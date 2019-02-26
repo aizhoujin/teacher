@@ -8,9 +8,14 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/index',
+      redirect: '/login',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/page/login/index.vue')
     },
     {
       path: '/index',

@@ -1,12 +1,19 @@
 <template>
   <div>
-    这里是主页
+    <mt-switch v-model="value"></mt-switch>
+    <mt-switch v-model="value">开关</mt-switch>
+    <mt-button type="primary" size="large">这里是主页</mt-button>
   </div>
 </template>
 
 <script>
   export default {
-    name: "index"
+    name: "index",
+    data() {
+      return{
+        value: false
+      }
+    }
   }
 </script>
 
