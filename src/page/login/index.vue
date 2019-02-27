@@ -13,16 +13,23 @@
       </mt-button>
     </div>
     <div class="login-footer">
-      <span>忘记密码</span>
+      <span>忘记密码{{userInfo}}</span>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from "vuex"
+
   export default {
     name: "index",
     data() {
       return {}
+    },
+    computed: {
+      ...mapState({
+        userInfo: state => state.user.userInfo
+      }),
     },
     methods: {
       login() {
