@@ -1,7 +1,13 @@
 import request from '@/router/axios'
+import {baseUrl} from "../../static/config";
 
-export const login = (username) => {
-  return new Promise((resolve, reject) => {
-    resolve({data: '12321'})
+export const userLogin = (data) =>{
+  return request({
+    url: `${baseUrl}/api/login`,
+    method: 'post',
+    params:{
+      userName: data.username,
+      password: data.password
+    }
   })
 }

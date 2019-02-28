@@ -10,7 +10,14 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    // proxyTable: [{
+    //   context: ["/wechat"],
+    //   target: 'http://39.98.196.28:8080'
+    // }],
+    proxyTable: [{
+      context: ["/wechat/"],
+      target: "http://39.98.196.28:8080",
+    }],
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

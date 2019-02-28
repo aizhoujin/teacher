@@ -5,12 +5,7 @@
     </div>
     <div class="login-title">科技改变教育</div>
     <div class="login-main">
-      <input type="text" placeholder="用户名">
-      <br/>
-      <br/>
-      <input type="password" placeholder="密码">
-      <mt-button type="primary" style="margin-top: 50px;background: #40D2B4" size="large" @click.native="login">登录
-      </mt-button>
+      <userlogin></userlogin>
     </div>
     <div class="login-footer">
       <span>忘记密码{{userInfo}}</span>
@@ -20,9 +15,13 @@
 
 <script>
   import { mapState } from "vuex"
+  import userlogin from './components/userlogin'
 
   export default {
     name: "index",
+    components: {
+      userlogin
+    },
     data() {
       return {}
     },
@@ -39,7 +38,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .login-logo {
     margin: 30px auto;
   }

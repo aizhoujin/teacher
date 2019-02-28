@@ -6,10 +6,13 @@ import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import store from './store'
 import axios from './router/axios'
 import VueAxios from 'vue-axios'
+import './style/index.scss'
+import * as urls from '../static/config';
+import {iconfontUrl, iconfontVersion} from "../static/config";
+import { loadStyle } from "./util/util";
 
 Vue.config.productionTip = false;
 
@@ -17,6 +20,13 @@ Vue.use(MintUI);
 Vue.use(ElementUI, {size: 'small'});
 Vue.use(VueAxios, axios);
 
+Object.keys(urls).forEach(key => {
+  Vue.prototype[key] = urls[key];
+})
+
+iconfontVersion.forEach(ele => {
+  loadStyle(iconfontUrl.replace('$key', ele));
+})
 
 /* eslint-disable no-new */
 new Vue({
