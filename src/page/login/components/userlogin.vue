@@ -110,18 +110,21 @@
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
-            userLogin(this.loginForm).then(res => {
-              console.log(res);
-            })
-            // axios({
-            //   method: 'POST',
-            //   // url: baseUrl + '/api/login',
-            //   url: 'http://39.98.196.28:8080/wechat/api/login',
-            //   params: {
-            //     userName: '13800138001',
-            //     password: '13800138001'
-            //   }
-            // }).then()
+            // userLogin(this.loginForm).then(res => {
+            //   console.log(res);
+            // })
+            axios({
+              method: 'POST',
+              // url: baseUrl + '/api/login',
+              url: 'http://39.98.196.28:8080/wechat/api/login',
+              headers: {
+                "from": "TEAW"
+              },
+              params: {
+                userName: '13800138001',
+                password: '13800138001'
+              }
+            }).then()
           }
         });
       }
