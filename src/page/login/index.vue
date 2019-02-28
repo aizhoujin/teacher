@@ -8,13 +8,13 @@
       <userlogin></userlogin>
     </div>
     <div class="login-footer">
-      <span>忘记密码{{userInfo}}</span>
+      <span>忘记密码</span>
     </div>
   </div>
 </template>
 
 <script>
-  import { mapState } from "vuex"
+  import {mapState} from "vuex"
   import userlogin from './components/userlogin'
 
   export default {
@@ -30,11 +30,7 @@
         userInfo: state => state.user.userInfo
       }),
     },
-    methods: {
-      login() {
-        this.$router.push({path: '/index'})
-      }
-    }
+    methods: {}
   }
 </script>
 
@@ -54,6 +50,7 @@
 
   .login-main {
     width: 100%;
+    padding-top: 50px;
   }
 
   .login-main input {
@@ -66,10 +63,4 @@
     padding: 6px;
   }
 
-  .login-footer {
-    position: absolute;
-    left: 0;
-    bottom: 10px;
-    width: 100%;
-  }
 </style>

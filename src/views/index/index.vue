@@ -1,8 +1,6 @@
 <template>
   <div>
-    <mt-switch v-model="value"></mt-switch>
-    <mt-switch v-model="value">开关</mt-switch>
-    <mt-button type="primary" size="large">这里是主页</mt-button>
+    切换 <i>123</i>
   </div>
 </template>
 
@@ -10,7 +8,7 @@
   export default {
     name: "index",
     data() {
-      return{
+      return {
         value: false
       }
     }

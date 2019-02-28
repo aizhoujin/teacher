@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import router from './router/index'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import ElementUI from 'element-ui';
@@ -12,7 +12,9 @@ import VueAxios from 'vue-axios'
 import './style/index.scss'
 import * as urls from '../static/config';
 import {iconfontUrl, iconfontVersion} from "../static/config";
-import { loadStyle } from "./util/util";
+import {loadStyle} from "./util/util";
+import {Loading} from 'element-ui'
+// import './permission' // 权限
 
 Vue.config.productionTip = false;
 
