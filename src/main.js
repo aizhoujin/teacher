@@ -14,7 +14,6 @@ import * as urls from '../static/config';
 import {iconfontUrl, iconfontVersion} from "../static/config";
 import {loadStyle} from "./util/util";
 import {Loading} from 'element-ui'
-// import './permission' // 权限
 
 Vue.config.productionTip = false;
 
@@ -38,3 +37,15 @@ new Vue({
   components: {App},
   template: '<App/>'
 })
+// export function createApp() {
+//   const app = new Vue({
+//     router,
+//     store,
+//     render: h => h(App)
+//   })
+//   return {
+//     app,
+//     router,
+//     store
+//   }
+// }

@@ -7,9 +7,11 @@
 import axios from 'axios'
 import store from '../store'
 import router from './index';
+import qs from 'qs'
 axios.defaults.timeout = 10000;
 //跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 let cfg, msg;
 msg = '服务器君开小差了，请稍后再试';
 //HTTPrequest拦截
@@ -17,6 +19,9 @@ axios.interceptors.request.use(config => {
   // if (store.getters.token) {
   // 	config.headers['X-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
   // }
+  if (config.method === 'post'){
+    config.data = qs.stringify(config.data);
+  }
   return config
 }, error => {
   console.log('err' + error)// for debug

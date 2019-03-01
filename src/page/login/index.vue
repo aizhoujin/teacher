@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position:relative;height: 100%">
     <div class="login-logo">
       <img src="../../assets/Logo.png" alt="logo">
     </div>
@@ -7,7 +7,7 @@
     <div class="login-main">
       <userlogin></userlogin>
     </div>
-    <div class="login-footer">
+    <div class="login-footer" :style="{'top': clientHeight + 'px'}">
       <span>忘记密码</span>
     </div>
   </div>
@@ -23,20 +23,26 @@
       userlogin
     },
     data() {
-      return {}
+      return {
+        clientHeight: 660
+      }
     },
     computed: {
       ...mapState({
         userInfo: state => state.user.userInfo
       }),
     },
-    methods: {}
+    methods: {},
+    created(){
+      this.clientHeight = document.documentElement.clientHeight -40
+    }
   }
 </script>
 
 <style scoped lang="scss">
   .login-logo {
-    margin: 30px auto;
+    margin: 0px auto;
+    padding-top: 30px;
   }
 
   .login-logo img {
@@ -63,4 +69,11 @@
     padding: 6px;
   }
 
+  .login-footer{
+    color: #40D2B4;
+    position: absolute;
+    left: 0px;
+    text-align: center;
+    width: 100%;
+  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-loading="loading">
+  <div id="app" v-loading="loading" element-loading-background="rgba(255, 255, 255, .9)">
     <router-view/>
   </div>
 </template>
@@ -31,5 +31,7 @@ export default {
   color: #2c3e50;
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

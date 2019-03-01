@@ -1,7 +1,10 @@
-const _import = require('../_import');
-
 export default [{
   path: '/',
-  name: '首页',
-  component: _import('index/index', 'views')
+  redirect: '/index',
+  name: 'HelloWorld',
+  component: () => import('@/views/index/index.vue')
+},{
+  path: '/index',
+  name: 'index',
+  component: () => import('@/views/index/index.vue')
 }]

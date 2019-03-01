@@ -1,49 +1,57 @@
 import Vue from 'vue'
 import Router from 'vue-router';
-// import PageRouter from './path/'
-// import ViewsRouter from './views/'
-//
-// const _import = require('./_import');
+import PageRouter from './path/'
+import ViewsRouter from './views/'
 
 Vue.use(Router)
-// export default new VueRouter({
-//   scrollBehavior(to, from, savedPosition) {
-//     if (savedPosition) {
-//       return savedPosition
-//     } else {
-//       if (from.meta.keepAlive) {
-//         from.meta.savedPosition = document.body.scrollTop;
-//       }
-//       return {
-//         x: 0,
-//         y: to.meta.savedPosition || 0
-//       }
-//     }
-//   },
-// });
-//
-// export const asyncRouterMap = [].concat(PageRouter, ViewsRouter)
-// console.log(asyncRouterMap)
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      redirect: '/login',
-      name: 'HelloWorld',
-      component: () => import('@/page/login/index.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/page/login/index.vue')
-    },
-    {
-      path: '/index',
-      name: 'index',
-      component: () => import('@/views/index/index.vue'),
+
+let router = new Router({
+  routes: [].concat(PageRouter,ViewsRouter),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop;
+      }
+      return {
+        x: 0,
+        y: to.meta.savedPosition || 0
+      }
     }
-  ]
+  },
 })
 
+function judgeAuth () {
+  let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  if (userInfo && userInfo.userId) {
+    return true
+  } else {
+    return false
+  }
+}
+
+router.beforeEach((to,from,next) => {
+  if (window.navigator.onLine) {
+    let authAllowTag = judgeAuth()
+    console.log(to.fullPath)
+    if (to.fullPath != '/login'){
+      if (authAllowTag){
+        next();
+      }else {
+        next({
+          path: '/login'
+        })
+        return false
+      }
+    }else {
+      next()
+    }
+  }else {
+    window.location.reload()
+  }
+})
+
+export default router
 
 
