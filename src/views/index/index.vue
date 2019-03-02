@@ -1,6 +1,53 @@
 <template>
-  <div>
-    切换 <i>123</i>
+  <div style="background: #FFFFFF">
+    <div class="home-head">
+      <div class="home-head-switcher">
+        <span>切换</span>
+        <i class="el-icon-sort" style="transform: rotate(90deg)"></i>
+      </div>
+      <div class="home-head-search">
+        <el-input placeholder="邯郸计算机职业技术学院"></el-input>
+      </div>
+    </div>
+    <div class="home-swiper">
+      <el-carousel
+        indicator-position="outside"
+        height="160px"
+        arrow="never"
+        autoplay="true">
+        <el-carousel-item v-for="item in swiperList" :key="item">
+          <img :src="item.src">
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+    <div class="home-bulletin">
+      <el-badge :value="3" class="item">
+        <i><b>学校公告 &nbsp;</b></i>
+      </el-badge>
+      <div class="home-bulletin-text">
+        Ant Design是一个服务于企业及产品企业Ant Design
+      </div>
+      <div class="home-bulletin-more">更多</div>
+    </div>
+    <div class="home-nav">
+      <li v-for="item in homeNav">
+        <div>
+          <img :src="item.img">
+        </div>
+        <p>{{item.title}}</p>
+      </li>
+    </div>
+    <div class="home-nav-mini">
+      <li v-for="item in homeNavMini">
+        <div class="home-nav-mini-left">
+          <img :src="item.img">
+        </div>
+        <div class="home-nav-mini-right">
+          <p>{{item.title}}</p>
+          <p>{{item.text}}</p>
+        </div>
+      </li>
+    </div>
   </div>
 </template>
 
@@ -9,12 +56,128 @@
     name: "index",
     data() {
       return {
-        value: false
+        swiperList: [
+          {'src': require('../../assets/Banner.png')},
+          {'src': require('../../assets/Banner.png')},
+          {'src': require('../../assets/Banner.png')}
+        ],
+        homeNav: [
+          {'title': '我的课表', img: require('../../assets/icon_首页/金刚区/我的课表.png')},
+          {'title': '上课点名', img: require('../../assets/icon_首页/金刚区/上课点名.png')},
+          {'title': '发布作业', img: require('../../assets/icon_首页/金刚区/发布作业.png')},
+          {'title': '意向学员', img: require('../../assets/icon_首页/金刚区/意向学员.png')},
+        ],
+        homeNavMini: [
+          {'title': '发布通知', 'text': '发布学生通知', 'img': require('../../assets/icon_首页/小金刚区/发布通知.png')},
+          {'title': '录入成绩单', 'text': '学员学习成绩单', 'img': require('../../assets/icon_首页/小金刚区/录入成绩单.png')},
+          {'title': '班级电话簿', 'text': '学员联系电话', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
+          {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
+        ]
       }
     }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .home-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+    line-height: 42px;
+    & .home-head-switcher {
+      width: 15%;
+      text-align: left;
+      white-space: nowrap;
+    }
+    & .home-head-search {
+      width: 75%;
+    }
+  }
+
+  .home-swiper {
+    width: 100%;
+    & img {
+      width: 100%;
+    }
+  }
+
+  .home-bulletin {
+    margin: 5px auto;
+    width: 90%;
+    background: #F8F8FC;
+    border-radius: 4px;
+    line-height: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: space-around;
+    & .home-bulletin-text {
+      width: 65%;
+      padding-left: 5px;
+      padding-right: 5px;
+      color: #BABDC5;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    & .home-bulletin-more {
+      width: 10%;
+      white-space: nowrap;
+      font-size: 12px;
+      color: #BABDC5;
+      height: 20px;
+      line-height: 20px;
+      margin-top: 6px;
+      border-left: 1px solid #BABDC5;
+    }
+  }
+  .home-nav{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    & li{
+      list-style: none;
+      width: 20%;
+      text-align: center;
+      & div{
+        width: 60%;
+        margin: 5px 20%;
+        height: 48px;
+        line-height: 48px;
+        & img{
+          width: 80%;
+          text-align: center;
+          vertical-align: bottom;
+        }
+      }
+      & p{
+        font-size: 13px;
+        color: #626468;
+      }
+    }
+  }
+  .home-nav-mini{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    & li{
+      width: 40%;
+      border: 1px solid #F6F6F6;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-around;
+      & .home-nav-mini-left{
+        width: 40%;
+        & img{
+          width: 100%;
+        }
+      }
+      & .home-nav-mini-right{
+        width: 55%;
+      }
+    }
+  }
 
 </style>
