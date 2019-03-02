@@ -13,10 +13,9 @@
       <el-carousel
         indicator-position="outside"
         height="160px"
-        arrow="never"
-        autoplay="true">
-        <el-carousel-item v-for="item in swiperList" :key="item">
-          <img :src="item.src">
+        arrow="never">
+        <el-carousel-item v-for="(item,index) in swiperList" :key="index">
+          <img :src="item">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -43,23 +42,26 @@
           <img :src="item.img">
         </div>
         <div class="home-nav-mini-right">
-          <p>{{item.title}}</p>
-          <p>{{item.text}}</p>
+          <p class="home-nav-mini-right-title">{{item.title}}</p>
+          <p class="home-nav-mini-right-text">{{item.text}}</p>
         </div>
       </li>
     </div>
+
   </div>
 </template>
 
 <script>
+  import {getBulletin} from "../../api/home";
+
   export default {
     name: "index",
     data() {
       return {
         swiperList: [
-          {'src': require('../../assets/Banner.png')},
-          {'src': require('../../assets/Banner.png')},
-          {'src': require('../../assets/Banner.png')}
+          require('../../assets/Banner.png'),
+          require('../../assets/Banner.png'),
+          require('../../assets/Banner.png')
         ],
         homeNav: [
           {'title': '我的课表', img: require('../../assets/icon_首页/金刚区/我的课表.png')},
@@ -72,8 +74,16 @@
           {'title': '录入成绩单', 'text': '学员学习成绩单', 'img': require('../../assets/icon_首页/小金刚区/录入成绩单.png')},
           {'title': '班级电话簿', 'text': '学员联系电话', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
           {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
-        ]
+        ],
       }
+    },
+    methods: {
+      getBulletin() {
+        let token = JSON.parse(window.localStorage.getItem('userInfo')).token;
+      }
+    },
+    mounted() {
+      this.getBulletin();
     }
   }
 </script>
@@ -83,7 +93,7 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-    padding-top: 10px;
+    padding-top: 5px;
     line-height: 42px;
     & .home-head-switcher {
       width: 15%;
@@ -132,52 +142,79 @@
       border-left: 1px solid #BABDC5;
     }
   }
-  .home-nav{
+
+  .home-nav {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    & li{
+    & li {
       list-style: none;
       width: 20%;
       text-align: center;
-      & div{
+      & div {
         width: 60%;
         margin: 5px 20%;
         height: 48px;
         line-height: 48px;
-        & img{
+        & img {
           width: 80%;
           text-align: center;
           vertical-align: bottom;
         }
       }
-      & p{
+      & p {
         font-size: 13px;
         color: #626468;
       }
     }
   }
-  .home-nav-mini{
+
+  .home-nav-mini {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    & li{
-      width: 40%;
+    margin: 5px 0px;
+    & li {
+      width: 45%;
       border: 1px solid #F6F6F6;
       border-radius: 5px;
       display: flex;
       justify-content: space-around;
-      & .home-nav-mini-left{
+      margin-top: 10px;
+      height: 60px;
+      & .home-nav-mini-left {
         width: 40%;
-        & img{
-          width: 100%;
+        height: 60px;
+        text-align: right;
+        & img {
+          width: 50px;
+          height: 50px;
+          margin-top: 5px;
         }
       }
-      & .home-nav-mini-right{
+      & .home-nav-mini-right {
         width: 55%;
+        font-size: 12px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        & p {
+          text-indent: 5px;
+          margin: 0;
+        }
+        & .home-nav-mini-right-title {
+          font-weight: bold;
+          font-size: 14px;
+        }
+        & .home-nav-mini-right-text {
+          color: #C3C3C3;
+          font-size: 11px;
+        }
       }
     }
   }
+
 
 </style>

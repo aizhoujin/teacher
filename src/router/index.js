@@ -6,7 +6,7 @@ import ViewsRouter from './views/'
 Vue.use(Router)
 
 let router = new Router({
-  routes: [].concat(PageRouter,ViewsRouter),
+  routes: [].concat(PageRouter, ViewsRouter),
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
@@ -22,7 +22,7 @@ let router = new Router({
   },
 })
 
-function judgeAuth () {
+function judgeAuth() {
   let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
   if (userInfo && userInfo.userId) {
     return true
@@ -31,23 +31,26 @@ function judgeAuth () {
   }
 }
 
-router.beforeEach((to,from,next) => {
+router.beforeEach((to, from, next) => {
   if (window.navigator.onLine) {
-    let authAllowTag = judgeAuth()
-    console.log(to.fullPath)
-    if (to.fullPath != '/login'){
-      if (authAllowTag){
+    let authAllowTag = judgeAuth();
+    if (to.fullPath != '/login') {
+      if (authAllowTag) {
+        if(to.fullPath == '/'){
+          next({path: '/index'})
+          return false
+        }
         next();
-      }else {
+      } else {
         next({
           path: '/login'
         })
         return false
       }
-    }else {
+    } else {
       next()
     }
-  }else {
+  } else {
     window.location.reload()
   }
 })

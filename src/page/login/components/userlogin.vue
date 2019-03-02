@@ -117,12 +117,15 @@
                 Toast('登陆成功');
                 let userInfo = res.data.data;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                this.$router.push({path: '/index'})
+                this.$router.push({path: '/home'})
               } else {
                 Toast(res.data.msg)
               }
             })
-
+              .error(err => {
+                this.$store.commit('loadChange', false);
+                Toast('请求失败')
+              })
           }
         });
       }

@@ -9,7 +9,7 @@ const env = process.env;
 // baseUrl = `http://localhost:8080/wechat`;
 
 //测试环境
-baseUrl = `http://39.98.196.28:8080/wechat`;
+baseUrl = `http://api.xiaoxunbang.com/wechat`;
 
 export {
   baseUrl,
