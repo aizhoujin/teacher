@@ -117,7 +117,7 @@
                 Toast('登陆成功');
                 let userInfo = res.data.data;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                this.$router.push({path: '/home'})
+                this.$router.push({path: '/index/home'})
               } else {
                 Toast(res.data.msg)
               }

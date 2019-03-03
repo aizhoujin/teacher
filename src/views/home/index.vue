@@ -177,20 +177,20 @@
     margin: 5px 0px;
     & li {
       width: 45%;
-      border: 1px solid #F6F6F6;
       border-radius: 5px;
       display: flex;
       justify-content: space-around;
       margin-top: 10px;
-      height: 60px;
+      height: 80px;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
       & .home-nav-mini-left {
         width: 40%;
-        height: 60px;
+        height: 80px;
         text-align: right;
         & img {
           width: 50px;
           height: 50px;
-          margin-top: 5px;
+          margin-top: 15px;
         }
       }
       & .home-nav-mini-right {
