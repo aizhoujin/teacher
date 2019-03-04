@@ -20,7 +20,7 @@ axios.interceptors.request.use(config => {
   // 	config.headers['X-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
   // }
   if (config.method === 'post'){
-    config.data = qs.stringify(config.data);
+    // config.data = qs.stringify(config.data);
   }
   return config
 }, error => {

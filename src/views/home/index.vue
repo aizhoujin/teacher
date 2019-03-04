@@ -6,7 +6,7 @@
         <i class="el-icon-sort" style="transform: rotate(90deg)"></i>
       </div>
       <div class="home-head-search">
-        <el-input placeholder="邯郸计算机职业技术学院"></el-input>
+        <el-input :placeholder="userInfo.company.name" v-model="homeSchool"></el-input>
       </div>
     </div>
     <div class="home-swiper">
@@ -47,13 +47,15 @@
         </div>
       </li>
     </div>
-    {{userInfo}}
   </div>
 </template>
 
 <script>
-  import {getBulletin} from "../../api/home";
+  import {getBulletin,detailMy} from "../../api/home";
+  import axios from 'axios'
   import {mapState} from 'vuex'
+  // import qs from 'qs'
+  // const Qs require('qs');
 
   export default {
     name: "index",
@@ -76,16 +78,79 @@
           {'title': '班级电话簿', 'text': '学员联系电话', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
           {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
         ],
+        homeSchool: '',
       }
     },
     computed: {
-    ...mapState({
+      ...mapState({
         userInfo: state => state.user.userInfo
       }),
     },
     methods: {
       getBulletin() {
-        let token = JSON.parse(window.localStorage.getItem('userInfo')).token;
+        let token = this.userInfo.token;
+        let obj = {
+          "between": {},
+          "equals": {},
+          "groupBy": [],
+          "gt": {},
+          "gtEquals": {},
+          "isIn": {},
+          "isNull": {},
+          "like": {},
+          "lt": {},
+          "ltEquals": {},
+          "notBetween": {},
+          "notEquals": {},
+          "notIn": {},
+          "notLike": {},
+          "notNull": {},
+          "orderBy": {},
+          "page": 1,
+          "size": 10,
+          "empty": true
+        }
+        // obj = Qs.stringify(obj)
+        // axios({
+        //   method: 'post',
+        //   url: 'http://tea.ngrok.eanfang.net:89/wechat/api/affiche/v1/listMy',
+        //   headers: {
+        //     "from": "TEAW",
+        //     "token": token,
+        //     "Content-Type": "application/json;charset=UTF-8",
+        //   },
+        //   data: {
+        //     id: '1'
+        //   },
+        // })
+
+
+        // axios.post()
+
+
+
+        // obj = JSON.stringify(obj)
+       //
+       // axios.post(`http://tea.ngrok.eanfang.net:89/wechat/api/affiche/v1/listMy`, qs.stringify(obj)).then()
+
+        getBulletin(token,obj).then(res => {
+          console.log(res);
+        })
+
+        let id = '1097141187560603648'
+        detailMy(token, id).then()
+
+       // axios.post(
+       //   `http://tea.ngrok.eanfang.net:89/wechat/api/affiche/v1/listMy`,{
+       //     data: obj,
+       //     headers: {
+       //       "from": "TEAW",
+       //       "token": token,
+       //       "Content-Type": "application/json;charset=UTF-8",
+       //     }
+       //   }
+       // )
+
       }
     },
     mounted() {

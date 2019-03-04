@@ -118,6 +118,9 @@
                 let userInfo = res.data.data;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 this.$store.commit('getUserInfo', userInfo);
+                this.$router.push({
+                  path: '/index/home'
+                })
               } else {
                 Toast(res.data.msg)
               }
