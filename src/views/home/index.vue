@@ -47,12 +47,13 @@
         </div>
       </li>
     </div>
-
+    {{userInfo}}
   </div>
 </template>
 
 <script>
   import {getBulletin} from "../../api/home";
+  import {mapState} from 'vuex'
 
   export default {
     name: "index",
@@ -76,6 +77,11 @@
           {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
         ],
       }
+    },
+    computed: {
+    ...mapState({
+        userInfo: state => state.user.userInfo
+      }),
     },
     methods: {
       getBulletin() {

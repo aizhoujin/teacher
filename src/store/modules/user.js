@@ -1,9 +1,10 @@
 const user = {
   state: {
-    userInfo: '123',
+    userInfo: null,
   },
   mutations: {
-    LoginByUsername(data) {
+    getUserInfo(state,data){
+      state.userInfo = data;
     }
   },
   actions: {

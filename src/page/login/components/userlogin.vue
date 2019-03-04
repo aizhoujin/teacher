@@ -117,12 +117,12 @@
                 Toast('登陆成功');
                 let userInfo = res.data.data;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                this.$router.push({path: '/index/home'})
+                this.$store.commit('getUserInfo', userInfo);
               } else {
                 Toast(res.data.msg)
               }
             })
-              .error(err => {
+              .catch(err => {
                 this.$store.commit('loadChange', false);
                 Toast('请求失败')
               })

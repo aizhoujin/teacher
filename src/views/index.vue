@@ -64,7 +64,7 @@
         height: 30px;
         & img {
           margin-top: 5px;
-          width: 25px;
+          width: 24px;
         }
       }
       & p {
