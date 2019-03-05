@@ -19,7 +19,7 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div class="home-bulletin">
+    <div class="home-bulletin" @click="toBulletin">
       <el-badge :hidden="unread.length == 0" :value="unread.length" class="item">
         <i><b>学校公告 &nbsp;</b></i>
       </el-badge>
@@ -29,7 +29,6 @@
             {{item.title}}
           </li>
         </transition>
-
       </div>
       <div class="home-bulletin-more">更多</div>
     </div>
@@ -59,8 +58,6 @@
   import {getBulletin, detailMy} from "../../api/home";
   import axios from 'axios'
   import {mapState} from 'vuex'
-  // import qs from 'qs'
-  // const Qs require('qs');
 
   export default {
     name: "index",
@@ -140,9 +137,13 @@
           .catch(err => {
             this.unread = [];
           })
-
         let id = '1097141187560603648'
         detailMy(token, id).then()
+      },
+      toBulletin(){
+        this.$router.push({
+          path: '/bulletin'
+        })
       }
     },
     mounted() {
@@ -279,6 +280,7 @@
       }
     }
   }
+
   .transition-box {
     width: 200px;
     height: 10px;

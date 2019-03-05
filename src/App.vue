@@ -6,6 +6,7 @@
 
 <script>
   import {mapState} from 'vuex'
+  import {tokenLogin} from './api/user'
 
   export default {
     name: 'App',
@@ -17,9 +18,10 @@
         loading: state => state.common.loading
       }),
     },
-    created () {
+    created() {
       let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
       this.$store.commit('getUserInfo', userInfo);
+      // tokenLogin(userInfo.token)
     }
   }
 </script>
