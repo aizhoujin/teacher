@@ -13,7 +13,6 @@ import './style/index.scss'
 import * as urls from '../static/config';
 import {iconfontUrl, iconfontVersion} from "../static/config";
 import {loadStyle} from "./util/util";
-import {Loading} from 'element-ui'
 
 Vue.config.productionTip = false;
 

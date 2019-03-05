@@ -20,11 +20,16 @@
       </el-carousel>
     </div>
     <div class="home-bulletin">
-      <el-badge :value="3" class="item">
+      <el-badge :hidden="unread.length == 0" :value="unread.length" class="item">
         <i><b>学校公告 &nbsp;</b></i>
       </el-badge>
       <div class="home-bulletin-text">
-        Ant Design是一个服务于企业及产品企业Ant Design
+        <transition name="el-fade-in-linear" v-for="(item,index) in bulletin.list" :key="index">
+          <li v-show="index == showIndex">
+            {{item.title}}
+          </li>
+        </transition>
+
       </div>
       <div class="home-bulletin-more">更多</div>
     </div>
@@ -51,7 +56,7 @@
 </template>
 
 <script>
-  import {getBulletin,detailMy} from "../../api/home";
+  import {getBulletin, detailMy} from "../../api/home";
   import axios from 'axios'
   import {mapState} from 'vuex'
   // import qs from 'qs'
@@ -79,6 +84,9 @@
           {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
         ],
         homeSchool: '',
+        unread: [],
+        bulletin: [],
+        showIndex: 0
       }
     },
     computed: {
@@ -110,47 +118,31 @@
           "size": 10,
           "empty": true
         }
-        // obj = Qs.stringify(obj)
-        // axios({
-        //   method: 'post',
-        //   url: 'http://tea.ngrok.eanfang.net:89/wechat/api/affiche/v1/listMy',
-        //   headers: {
-        //     "from": "TEAW",
-        //     "token": token,
-        //     "Content-Type": "application/json;charset=UTF-8",
-        //   },
-        //   data: {
-        //     id: '1'
-        //   },
-        // })
-
-
-        // axios.post()
-
-
-
-        // obj = JSON.stringify(obj)
-       //
-       // axios.post(`http://tea.ngrok.eanfang.net:89/wechat/api/affiche/v1/listMy`, qs.stringify(obj)).then()
-
-        getBulletin(token,obj).then(res => {
-          console.log(res);
+        getBulletin(token, obj).then(res => {
+          let data = res.data.data;
+          this.unread = [];
+          this.bulletin = data;
+          if (data.list && data.list.length > 0) {
+            setInterval(() => {
+              if (this.showIndex >= data.list.length - 1) {
+                this.showIndex = 0;
+              } else {
+                this.showIndex++;
+              }
+            }, 3000)
+          }
+          data.list.forEach((item, index) => {
+            if (item.status == 0) {
+              this.unread.push(item);
+            }
+          })
         })
+          .catch(err => {
+            this.unread = [];
+          })
 
         let id = '1097141187560603648'
         detailMy(token, id).then()
-
-       // axios.post(
-       //   `http://tea.ngrok.eanfang.net:89/wechat/api/affiche/v1/listMy`,{
-       //     data: obj,
-       //     headers: {
-       //       "from": "TEAW",
-       //       "token": token,
-       //       "Content-Type": "application/json;charset=UTF-8",
-       //     }
-       //   }
-       // )
-
       }
     },
     mounted() {
@@ -201,6 +193,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-align: left;
     }
     & .home-bulletin-more {
       width: 10%;
@@ -285,6 +278,12 @@
         }
       }
     }
+  }
+  .transition-box {
+    width: 200px;
+    height: 10px;
+    border-radius: 4px;
+    background-color: #409EFF;
   }
 
 

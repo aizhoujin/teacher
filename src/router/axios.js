@@ -6,8 +6,6 @@
 // 引入axios以及element ui中的loading和message组件
 import axios from 'axios'
 import store from '../store'
-import router from './index';
-import qs from 'qs'
 axios.defaults.timeout = 10000;
 //跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
