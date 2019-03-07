@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router';
 import PageRouter from './path/'
 import ViewsRouter from './views/'
+import setTitle from '../util/util'
 
 Vue.use(Router)
 
@@ -53,6 +54,10 @@ router.beforeEach((to, from, next) => {
   } else {
     window.location.reload()
   }
+})
+
+router.afterEach((to, from) => {
+  // setTitle(to.name)
 })
 
 export default router

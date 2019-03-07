@@ -22,18 +22,28 @@
       <div class="date-select">
         <div class="date-from" @click="openPicker(1)">{{dateFrom}}</div>
         <div class="date-Line">--</div>
-        <div class="date-to"  @click="openPicker(2)">{{dateTo}}</div>
+        <div class="date-to" @click="openPicker(2)">{{dateTo}}</div>
       </div>
       <div class="date-fit">
         <span>筛选</span>
         <img src="../../assets/icon_学校公告/筛选.png">
       </div>
     </div>
+    <div class="bulletinList">
+      <li v-for="(item,index) in bulletinList">
+        <div class="bulletinList-title">
+          {{item.title}}
+        </div>
+      </li>
+    </div>
   </div>
 </template>
 
 <script>
   // import {DatetimePicker} from 'mint-ui'
+  import {myGetBulletin} from "../../api/home";
+  import {mapState} from "vuex";
+
   export default {
     name: "index",
     data() {
@@ -41,7 +51,13 @@
         dateFrom: "开始时间",
         dateTo: "结束时间",
         pickerValue1: '',
-        pickerValue2: ''
+        pickerValue2: '',
+        bulletinList:[],
+        obj: {
+          "page": 1,
+          "size": 10,
+          "empty": true
+        }
       }
     },
     methods: {
@@ -56,12 +72,27 @@
       handleConfirm(type) {
         if (type == 1) {
           this.pickerValue1 = new Date(this.pickerValue1).toLocaleDateString();
+          console.log(this.pickerValue1)
           this.dateFrom = this.pickerValue1;
-        }else if(type == 2){
+        } else if (type == 2) {
           this.pickerValue2 = new Date(this.pickerValue2).toLocaleDateString();
           this.dateTo = this.pickerValue2;
         }
       },
+    },
+    computed: {
+      ...mapState({
+        userInfo: state => state.user.userInfo
+      }),
+    },
+    mounted() {
+      this.bulletinList = [];
+      myGetBulletin(this.userInfo.token,this.obj).then(res => {
+        let list = res.data.data.list;
+        list.forEach(item => {
+          this.bulletinList.push(item);
+        })
+      })
     },
     created() {
       this.pickerValue1 = new Date();

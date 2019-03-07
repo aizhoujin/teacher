@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {getBulletin, detailMy} from "../../api/home";
+  import {myGetBulletin, detailMy} from "../../api/home";
   import axios from 'axios'
   import {mapState} from 'vuex'
 
@@ -115,7 +115,7 @@
           "size": 10,
           "empty": true
         }
-        getBulletin(token, obj).then(res => {
+        myGetBulletin(token, obj).then(res => {
           let data = res.data.data;
           this.unread = [];
           this.bulletin = data;

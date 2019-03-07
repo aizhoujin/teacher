@@ -20,8 +20,8 @@
     },
     created() {
       let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
-      this.$store.commit('getUserInfo', userInfo);
       // tokenLogin(userInfo.token)
+      this.$store.commit('getUserInfo', userInfo);
     }
   }
 </script>
