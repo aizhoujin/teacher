@@ -42,6 +42,7 @@
 <style scoped lang="scss">
   .login-logo {
     margin: 0px auto;
+    text-align: center;
     padding-top: 30px;
   }
 
@@ -50,6 +51,7 @@
   }
 
   .login-title {
+    text-align: center;
     margin: 20px auto;
     font-size: 16px;
   }

@@ -6,7 +6,7 @@
         <i class="el-icon-sort" style="transform: rotate(90deg)"></i>
       </div>
       <div class="home-head-search">
-        <el-input :placeholder="userInfo.company.name" v-model="homeSchool"></el-input>
+        <el-input :placeholder="userInfo ? userInfo.company.name : '邯郸计算机培训学院'" v-model="homeSchool"></el-input>
       </div>
     </div>
     <div class="home-swiper">
@@ -88,7 +88,8 @@
     },
     computed: {
       ...mapState({
-        userInfo: state => state.user.userInfo
+        userInfo: state => state.user.userInfo,
+        loginState: state => state.user.loginState
       }),
     },
     methods: {
@@ -119,6 +120,7 @@
           let data = res.data.data;
           this.unread = [];
           this.bulletin = data;
+          console.log()
           if (data.list && data.list.length > 0) {
             setInterval(() => {
               if (this.showIndex >= data.list.length - 1) {
@@ -138,7 +140,7 @@
             this.unread = [];
           })
         let id = '1097141187560603648'
-        detailMy(token, id).then()
+        // detailMy(token, id).then()
       },
       toBulletin(){
         this.$router.push({
@@ -148,13 +150,22 @@
     },
     mounted() {
       this.getBulletin();
+    },
+    watch: {
+      loginState(val,oldVal){
+        console.log(val, oldVal);
+        if (val){
+          this.getBulletin();
+        }
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
   .home-head {
-    width: 100%;
+    width: 96%;
+    margin: 0 auto;
     display: flex;
     justify-content: space-around;
     padding-top: 5px;

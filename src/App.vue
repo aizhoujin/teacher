@@ -20,8 +20,18 @@
     },
     created() {
       let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
-      // tokenLogin(userInfo.token)
       this.$store.commit('getUserInfo', userInfo);
+      // if (userInfo && userInfo.token){
+      //   tokenLogin(userInfo.token).then(res => {
+      //     console.log(res.data.code)
+      //     if (res.data.code == 401) {
+      //       window.localStorage.clear();
+      //     } else if (res.data.code == 200 && res.data.msg == "请求成功") {
+      //       this.$store.commit('getUserInfo', userInfo);
+      //       this.$store.commit('loginState', true);
+      //     }else {}
+      //   })
+      // }
     }
   }
 </script>
@@ -31,7 +41,7 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
+    /*text-align: center;*/
     color: #2c3e50;
     margin: 0;
     padding: 0;

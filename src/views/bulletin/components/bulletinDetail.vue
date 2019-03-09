@@ -1,0 +1,74 @@
+<template>
+  <div class="detail">
+    <div class="detail-title">
+      {{detail.title}}
+    </div>
+    <div class="detail-basic">
+      <div>
+        发布人：{{detail.createStaffEntity ? detail.createStaffEntity.infoEntity.realName : ''}}
+      </div>
+      <div>{{detail.createTime}}</div>
+    </div>
+    <div class="detail-text">
+      {{detail.content}}
+    </div>
+  </div>
+</template>
+
+<script>
+  import {detailMy} from '../../../api/home'
+
+  export default {
+    name: "bulletin-detail",
+    data() {
+      return {
+        detail: {}
+      }
+    },
+    created() {
+      let token = this.$store.state.user.userInfo.token;
+      let id = this.$route.params.id;
+      detailMy(token, id).then(res => {
+        if (res.data.code == 200) {
+          console.log(res.data.data)
+          this.detail = res.data.data;
+        }
+      })
+    }
+  }
+</script>
+
+<style scoped>
+  .detail-title {
+    margin: 15px 15px 10px 15px;
+    font-size: 16px;
+    color: #1F2423;
+    font-weight: bold;
+    text-align: left;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 24px;
+  }
+
+  .detail-basic {
+    display: flex;
+    margin: 10px 15px;
+    justify-content: space-between;
+    color: #B5B6B6;
+    font-size: 12px;
+    line-height: 17px;
+  }
+  .detail{
+    padding-bottom: 16px;
+  }
+  .detail-text{
+    margin: 10px 15px;
+    color: #464948;
+    font-size: 14px;
+    line-height: 21px;
+  }
+</style>

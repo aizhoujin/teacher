@@ -29,33 +29,18 @@ export const myGetBulletin = (data, obj) => {
   })
 }
 
-// 标记已读
-// export const detailMy = (data,id) => {
-//   return request({
-//     url: `${baseUrl}/api/affiche/v1/detailMy`,
-//     method: 'POST',
-//     headers: {
-//       "from": "STUW",
-//       "token": data,
-//       // "Content-Type": "application/json;charset=UTF-8",
-//     },
-//     params:{
-//       id: '1097141187560603648'
-//     }
-//   })
-// }
-
-export const detailMy = (data) => {
+// 我的公告详情，标记已读
+export const detailMy = (token,id) => {
   return request({
     url: `${baseUrl}/api/affiche/v1/detailMy`,
     method: 'post',
     headers: {
       "from": "TEAW",
-      "token": data,
+      "token": token,
       "Content-Type": "application/json;charset=UTF-8",
     },
     params: {
-      id: "1097141187560603648"
+      id: id
     }
   })
 }

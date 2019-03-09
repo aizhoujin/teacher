@@ -20,4 +20,8 @@ export default [{
   path: '/bulletin',
   name: 'bulletin',
   component: () => import('@/views/bulletin/index.vue')
+}, {
+  path: '/bulletinDetail/:id',
+  name: '公告详情',
+  component: () => import('@/views/bulletin/components/bulletinDetail.vue')
 }]
