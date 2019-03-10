@@ -1,11 +1,11 @@
 <template>
   <el-form class="login-form" :rules="loginRules" ref="loginForm" :model="loginForm" label-width="0">
-    <el-form-item prop="username">
+    <el-form-item prop="username" style="height: 36px">
       <el-input size="small" @keyup.enter.native="handleLogin" v-model="loginForm.username" auto-complete="off"
                 placeholder="请输入用户名">
       </el-input>
     </el-form-item>
-    <el-form-item prop="password">
+    <el-form-item prop="password" style="height: 36px">
       <el-input size="small" @keyup.enter.native="handleLogin" :type="passwordType" v-model="loginForm.password"
                 auto-complete="off" placeholder="请输入密码">
         <i class="login-view" slot="suffix" @click="showPassword"><img :src=passwordeye[passwordActive]></i>
@@ -148,6 +148,7 @@
   .login-submit {
     width: 100%;
     height: 44px;
+    font-size: 20px;
   }
 
   .login-view {

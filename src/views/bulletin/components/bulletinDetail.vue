@@ -11,18 +11,28 @@
     </div>
     <div class="detail-text">
       {{detail.content}}
+      <!--<img src="osspath" alt="">-->
+      <!--<img :src="'http://tea.ngrok.eanfang.net:89/sys/api/oss/url?token=' + token + '&ossPath=test/456.png'" alt="">-->
+
+      <!--<img src="http://api.xiaoxunbang.com/sys/api/oss/url?token=fcebec45-098d-443d-921e-fe7a8e26a07c&ossPath=test/222.png" alt="">-->
+      <!--<img-->
+      <!--src="http://api.xiaoxunbang.com/sys/api/oss/url?token=fcebec45-098d-443d-921e-fe7a8e26a07c&ossPath=test/222.png"-->
+      <!--alt="">-->
     </div>
   </div>
 </template>
 
 <script>
   import {detailMy} from '../../../api/home'
+  import axios from 'axios'
 
   export default {
     name: "bulletin-detail",
     data() {
       return {
-        detail: {}
+        detail: {},
+        osspath: null,
+        token: null
       }
     },
     created() {
@@ -34,6 +44,9 @@
           this.detail = res.data.data;
         }
       })
+      this.token = this.$store.state.user.userInfo.token;
+      // this.osspath = 'http://tea.ngrok.eanfang.net:89/sys/api/oss/url?token=' + this.$store.state.user.userInfo.token + '&ossPath=456.png'
+      // this.osspath  = axios.get()
     }
   }
 </script>
@@ -62,10 +75,12 @@
     font-size: 12px;
     line-height: 17px;
   }
-  .detail{
+
+  .detail {
     padding-bottom: 16px;
   }
-  .detail-text{
+
+  .detail-text {
     margin: 10px 15px;
     color: #464948;
     font-size: 14px;

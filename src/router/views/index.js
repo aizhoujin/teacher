@@ -24,4 +24,16 @@ export default [{
   path: '/bulletinDetail/:id',
   name: '公告详情',
   component: () => import('@/views/bulletin/components/bulletinDetail.vue')
+}, {
+  path: '/notice',
+  name: '通知列表',
+  component: () => import('@/views/notice/index.vue')
+}, {
+  path: '/noticeDetail/:id',
+  name: '通知详情',
+  component: () => import('@/views/notice/components/noticeDetail.vue')
+}, {
+  path: '/written',
+  name: '撰写通知',
+  component: () => import('@/views/notice/components/written.vue')
 }]

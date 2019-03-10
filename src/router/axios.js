@@ -6,6 +6,7 @@
 // 引入axios以及element ui中的loading和message组件
 import axios from 'axios'
 import store from '../store'
+import router from '../router/index'
 
 axios.defaults.timeout = 10000;
 //跨域请求，允许保存cookie
@@ -29,8 +30,13 @@ axios.interceptors.request.use(config => {
 })
 //HTTPresponse拦截
 axios.interceptors.response.use(data => {
+  console.log(data)
   return data
 }, error => {
+  if (error.response.status == 500) {
+    window.localStorage.clear();
+    window.reload();
+  }
   return Promise.reject(new Error(msg));
 
 })

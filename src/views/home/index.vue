@@ -41,7 +41,7 @@
       </li>
     </div>
     <div class="home-nav-mini">
-      <li v-for="item in homeNavMini">
+      <li v-for="item in homeNavMini" :key="item.title" @click="$router.push({path: item.path})">
         <div class="home-nav-mini-left">
           <img :src="item.img">
         </div>
@@ -75,7 +75,7 @@
           {'title': '意向学员', img: require('../../assets/icon_首页/金刚区/意向学员.png')},
         ],
         homeNavMini: [
-          {'title': '发布通知', 'text': '发布学生通知', 'img': require('../../assets/icon_首页/小金刚区/发布通知.png')},
+          {'title': '发布通知', 'text': '发布学生通知', path: '/notice','img': require('../../assets/icon_首页/小金刚区/发布通知.png')},
           {'title': '录入成绩单', 'text': '学员学习成绩单', 'img': require('../../assets/icon_首页/小金刚区/录入成绩单.png')},
           {'title': '班级电话簿', 'text': '学员联系电话', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
           {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
@@ -142,7 +142,7 @@
         let id = '1097141187560603648'
         // detailMy(token, id).then()
       },
-      toBulletin(){
+      toBulletin() {
         this.$router.push({
           path: '/bulletin'
         })
@@ -152,9 +152,9 @@
       this.getBulletin();
     },
     watch: {
-      loginState(val,oldVal){
+      loginState(val, oldVal) {
         console.log(val, oldVal);
-        if (val){
+        if (val) {
           this.getBulletin();
         }
       }
@@ -189,6 +189,7 @@
 
   .home-bulletin {
     margin: 5px auto;
+    padding-left: 5px;
     width: 90%;
     background: #F8F8FC;
     border-radius: 4px;
@@ -216,6 +217,7 @@
       line-height: 20px;
       margin-top: 6px;
       border-left: 1px solid #BABDC5;
+      padding-left: 3px;
     }
   }
 

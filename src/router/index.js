@@ -33,11 +33,13 @@ function judgeAuth() {
 }
 
 router.beforeEach((to, from, next) => {
+  // console.log('from' , from);
+  // console.log('to' , to)
   if (window.navigator.onLine) {
     let authAllowTag = judgeAuth();
     if (to.fullPath != '/login') {
       if (authAllowTag) {
-        if(to.fullPath == '/'){
+        if (to.fullPath == '/') {
           next({path: '/index'})
           return false
         }

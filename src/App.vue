@@ -1,6 +1,11 @@
 <template>
   <div id="app" v-loading="loading" element-loading-background="rgba(255, 255, 255, .9)">
     <router-view/>
+    <div class="goHome" v-if="goHomeShow">
+      <router-link :to="{path: '/index'}">
+        返回主页
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -11,13 +16,32 @@
   export default {
     name: 'App',
     data() {
-      return {}
+      return {
+        goHomeShow: false,
+        noGoHome: [
+          '/login',
+          '/index/home',
+          '/index/chat',
+          '/index/user'
+        ]
+      }
     },
     computed: {
       ...mapState({
         loading: state => state.common.loading
       }),
     },
+    watch: {
+      $route(to, from) {
+        console.log(to.path);
+        if (this.noGoHome.indexOf(to.path) !== -1) {
+          this.goHomeShow = false;
+        } else {
+          this.goHomeShow = true;
+        }
+      },
+    },
+
     created() {
       let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
       this.$store.commit('getUserInfo', userInfo);
@@ -48,5 +72,25 @@
     width: 100%;
     height: 100%;
     font-size: 16px;
+  }
+
+  .goHome {
+    width: 80px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    background: #40D2B4;
+    color: #fff;
+    text-align: center;
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 16px;
+    position: fixed;
+    left: 0px;
+    top: 60%;
+  }
+
+  a {
+    text-decoration: none;
+    color: #fff;
   }
 </style>

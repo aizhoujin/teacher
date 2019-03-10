@@ -112,8 +112,8 @@
           Toast('请选择结束时间')
         } else {
           if (this.pickerValue1 < this.pickerValue2) {
-            this.obj.gtEquals.createtTime = this.pickerValue1.replace('/', '-').replace('/', '-') + ' 00:00:00';
-            this.obj.ltEquals.createtTime = this.pickerValue2.replace('/', '-').replace('/', '-') + ' 00:00:00';
+            this.obj.gtEquals.createTime = this.pickerValue1.replace('/', '-').replace('/', '-');
+            this.obj.ltEquals.createTime = this.pickerValue2.replace('/', '-').replace('/', '-');
             this.bulletinList = [];
             this.myGetBulletin();
           }
@@ -123,7 +123,7 @@
       bulletinDetail(id){
         console.log('id', id)
         this.$router.push({
-          path: 'bulletinDetail/' + id,
+          path: '/bulletinDetail/' + id,
         })
       }
     },
