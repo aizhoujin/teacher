@@ -12,14 +12,16 @@ axios.defaults.timeout = 10000;
 //跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-axios.defaults.headers.post['from'] = 'TEAW';
+axios.defaults.headers.post['from'] = 'biz';
 let cfg, msg;
 msg = '服务器君开小差了，请稍后再试';
 //HTTPrequest拦截
+let userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+console.log(userInfo);
 axios.interceptors.request.use(config => {
-  // if (store.getters.token) {
-  // 	config.headers['X-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-  // }
+  if (userInfo) {
+  	config.headers['token'] = userInfo.token; // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+  }
   if (config.method === 'post') {
     // config.data = qs.stringify(config.data);
   }

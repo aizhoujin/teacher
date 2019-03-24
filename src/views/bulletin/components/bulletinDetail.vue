@@ -12,7 +12,7 @@
     <div class="detail-text">
       {{detail.content}}
       <!--<img src="osspath" alt="">-->
-      <!--<img :src="'http://tea.ngrok.eanfang.net:89/sys/api/oss/url?token=' + token + '&ossPath=test/456.png'" alt="">-->
+      <!--<img :src="'http://biz.ngrok.eanfang.net:89/sys/api/oss/url?token=' + token + '&ossPath=test/456.png'" alt="">-->
 
       <!--<img src="http://api.xiaoxunbang.com/sys/api/oss/url?token=fcebec45-098d-443d-921e-fe7a8e26a07c&ossPath=test/222.png" alt="">-->
       <!--<img-->

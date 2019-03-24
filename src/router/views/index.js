@@ -36,4 +36,8 @@ export default [{
   path: '/written',
   name: '撰写通知',
   component: () => import('@/views/notice/components/written.vue')
+}, {
+  path: '/seatwork',
+  name: '布置作业',
+  component: () => import('@/views/seatwork/index.vue')
 }]

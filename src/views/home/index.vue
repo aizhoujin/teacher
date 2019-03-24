@@ -33,7 +33,7 @@
       <div class="home-bulletin-more">更多</div>
     </div>
     <div class="home-nav">
-      <li v-for="item in homeNav">
+      <li v-for="item in homeNav" @click="$router.push({path: item.path})">
         <div>
           <img :src="item.img">
         </div>
@@ -71,11 +71,11 @@
         homeNav: [
           {'title': '我的课表', img: require('../../assets/icon_首页/金刚区/我的课表.png')},
           {'title': '上课点名', img: require('../../assets/icon_首页/金刚区/上课点名.png')},
-          {'title': '发布作业', img: require('../../assets/icon_首页/金刚区/发布作业.png')},
+          {'title': '发布作业', path: '/seatwork', img: require('../../assets/icon_首页/金刚区/发布作业.png')},
           {'title': '意向学员', img: require('../../assets/icon_首页/金刚区/意向学员.png')},
         ],
         homeNavMini: [
-          {'title': '发布通知', 'text': '发布学生通知', path: '/notice','img': require('../../assets/icon_首页/小金刚区/发布通知.png')},
+          {'title': '发布通知', 'text': '发布学生通知', path: '/notice', 'img': require('../../assets/icon_首页/小金刚区/发布通知.png')},
           {'title': '录入成绩单', 'text': '学员学习成绩单', 'img': require('../../assets/icon_首页/小金刚区/录入成绩单.png')},
           {'title': '班级电话簿', 'text': '学员联系电话', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
           {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
