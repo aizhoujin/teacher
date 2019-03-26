@@ -12,7 +12,7 @@ axios.defaults.timeout = 10000;
 //跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-axios.defaults.headers.post['from'] = 'biz';
+axios.defaults.headers.post['from'] = 'TEAW';
 let cfg, msg;
 msg = '服务器君开小差了，请稍后再试';
 //HTTPrequest拦截

@@ -5,3 +5,9 @@ $--color-primary: #40D2B4;
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
+
+#linkmanList {
+  & .el-collapse-item__header {
+    height: 75px !important;
+  }
+}
