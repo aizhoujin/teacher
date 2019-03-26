@@ -37,6 +37,10 @@ export default [{
   name: '撰写通知',
   component: () => import('@/views/notice/components/written.vue')
 }, {
+  path: '/linkman',
+  name: '添加通知对象',
+  component: () => import('@/views/notice/components/linkman.vue')
+}, {
   path: '/seatwork',
   name: '布置作业',
   component: () => import('@/views/seatwork/index.vue')

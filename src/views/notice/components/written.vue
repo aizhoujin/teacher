@@ -3,7 +3,7 @@
     <div class="written">
       <input type="text" v-model="title" class="written-title" placeholder="标题">
     </div>
-    <div class="addNotice">
+    <div class="addNotice" @click="addPerson">
       <div class="icon el-icon-plus"></div><span>添加通知对象</span>
     </div>
     <div class="context">
@@ -18,7 +18,14 @@
     data() {
       return{
         title: '',
-        context: ''
+        context: '',
+      }
+    },
+    methods: {
+      addPerson() {
+        this.$router.push({
+          path: '/linkman',
+        })
       }
     }
   }
