@@ -4,7 +4,7 @@
       <input type="text" v-model="title" class="written-title" placeholder="标题">
     </div>
     <div class="addNotice" @click="addPerson">
-      <div class="icon el-icon-plus"></div><span>添加通知对象</span>
+      <div class="icon el-icon-plus"></div><span>{{classIds}}</span>
     </div>
     <div class="context">
       <textarea name="writtenContext" id="writtenContext" rows="35" placeholder="正文" v-model="context"></textarea>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name: "written",
     data() {
@@ -20,6 +21,12 @@
         title: '',
         context: '',
       }
+    },
+    computed: {
+      ...mapState({
+        classIds: this.$store.person.classIds,
+        personIds: this.$store.person.personIds
+      })
     },
     methods: {
       addPerson() {
