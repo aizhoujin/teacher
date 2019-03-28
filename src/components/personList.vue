@@ -4,11 +4,12 @@
       placeholder="请输入内容"
       prefix-icon="el-icon-search"
       style="background: #F7F8F8FF"
+      @change="searchEvent"
       v-model="searchPerson">
     </el-input>
     <el-row style="margin: 16px 0px;font-size: 16px">通知对象</el-row>
-    <el-collapse accordion>
-      <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList">
+    <el-collapse accordion v-model="activeNames">
+      <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList" :name="item.classNo">
         <template slot="title">
           <div class="listTitle">
             <div class="list-portrait">{{item.classNo}}</div>
@@ -59,7 +60,8 @@
     data() {
       return {
         searchPerson: '',
-        classPersonList: []
+        classPersonList: [],
+        activeNames: []
       }
     },
     computed: {
@@ -134,7 +136,7 @@
             for (let i = 0; i < listLi.length; i++) {
               if (listLi[i].check) {
                 classFlag = true;
-                personIds += (listLi[i].studentId + ',')
+                personIds += (listLi[i].studentId + ',');
               }
             }
             if (classFlag) {
@@ -142,9 +144,14 @@
             }
           }
         })
-        this.$store.commit('classIdsChange',classIds.substring(0,classIds.length-1));
-        this.$store.commit('personIdsChange',personIds.substring(0,personIds.length-1));
+        this.$store.commit('classIdsChange', classIds.substring(0, classIds.length - 1));
+        this.$store.commit('personIdsChange', personIds.substring(0, personIds.length - 1));
         this.$router.go(-1);
+      },
+
+      // 搜索事件
+      searchEvent() {
+
       }
     },
     mounted() {
@@ -222,6 +229,7 @@
     background: #ffffff;
     line-height: 64px;
     height: 64px;
+    z-index: 3000;
     .el-button {
       width: 161px;
       height: 44px;

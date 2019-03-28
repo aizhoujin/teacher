@@ -4,7 +4,9 @@
       <input type="text" v-model="title" class="written-title" placeholder="标题">
     </div>
     <div class="addNotice" @click="addPerson">
-      <div class="icon el-icon-plus"></div><span>{{classIds}}</span>
+      <div class="icon el-icon-plus"></div>
+      <span v-if="classIds.length > 0">{{classIds}}</span>
+      <span v-else>添加通知对象</span>
     </div>
     <div class="context">
       <textarea name="writtenContext" id="writtenContext" rows="35" placeholder="正文" v-model="context"></textarea>
@@ -14,18 +16,19 @@
 
 <script>
   import {mapState} from 'vuex'
+
   export default {
     name: "written",
     data() {
-      return{
+      return {
         title: '',
         context: '',
       }
     },
     computed: {
       ...mapState({
-        classIds: this.$store.person.classIds,
-        personIds: this.$store.person.personIds
+        classIds: state => state.person.classIds,
+        personIds: state => state.person.personIds
       })
     },
     methods: {
@@ -34,6 +37,9 @@
           path: '/linkman',
         })
       }
+    },
+    created() {
+      console.log(this.$store.state.person.classIds)
     }
   }
 </script>
@@ -45,18 +51,19 @@
     height: 100%;
     & .written-title {
       width: 100%;
-      border:0 none !important;
-      outline:none;
+      border: 0 none !important;
+      outline: none;
       font-size: 16px;
       background: none;
       padding: 4px 2px;
     }
   }
-  .addNotice{
+
+  .addNotice {
     width: 92%;
     display: flex;
     margin: 15px auto;
-    & .icon{
+    & .icon {
       width: 20px;
       height: 20px;
       background: #40d2b4;
@@ -66,20 +73,21 @@
       line-height: 20px;
       font-size: 12px;
     }
-    & span{
+    & span {
       color: #B5B6B6;
       font-size: 14px;
       line-height: 20px;
       text-indent: 5px;
     }
   }
-  .context{
+
+  .context {
     width: 92%;
     margin: 15px auto;
-    & #writtenContext{
+    & #writtenContext {
       width: 100%;
-      border:0 none !important;
-      outline:none;
+      border: 0 none !important;
+      outline: none;
       font-size: 14px;
     }
   }
