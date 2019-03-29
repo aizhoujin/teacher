@@ -2,7 +2,7 @@
   <div id="app" v-loading="loading" element-loading-background="rgba(255, 255, 255, .9)">
     <router-view/>
     <div class="goHome" v-if="goHomeShow">
-      <router-link :to="{path: '/index'}">
+      <router-link :to="{path: '/upload'}">
         返回主页
       </router-link>
     </div>

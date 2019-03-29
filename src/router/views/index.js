@@ -44,4 +44,8 @@ export default [{
   path: '/seatwork',
   name: '布置作业',
   component: () => import('@/views/seatwork/index.vue')
+}, {
+  path: '/upload',
+  name: '上传',
+  component: () => import('@/views/upload/index.vue')
 }]
