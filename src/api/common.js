@@ -13,6 +13,12 @@ export const getClassPerson = (data) => {
   })
 }
 
+export const getJdk = () => {
+  return request({
+    url: `${baseUrl}/api/wx/authJs`,
+    method: 'get',
+  })
+}
 
 //  获取班级人员列表
 // export const getClassPerson1 = (data) => {
