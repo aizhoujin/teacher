@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 人员列表 -->
     <person-list></person-list>
   </div>
 </template>

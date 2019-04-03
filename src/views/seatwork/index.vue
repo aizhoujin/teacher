@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 开始时间 -->
     <mt-datetime-picker
       ref="picker1"
       type="date"
@@ -9,6 +10,8 @@
       v-model="pickerValue1"
       @confirm="handleConfirm(1)">
     </mt-datetime-picker>
+
+    <!-- 结束时间 -->
     <mt-datetime-picker
       ref="picker2"
       type="date"
@@ -18,6 +21,8 @@
       v-model="pickerValue2"
       @confirm="handleConfirm(2)">
     </mt-datetime-picker>
+
+    <!-- 时间框 -->
     <div class="date">
       <div class="date-select">
         <div class="date-from" @click="openPicker(1)">{{dateFrom}}</div>
@@ -29,6 +34,8 @@
         <img src="../../assets/icon_学校公告/筛选.png">
       </div>
     </div>
+
+    <!-- 作业列表 -->
     <div class="bulletinList">
       <li v-for="(item,index) in bulletinList" :key="item.id" @click="bulletinDetail(item.id)">
         <div class="bulletinList-title">

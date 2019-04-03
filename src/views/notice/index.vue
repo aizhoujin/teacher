@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="notice" :style="{'max-height': clientHeight + 'px'}">
+      <!-- 通知列表 -->
       <li class="notice-list" v-for="(item,index) in noticeList" :key="item.id">
         <div class="notice-list-time">{{item.beginTime}}</div>
         <div class="notice-list-main">

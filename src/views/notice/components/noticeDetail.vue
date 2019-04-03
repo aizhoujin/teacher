@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 通知详情 -->
     <div class="detail-title">
       {{detail.title}}
     </div>
