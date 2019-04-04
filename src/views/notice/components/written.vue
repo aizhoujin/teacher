@@ -9,7 +9,9 @@
       <span v-if="classIds.length > 0">{{classIds}}</span>
       <span v-else>添加通知对象</span>
     </div>
-    <jdkFun></jdkFun>
+    <div class="jdkFun">
+      <jdkFun></jdkFun>
+    </div>
   </div>
 </template>
 
@@ -94,5 +96,11 @@
       outline: none;
       font-size: 14px;
     }
+  }
+  .jdkFun{
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
   }
 </style>
