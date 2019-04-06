@@ -8,7 +8,8 @@
          :style="{'top': footHeight + 'px'}">
       <li v-for="item in homeFooter" @click="changeRoute(item.path)">
         <div>
-          <img :src="item.img">
+          <img v-if="currentPath == item.path" :src="item.imgActive">
+          <img v-else :src="item.img">
         </div>
         <p>{{item.title}}</p>
       </li>
@@ -17,17 +18,39 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   export default {
     name: "index",
     data() {
       return {
         footHeight: 617,
         homeFooter: [
-          {'title': '首页', 'img': require('../assets/icon_首页/tabbar/首页/selected.png'), 'path': '/index/home'},
-          {'title': '微聊', 'img': require('../assets/icon_首页/tabbar/微聊/default copy48px.png'), 'path': '/index/chat'},
-          {'title': '我的', 'img': require('../assets/icon_首页/tabbar/我的/default48px.png'), 'path': '/index/user'}
+          {
+            'title': '首页',
+            'img': require('../assets/icon_首页/tabbar/首页/default.png'),
+            'imgActive': require('../assets/icon_首页/tabbar/首页/selected.png'),
+            'path': '/index/home'
+          },
+          {
+            'title': '微聊',
+            'img': require('../assets/icon_首页/tabbar/微聊/default copy48px.png'),
+            'imgActive': require('../assets/icon_首页/tabbar/微聊/selected48px.png'),
+            'path': '/index/chat'
+          },
+          {
+            'title': '我的',
+            'img': require('../assets/icon_首页/tabbar/我的/default48px.png'),
+            'imgActive': require('../assets/icon_首页/tabbar/我的/selected48px.png'),
+            'path': '/index/user'
+          }
         ],
       }
+    },
+    computed: {
+      ...mapState({
+        currentPath: state => state.common.currentPath
+      })
     },
     methods: {
       changeRoute(path) {

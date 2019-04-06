@@ -1,10 +1,14 @@
 const common = {
   state: {
     loading: false,
+    currentPath: '',
   },
   mutations: {
     loadChange(state, data) {
       state.loading = data
+    },
+    currentPathChange(state,data){
+      state.currentPath = data;
     }
   },
   actions: {

@@ -41,6 +41,8 @@
         } else {
           this.goHomeShow = true;
         }
+        console.log(to.path)
+        this.$store.commit('currentPathChange',to.path)
       },
     },
 

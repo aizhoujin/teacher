@@ -9,6 +9,27 @@
       <span v-if="classIds.length > 0">{{classIds}}</span>
       <span v-else>添加通知对象</span>
     </div>
+    <div class="recordList">
+      <li v-for="item in localIdsRecord">
+        {{item}}1
+      </li>
+    </div>
+    <div class="localIdsImgList">
+      <li v-for="item in localIdsImg">
+        <img :src="item" alt="">
+      </li>
+    </div>
+    <div class="context">
+      <el-input
+        type="textarea"
+        style="border: none;"
+        :rows="5"
+        :autosize="{ minRows: 10}"
+        placeholder="正文"
+        v-model="context">
+      </el-input>
+    </div>
+
     <div class="jdkFun">
       <jdkFun></jdkFun>
     </div>
@@ -34,7 +55,9 @@
     computed: {
       ...mapState({
         classIds: state => state.person.classIds,
-        personIds: state => state.person.personIds
+        personIds: state => state.person.personIds,
+        localIdsRecord: state => state.fun.localIdsRecord,
+        localIdsImg: state => state.fun.localIdsImg
       })
     },
     methods: {
@@ -62,6 +85,14 @@
       font-size: 16px;
       background: none;
       padding: 4px 2px;
+    }
+  }
+
+  .context {
+    border: none;
+    margin: 10px auto;
+    & input{
+      border: none !important;
     }
   }
 
@@ -97,10 +128,31 @@
       font-size: 14px;
     }
   }
-  .jdkFun{
+
+  .jdkFun {
     width: 100%;
     position: fixed;
     bottom: 0px;
     left: 0px;
+  }
+
+  .localIdsImgList{
+    width: 92%;
+    margin: 15px auto;
+    display: flex;
+    /*justify-content: space-around;*/
+    flex-wrap: wrap;
+    li{
+      width: 33.3%;
+      height: 100px;
+      margin-bottom: 5px;
+      overflow: hidden;
+      text-align: center;
+      img{
+        width: 100px;
+        /*max-height: 100px;*/
+        overflow-y: auto;
+      }
+    }
   }
 </style>
