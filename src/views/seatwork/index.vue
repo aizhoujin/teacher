@@ -53,6 +53,15 @@
         <div class="bulletinList-tag" v-show="item.status == 0"></div>
       </li>
     </div>
+
+    <!--布置作业-->
+    <div class="newNotive" :style="{'top': clientHeight + 'px'}">
+      <router-link :to="{path: '/written'}">
+        <el-button type="primary" size="small" class="newNotive-btn"
+                   :style="{'width': clientWidth+ 'px'}">布置作业
+        </el-button>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -77,7 +86,9 @@
           "empty": true
         },
         total: 0,
-        allLoaded: true
+        allLoaded: true,
+        clientHeight: 603,
+        clientWidth: 342
       }
     },
     methods: {
@@ -125,7 +136,7 @@
         }
         console.log(this.pickerValue2 > this.pickerValue1)
       },
-      bulletinDetail(id){
+      bulletinDetail(id) {
         console.log('id', id)
         this.$router.push({
           path: '/bulletinDetail/' + id,
@@ -142,7 +153,8 @@
       this.myGetBulletin();
     },
     created() {
-
+      this.clientHeight = document.documentElement.clientHeight - 64;
+      this.clientWidth = document.documentElement.clientWidth - 32;
     }
   }
 </script>
@@ -236,7 +248,7 @@
         font-size: 12px;
         line-height: 17px;
       }
-      & .bulletinList-tag{
+      & .bulletinList-tag {
         position: absolute;
         border-radius: 50%;
         width: 5px;
@@ -244,9 +256,23 @@
         background: #F52B2B;
         top: 5px;
         left: 5px;
-        box-shadow: 0px 1px 2px rgba(234,52,42,0.3);
+        box-shadow: 0px 1px 2px rgba(234, 52, 42, 0.3);
       }
     }
 
+  }
+
+  .newNotive {
+    height: 64px;
+    font-size: 16px;
+    /*padding: 10px 16px;*/
+    position: fixed;
+    left: 0;
+    width: 100%;
+    & .newNotive-btn {
+      height: 44px;
+      font-size: 16px;
+      margin: 10px 16px;
+    }
   }
 </style>

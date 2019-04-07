@@ -10,10 +10,13 @@
       <!--<div class="funicon-icon">-->
       <!--<img src="../assets/发布通知模块/键盘/default.png">-->
       <!--</div>-->
-      <div v-for="(item, index) in funIcon" :key="index" class="funicon-icon" @click="funIconEvent(item.id)">
-        <img v-if="selectFunIco.indexOf(item.id) == -1" :src="item.icon">
-        <img v-else :src="item.iconActive" alt="">
+      <div class="funicon-list">
+        <div v-for="(item, index) in funIcon" :key="index" class="funicon-icon" @click="funIconEvent(item.id)">
+          <img v-if="selectFunIco.indexOf(item.id) == -1" :src="item.icon">
+          <img v-else :src="item.iconActive" alt="">
+        </div>
       </div>
+
       <div style="height: 24px;width: 80px;text-align: center">
         <el-button size="mini" type="primary">发布</el-button>
       </div>
@@ -288,15 +291,18 @@
     width: 100%;
     display: flex;
     height: 48px;
-    justify-content: flex-end;
+    justify-content: space-between;
     line-height: 48px;
-    .funicon-icon {
-      width: 48px;
-      text-align: center;
-      img {
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
+    .funicon-list{
+      display: flex;
+      .funicon-icon {
+        width: 48px;
+        text-align: center;
+        img {
+          width: 24px;
+          height: 24px;
+          vertical-align: middle;
+        }
       }
     }
   }
