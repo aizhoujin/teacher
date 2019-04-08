@@ -19,3 +19,17 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     resize: none;
   }
 }
+
+.occupied{
+  width: 100%;
+  height: 64px;
+}
+
+.addStudent{
+  .el-input__inner{
+    border: none !important;
+    background: none !important;
+  }
+}
+
+

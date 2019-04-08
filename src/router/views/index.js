@@ -48,4 +48,12 @@ export default [{
   path: '/upload',
   name: '上传',
   component: () => import('@/views/upload/index.vue')
+}, {
+  path: '/student',
+  name: '意向学员',
+  component: () => import('@/views/student/index.vue')
+}, {
+  path: '/addStudent',
+  name: '新增意向学员',
+  component: () => import('@/views/student/components/addStudent.vue')
 }]
