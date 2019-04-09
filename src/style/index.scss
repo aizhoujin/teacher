@@ -30,12 +30,23 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     border: none !important;
     background: none !important;
   }
+  .el-textarea__inner{
+    border: none;
+    background: none;
+    resize: none;
+  }
   //.el-form-item__label{
   //  margin: 8px 0px;
   //}
   //.el-form-item__content{
   //  margin: 3px 0px;
   //}
+}
+
+.demo-ruleForm{
+  .el-form-item__label{
+    padding: 0px;
+  }
 }
 
 

@@ -56,4 +56,8 @@ export default [{
   path: '/addStudent',
   name: '新增意向学员',
   component: () => import('@/views/student/components/addStudent.vue')
+}, {
+  path: '/changePassword',
+  name: '修改密码',
+  component: () => import('@/views/user/components/changePassword.vue')
 }]
