@@ -30,7 +30,7 @@
     data() {
       return {
         userFunList: [
-          {path: '', icon: require('../../assets/我的模块/查看工资单.png'), text: '查看工资单'},
+          {path: '/payroll', icon: require('../../assets/我的模块/查看工资单.png'), text: '查看工资单'},
           {path: '/changePassword', icon: require('../../assets/我的模块/修改密码.png'), text: '修改密码'},
           {path: '', icon: require('../../assets/我的模块/修改头像.png'), text: '修改头像'},
           {path: '', icon: require('../../assets/我的模块/退出登录.png'), text: '退出登录'},

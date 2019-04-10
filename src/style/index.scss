@@ -5,6 +5,7 @@ $--color-primary: #40D2B4;
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
+@import "./timeTable";
 
 #linkmanList {
   & .el-collapse-item__header {
@@ -47,6 +48,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   .el-form-item__label{
     padding: 0px;
   }
+}
+.payroll-head{
+  background: $--color-primary;
 }
 
 

@@ -60,4 +60,12 @@ export default [{
   path: '/changePassword',
   name: '修改密码',
   component: () => import('@/views/user/components/changePassword.vue')
+}, {
+  path: '/payroll',
+  name: '工资单',
+  component: () => import('@/views/user/components/payroll.vue')
+}, {
+  path: '/timeTable',
+  name: '我的课表',
+  component: () => import('@/views/timeTable/index.vue')
 }]

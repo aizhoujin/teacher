@@ -4,7 +4,7 @@
 
     <!-- 返回主页按钮 -->
     <div class="goHome" v-if="goHomeShow">
-      <router-link :to="{path: '/upload'}">
+      <router-link :to="{path: '/index'}">
         返回主页
       </router-link>
     </div>
