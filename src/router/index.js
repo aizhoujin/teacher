@@ -33,29 +33,30 @@ function judgeAuth() {
 }
 
 router.beforeEach((to, from, next) => {
+  next();
   // console.log('from' , from);
   // console.log('to' , to)
-  if (window.navigator.onLine) {
-    let authAllowTag = judgeAuth();
-    if (to.fullPath != '/login') {
-      if (authAllowTag) {
-        if (to.fullPath == '/') {
-          next({path: '/index'})
-          return false
-        }
-        next();
-      } else {
-        next({
-          path: '/login'
-        })
-        return false
-      }
-    } else {
-      next()
-    }
-  } else {
-    window.location.reload()
-  }
+  // if (window.navigator.onLine) {
+  //   let authAllowTag = judgeAuth();
+  //   if (to.fullPath != '/login') {
+  //     if (authAllowTag) {
+  //       if (to.fullPath == '/') {
+  //         next({path: '/index'})
+  //         return false
+  //       }
+  //       next();
+  //     } else {
+  //       next({
+  //         path: '/login'
+  //       })
+  //       return false
+  //     }
+  //   } else {
+  //     next()
+  //   }
+  // } else {
+  //   window.location.reload()
+  // }
 })
 
 router.afterEach((to, from) => {

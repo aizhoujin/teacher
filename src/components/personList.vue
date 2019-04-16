@@ -28,11 +28,12 @@
                          @change="checkAll(item.id)"></el-checkbox>
           </div>
         </li>
-        <li v-for="(ite, ind) in item.applyList" :key="ind" class="class-detail">
+        <li v-if="item.applyList.length>0" v-for="(ite, ind) in item.applyList" :key="ind" class="class-detail">
           <div class="perosn-data">
             <div class="person-portrait"></div>
             <div class="person-name">
-              {{ite.studentEntity.infoEntity.nickName}}
+              {{ite.studentEntity ? ite.studentEntity.infoEntity.nickName: ''}}
+              <!--{{ite.studentEntity.infoEntity.nickName}}-->
             </div>
           </div>
           <div class="person-check">

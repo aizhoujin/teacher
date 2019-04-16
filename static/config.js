@@ -10,8 +10,8 @@ const env = process.env;
 
 //测试环境
 // baseUrl = `http://biz.ngrok.eanfang.net:89/wechat`;
-// baseUrl = `http://tea.ngrok.eanfang.net:89/wechat`;
-baseUrl = `http://api.xiaoxunbang.com/wechat`;
+baseUrl = `http://tea.ngrok.eanfang.net:89/wechat`;
+// baseUrl = `http://api.xiaoxunbang.com/wechat`;
 
 // base_baseUrl = `http://tea.ngrok.eanfang.net:89/biz`
 

@@ -1,9 +1,42 @@
-.timeTable {
-  .mark1 {
+#timeTable {
+  .mark {
+    position: relative;
+  }
+  .markChild{
+    position: absolute;
+    bottom: 5px;
+    width: 4px;
+    height: 4px;
     background: red;
+    border-radius: 80%;
+  }
+  .wh_top_changge{
+    li {
+      color: #464948 !important;
+    }
+    .wh_jiantou1{
+      border-color: #464948 !important;
+    }
+    .wh_jiantou2{
+      border-color: #464948 !important;
+    }
+  }
+  .wh_content_li{
+    color: #464948 !important;
   }
   .wh_content_all{
     background-color: #fff !important;
     color: #464948 !important;
+  }
+  .wh_content_item{
+    color: #464948 !important;
+  }
+  .wh_isToday{
+    background: rgba(64, 210, 180, 0.15);
+    color: #40D2B4;
+  }
+  .wh_chose_day{
+    background: #40D2B4 !important;
+    color: #ffffff !important;
   }
 }
