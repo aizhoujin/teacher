@@ -68,4 +68,8 @@ export default [{
   path: '/timeTable',
   name: '我的课表',
   component: () => import('@/views/timeTable/index.vue')
+}, {
+  path: '/checkroll',
+  name: '上课点名',
+  component: () => import('@/views/checkroll/index.vue')
 }]

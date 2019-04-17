@@ -70,7 +70,7 @@
         ],
         homeNav: [
           {'title': '我的课表', path: '/timeTable', img: require('../../assets/icon_首页/金刚区/我的课表.png')},
-          {'title': '上课点名', img: require('../../assets/icon_首页/金刚区/上课点名.png')},
+          {'title': '上课点名', path: '/checkroll', img: require('../../assets/icon_首页/金刚区/上课点名.png')},
           {'title': '发布作业', path: '/seatwork', img: require('../../assets/icon_首页/金刚区/发布作业.png')},
           {'title': '意向学员', path: '/student', img: require('../../assets/icon_首页/金刚区/意向学员.png')},
         ],
