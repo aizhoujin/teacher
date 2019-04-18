@@ -21,6 +21,8 @@
 </template>
 
 <script>
+  import {changePassword} from "../../../api/user";
+
   export default {
     name: "change-password",
     data() {
@@ -67,14 +69,17 @@
         },
         rules2: {
           pass: [
-            {validator: validatePass, trigger: 'blur'}
+            {validator: validatePass, trigger: 'blur'},
+            {min: 6, message: "密码长度最少为6位", trigger: "blur"}
           ],
           checkPass: [
-            {validator: validatePass2, trigger: 'blur'}
+            {min: 6, message: "密码长度最少为6位", trigger: "blur"},
+            {validator: validatePass2, trigger: 'blur'},
           ],
-          // oldpass: [
-          //   {validator: checkAge, trigger: 'blur'}
-          // ]
+          oldpass: [
+            {validator: validatePass, trigger: 'blur'},
+            {min: 6, message: "密码长度最少为6位", trigger: "blur"}
+          ]
         }
       };
     },
@@ -82,7 +87,16 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let obj = {
+              old: this.ruleForm2.oldpass,
+              pwd: this.ruleForm2.pass
+            }
+            changePassword(obj).then(res => {
+              if (res.data.code == 200 && res.data.msg == '请求成功') {
+                window.localStorage.clear();
+                window.location.reload();
+              }
+            })
           } else {
             console.log('error submit!!');
             return false;
@@ -102,13 +116,13 @@
     margin: 5px auto;
   }
 
-  .pass-sub{
+  .pass-sub {
     width: 100%;
     margin-top: 50px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    .el-button{
+    .el-button {
       font-size: 20px;
       height: 44px;
       width: 100%;

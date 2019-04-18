@@ -27,3 +27,11 @@ export const tokenLogin = (data) => {
     }
   })
 }
+
+export const changePassword = (data) => {
+  return request({
+    url: `${baseUrl}/api/account/v1/changePassword`,
+    method: "post",
+    params: data
+  })
+}

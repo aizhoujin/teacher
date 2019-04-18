@@ -55,6 +55,7 @@
     </div>
 
     <!--布置作业-->
+    <div class="occupied"></div>
     <div class="newNotive" :style="{'top': clientHeight + 'px'}">
       <router-link :to="{path: '/written'}">
         <el-button type="primary" size="small" class="newNotive-btn"

@@ -72,4 +72,8 @@ export default [{
   path: '/checkroll',
   name: '上课点名',
   component: () => import('@/views/checkroll/index.vue')
+}, {
+  path: '/temporary',
+  name: '临时排课',
+  component: () => import('@/views/checkroll/components/temporary.vue')
 }]
