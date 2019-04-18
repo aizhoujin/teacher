@@ -92,7 +92,6 @@
         for (let i = 0; i < marks.length; i++) {
           marks[i].innerHTML = marks[i].innerHTML + '<div class="markChild"></div>'
         }
-        document.querySelectorAll('.mark').innerHTML = document.querySelectorAll('.mark').innerHTML + '<span style="color: red">1</span>';
       }, 1000)
     }
   }
@@ -113,7 +112,7 @@
 
   .timeTable-list {
     background: #ffffff;
-    min-height: 300px;
+    min-height: 500px;
     margin: 0px;
     padding: 20px 0px;
     li {

@@ -24,7 +24,8 @@
         <i><b>学校公告 &nbsp;</b></i>
       </el-badge>
       <div class="home-bulletin-text">
-        <transition name="el-fade-in-linear" v-for="(item,index) in bulletin.list" :key="index">
+        <transition name="el-fade-in-linear" v-for="(item,index) in (bulletin&&bulletin.list ? bulletin.list: [])"
+                    :key="index">
           <li v-show="index == showIndex">
             {{item.title}}
           </li>
@@ -76,9 +77,14 @@
         ],
         homeNavMini: [
           {'title': '发布通知', 'text': '发布学生通知', path: '/notice', 'img': require('../../assets/icon_首页/小金刚区/发布通知.png')},
-          {'title': '录入成绩单', 'text': '学员学习成绩单', 'img': require('../../assets/icon_首页/小金刚区/录入成绩单.png')},
-          {'title': '班级电话簿', 'text': '学员联系电话', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
-          {'title': '上课点评', 'text': '查看学生点评', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
+          {
+            'title': '录入成绩单',
+            'text': '学员学习成绩单',
+            path: '/transcript',
+            'img': require('../../assets/icon_首页/小金刚区/录入成绩单.png')
+          },
+          {'title': '班级电话簿', 'text': '学员联系电话', path: '/phone', 'img': require('../../assets/icon_首页/小金刚区/班级电话.png')},
+          {'title': '上课点评', 'text': '查看学生点评', path: '/remark', 'img': require('../../assets/icon_首页/小金刚区/上课点评.png')}
         ],
         homeSchool: '',
         unread: [],
@@ -95,6 +101,7 @@
     methods: {
       getBulletin() {
         let token = this.userInfo.token;
+        console.log(this.userInfo.token);
         let obj = {
           "between": {},
           "equals": {},
@@ -120,8 +127,8 @@
           let data = res.data.data;
           this.unread = [];
           this.bulletin = data;
-          console.log()
-          if (data.list && data.list.length > 0) {
+
+          if (data && data.list && data.list.length > 0) {
             setInterval(() => {
               if (this.showIndex >= data.list.length - 1) {
                 this.showIndex = 0;
@@ -129,12 +136,13 @@
                 this.showIndex++;
               }
             }, 3000)
+            data.list.forEach((item, index) => {
+              if (item.status == 0) {
+                this.unread.push(item);
+              }
+            })
           }
-          data.list.forEach((item, index) => {
-            if (item.status == 0) {
-              this.unread.push(item);
-            }
-          })
+
         })
           .catch(err => {
             this.unread = [];

@@ -61,8 +61,8 @@
       // };
       return {
         loginForm: {
-          username: "13800138001",
-          password: "13800138001",
+          username: "",
+          password: "",
           code: "",
           redomStr: ""
         },
@@ -79,7 +79,7 @@
           ],
           password: [
             {required: true, message: "请输入密码", trigger: "blur"},
-            {min: 3, message: "密码长度最少为6位", trigger: "blur"}
+            {min: 6, message: "密码长度最少为6位", trigger: "blur"}
           ],
           code: [
             {required: false, message: "请输入验证码", trigger: "blur"},

@@ -1,24 +1,24 @@
 export default [{
   path: '/index',
-  name: 'index',
+  name: '老师端',
   component: () => import('@/views/index.vue'),
   redirect: '/index/home',
   children: [{
     path: "/index/home",
-    name: 'home',
+    name: '主页',
     component: () => import('@/views/home/index.vue')
   }, {
     path: "/index/chat",
-    name: 'chat',
+    name: '微聊',
     component: () => import('@/views/chat/index.vue')
   }, {
     path: "/index/user",
-    name: 'user',
+    name: '我的',
     component: () => import('@/views/user/index.vue')
   }]
 }, {
   path: '/bulletin',
-  name: 'bulletin',
+  name: '公告列表',
   component: () => import('@/views/bulletin/index.vue')
 }, {
   path: '/bulletinDetail/:id',
@@ -76,4 +76,16 @@ export default [{
   path: '/temporary',
   name: '临时排课',
   component: () => import('@/views/checkroll/components/temporary.vue')
+}, {
+  path: '/phone',
+  name: '班级电话簿',
+  component: () => import('@/views/phone/index.vue')
+}, {
+  path: '/remark',
+  name: '上课点评',
+  component: () => import('@/views/remark/index.vue')
+}, {
+  path: '/transcript',
+  name: '录入成绩单',
+  component: () => import('@/views/transcript/index.vue')
 }]

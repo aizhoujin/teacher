@@ -18,9 +18,8 @@ axios.defaults.headers.get['from'] = 'TEAW';
 let cfg, msg;
 msg = '服务器君开小差了，请稍后再试';
 //HTTPrequest拦截
-let userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-console.log(userInfo);
 axios.interceptors.request.use(config => {
+  let userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
   if (userInfo) {
   	config.headers['token'] = userInfo.token; // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
   }

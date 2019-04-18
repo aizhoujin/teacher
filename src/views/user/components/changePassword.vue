@@ -14,7 +14,7 @@
       <div style="font-size: 14px; color: #B5B6B6">密码为6-20位，必须包含英文字母、数字</div>
       <el-form-item class="pass-sub">
         <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
-        <el-button type='info' @click="resetForm('ruleForm2')">取消修改</el-button>
+        <el-button type='info' @click="resetForm('ruleForm2');$router.go(-1)">取消修改</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -22,6 +22,7 @@
 
 <script>
   import {changePassword} from "../../../api/user";
+  import {Toast} from 'mint-ui'
 
   export default {
     name: "change-password",
@@ -93,8 +94,11 @@
             }
             changePassword(obj).then(res => {
               if (res.data.code == 200 && res.data.msg == '请求成功') {
+                Toast('密码修改成功');
                 window.localStorage.clear();
-                window.location.reload();
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000)
               }
             })
           } else {

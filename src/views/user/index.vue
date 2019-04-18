@@ -13,7 +13,7 @@
     </div>
     <div class="#E5E5E5" style="width: 100%;height:5px;background: #F7F8F8"></div>
     <div class="userFunList">
-      <li v-for="item in userFunList" @click="$router.push(item.path)">
+      <li v-for="item in userFunList" @click="goPath(item.path)">
         <div class="userFunList-left">
           <img :src="item.icon" alt="">
           <div>{{item.text}}</div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  import { MessageBox } from 'mint-ui';
   export default {
     name: "index",
     data() {
@@ -33,8 +34,21 @@
           {path: '/payroll', icon: require('../../assets/我的模块/查看工资单.png'), text: '查看工资单'},
           {path: '/changePassword', icon: require('../../assets/我的模块/修改密码.png'), text: '修改密码'},
           {path: '', icon: require('../../assets/我的模块/修改头像.png'), text: '修改头像'},
-          {path: '', icon: require('../../assets/我的模块/退出登录.png'), text: '退出登录'},
+          {path: 'exit', icon: require('../../assets/我的模块/退出登录.png'), text: '退出登录'},
         ]
+      }
+    },
+    methods: {
+      goPath(path) {
+        if (path == '/payroll' || path == '/changePassword') {
+          this.$router.push({path: path})
+        } else if (path == 'exit') {
+          MessageBox.confirm('您确定要退出登录吗？', '退出登录');
+          MessageBox.confirm('确定执行此操作?').then(action => {
+            window.localStorage.clear();
+            window.location.reload();
+          });
+        }
       }
     }
   }
@@ -78,7 +92,7 @@
         margin: 16px;
         font-size: 14px;
         line-height: 20px;
-        img{
+        img {
           width: 20px;
           height: 20px;
           margin-right: 16px;

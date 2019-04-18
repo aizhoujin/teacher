@@ -58,7 +58,10 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-  // setTitle(to.name)
+  setTimeout(() => {
+    console.log(to.name)
+    window.document.title = to.name
+  }, 0)
 })
 
 export default router

@@ -61,7 +61,9 @@
       }
     },
     mounted() {
-      this.footHeight = document.documentElement.clientHeight - 50;
+      setTimeout(() => {
+        this.footHeight = document.documentElement.clientHeight - 50;
+      },500)
     },
     created() {
       this.footHeight = document.documentElement.clientHeight - 50;

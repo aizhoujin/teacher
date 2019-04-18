@@ -46,7 +46,7 @@
     </el-collapse>
     <div style="height: 64px;"></div>
     <div class="person-footer">
-      <el-button>取消</el-button>
+      <el-button @click="$router.go(-1)">取消</el-button>
       <el-button type="primary" @click="selectPerson">确定</el-button>
     </div>
   </div>

@@ -1,14 +1,14 @@
 #timeTable {
   .mark {
     position: relative;
-  }
-  .markChild{
-    position: absolute;
-    bottom: 5px;
-    width: 4px;
-    height: 4px;
-    background: red;
-    border-radius: 80%;
+    .markChild{
+      position: absolute;
+      bottom: 5px;
+      width: 4px;
+      height: 4px;
+      background: red;
+      border-radius: 80%;
+    }
   }
   .wh_top_changge{
     li {

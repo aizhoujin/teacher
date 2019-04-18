@@ -7,19 +7,19 @@
       @change="searchEvent"
       v-model="searchPerson">
     </el-input>
-    <el-row style="margin: 16px 0px;font-size: 16px">通知对象</el-row>
+    <el-row style="margin: 16px 0px;font-size: 16px" v-if="!showPhone">通知对象</el-row>
     <el-collapse accordion v-model="activeNames">
       <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList" :name="item.classNo">
         <template slot="title">
           <div class="listTitle">
             <div class="list-portrait">{{item.classNo}}</div>
             <div class="list-detail">
-              <div>{{item.classNo}} 班</div>
+              <div>{{item.classNo ? item.classNo + '班' : item.name}}</div>
               <div class="list-detail-text">全班共{{item.applyList.length}}名同学</div>
             </div>
           </div>
         </template>
-        <li class="class-detail">
+        <li v-if="!showPhone" class="class-detail">
           <div>
             全选
           </div>
@@ -36,17 +36,20 @@
               <!--{{ite.studentEntity.infoEntity.nickName}}-->
             </div>
           </div>
-          <div class="person-check">
+          <div class="person-check" v-if="!showPhone">
             <el-checkbox size="medium" v-model="ite.check" :key="ite.id" :checked="ite.check"
                          @change="checkAction(ite.id)"></el-checkbox>
+          </div>
+          <div class="person-check" v-if="showPhone">
+            <i class="el-icon-phone"></i>
           </div>
         </li>
 
       </el-collapse-item>
     </el-collapse>
     <div style="height: 64px;"></div>
-    <div class="person-footer">
-      <el-button>取消</el-button>
+    <div class="person-footer" v-if="!showPhone">
+      <el-button @click="$router.go(-1)">取消</el-button>
       <el-button type="primary" @click="selectPerson">确定</el-button>
     </div>
   </div>
@@ -64,6 +67,9 @@
         classPersonList: [],
         activeNames: []
       }
+    },
+    props: {
+      showPhone: Boolean
     },
     computed: {
       ...mapState({
@@ -159,7 +165,11 @@
       this.getPersonData();
     },
     created() {
-
+    },
+    watch: {
+      showPhone(value, oldVal) {
+        console.log(value)
+      }
     }
   }
 </script>
