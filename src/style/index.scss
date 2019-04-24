@@ -56,3 +56,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 
+.payroll-date {
+  .picker-items {
+    color: red;
+    & > div:nth-child(3) {
+      display: none;
+    }
+  }
+}
+

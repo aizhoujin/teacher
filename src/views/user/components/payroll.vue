@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="payroll-head">
-      <span>2019年03月</span>
+    <div class="payroll-head" @click="changeDate">
+      <span>{{pickerVisible | dateFil}}</span>
       <i class="el-icon-arrow-down"></i>
     </div>
     <div class="payroll-counnt">
       <div class="payroll-count-title">实发金额</div>
-      <div class="payroll-count-number">90,000.00</div>
-      <el-button type="primary" style="width: 212px; height: 40px;font-size: 20px;">确认无误</el-button>
+      <div class="payroll-count-number">{{sumMoney | currency}}</div>
+      <el-button type="primary" style="width: 212px; height: 40px;font-size: 20px;" :disabled="isConfirm == 1"
+                 @click="confirm">确认无误
+      </el-button>
       <div class="payroll-count-hint">如工资发放无误，请操作确认</div>
       <div class="chain">
         <div class="chain-li">
@@ -24,40 +26,122 @@
     </div>
     <div class="payroll-detail">
       <div class="payroll-detail-title">工资详情</div>
-      <div class="payroll-detail-list">
-        <div class="payroll-detail-list-li">
-          <div>绩效</div>
-          <div>1000.00</div>
-        </div>
-        <div class="payroll-detail-list-li">
-          <div>绩效</div>
-          <div>1000.00</div>
-        </div>
-        <div class="payroll-detail-list-li">
-          <div>绩效</div>
-          <div>1000.00</div>
-        </div>
-        <div class="payroll-detail-list-li">
-          <div>绩效</div>
-          <div>1000.00</div>
-        </div>
-        <div class="payroll-detail-list-li">
-          <div>绩效</div>
-          <div>1000.00</div>
-        </div>
-        <div class="payroll-detail-list-li">
-          <div>绩效</div>
-          <div>1000.00</div>
-        </div>
-
+      <div v-if="payollDetaill.length == 0" style="text-align: center;margin-top: 60px;color: #909399;font-size: 13px">
+        暂无数据
       </div>
+      <div class="payroll-detail-list">
+        <div class="payroll-detail-list-li"
+             v-for="(item,index) in payollDetaill" :key="index">
+          <div>{{item.payunitName}}</div>
+          <div><span>{{item.payUnitEntity&& item.payUnitEntity.type == 0 ? "+" : "-"}}</span> {{item.money | currency}}
+          </div>
+        </div>
+      </div>
+
     </div>
+    <mt-datetime-picker
+      v-model="pickerVisible"
+      class="payroll-date"
+      type="date"
+      ref="picker"
+      year-format="{value} 年"
+      month-format="{value} 月"
+      @confirm="handleConfirm"
+    >
+    </mt-datetime-picker>
   </div>
 </template>
 
 <script>
+  import {Toast} from 'mint-ui';
+  import {DatetimePicker} from 'mint-ui';
+  import {getPayroll, confirmPayroll} from '../../../api/user'
+
   export default {
     name: "payroll",
+    data() {
+      return {
+        pickerVisible: new Date(),
+        payollData: null,
+        sumMoney: "00.00",
+        payollDetaill: [],
+        isConfirm: 1
+      }
+    },
+    methods: {
+      // 获取工资
+      getPayroll() {
+        let obj = {
+          year: this.pickerVisible.getFullYear(),
+          month: this.pickerVisible.getMonth() + 1
+        }
+        this.$store.commit('loadChange', true);
+        getPayroll(obj).then(res => {
+          this.$store.commit('loadChange', false);
+          if (res.data.data) {
+            this.payollData = res.data.data;
+            this.sumMoney = this.payollData.sumMoney;
+            this.payollDetaill = this.payollData.detailList;
+            this.isConfirm = this.payollData.isConfirm;
+          }
+        })
+          .catch(err => {
+            this.$store.commit('loadChange', false);
+          })
+      },
+
+      // 切换日期
+      changeDate() {
+        this.$refs.picker.open();
+      },
+
+      handleConfirm() {
+        this.getPayroll();
+      },
+
+      // 确认无误
+      confirm() {
+        let recordId = this.payollData.id;
+        confirmPayroll(recordId).then(res => {
+          Toast({
+            message: res.data.msg,
+            position: 'center',
+            duration: 2000
+          });
+        })
+      }
+    },
+    mounted() {
+      this.getPayroll();
+    },
+    filters: {
+      currency: (value, currency, decimals) => {
+        value = parseFloat(value)
+        const digitsRE = /(\d{3})(?=\d)/g
+        if (!isFinite(value) || (!value && value !== 0)) return ''
+        currency = currency != null ? currency : ''
+        decimals = decimals != null ? decimals : 2
+        var stringified = Math.abs(value).toFixed(decimals)
+        var _int = decimals
+          ? stringified.slice(0, -1 - decimals)
+          : stringified
+        var i = _int.length % 3
+        var head = i > 0
+          ? (_int.slice(0, i) + (_int.length > 3 ? ',' : ''))
+          : ''
+        var _float = decimals
+          ? stringified.slice(-1 - decimals)
+          : ''
+        var sign = value < 0 ? '-' : ''
+        return sign + currency + head +
+          _int.slice(i).replace(digitsRE, '1,') +
+          _float;
+      },
+      dateFil: (value) => {
+        console.log(value)
+        return value.getFullYear() + '年' + (value.getMonth() + 1) + '月'
+      }
+    }
   }
 </script>
 
@@ -155,10 +239,10 @@
       height: 22px;
       line-height: 22px;
     }
-    .payroll-detail-list{
+    .payroll-detail-list {
       padding-bottom: 10px;
       min-height: 200px;
-      .payroll-detail-list-li{
+      .payroll-detail-list-li {
         width: 90%;
         margin: 0 auto;
         display: flex;
@@ -169,4 +253,5 @@
       }
     }
   }
+
 </style>

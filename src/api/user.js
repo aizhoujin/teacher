@@ -28,6 +28,7 @@ export const tokenLogin = (data) => {
   })
 }
 
+// 修改密码
 export const changePassword = (data) => {
   return request({
     url: `${baseUrl}/api/account/v1/changePassword`,
@@ -35,3 +36,26 @@ export const changePassword = (data) => {
     params: data
   })
 }
+
+// 获取工资
+export const getPayroll = (data) => {
+  return request({
+    url: `${baseUrl}/api/wages/v1/detailMy`,
+    method: "post",
+    params: data
+  })
+}
+
+
+// 获取工资
+export const confirmPayroll = (data) => {
+  return request({
+    url: `${baseUrl}/api/wages/v1/confirm`,
+    method: "post",
+    params: {
+      recordId: data
+    }
+  })
+}
+
+

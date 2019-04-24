@@ -1,4 +1,3 @@
-
 let baseUrl = '';
 let base_baseUrl = '';
 let iconfontVersion = ['567566_r22zi6t8noas8aor'];
@@ -10,10 +9,9 @@ const env = process.env;
 
 //测试环境
 // baseUrl = `http://biz.ngrok.eanfang.net:89/wechat`;
-// baseUrl = `http://tea.ngrok.eanfang.net:89/wechat`;
-baseUrl = `http://api.xiaoxunbang.com/wechat`;
+baseUrl = `http://tea.ngrok.eanfang.net:89/wechat`;
+// baseUrl = `http://api.xiaoxunbang.com/wechat`;
 
-// base_baseUrl = `http://tea.ngrok.eanfang.net:89/biz`
 
 export {
   baseUrl,
