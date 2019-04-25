@@ -2,9 +2,10 @@
   <div id="timeTable">
     <Calendar
       :markDateMore="selectArr"
+      v-on:changeMonth="changeMonth"
       v-on:choseDay="clickDay"></Calendar>
     <div class="timeTable-title">
-      <span class="timeTable-title-date">{{currentDate}}</span>
+      <span class="timeTable-title-date">{{currentDate | date}}</span>
       <span> {{ courselist.length > 0 ? '(共' + courselist.length + '节课)' : ''}}</span>
     </div>
     <div class="timeTable-list">
@@ -67,7 +68,8 @@
 </template>
 
 <script>
-  import Calendar from 'vue-calendar-component'
+  import Calendar from 'vue-calendar-component';
+  import {listByTeacher} from '../../api/timeTable'
 
   export default {
     name: "index",
@@ -76,23 +78,68 @@
     },
     data() {
       return {
-        selectArr: [{date: '2019/4/1', className: "mark"}, {date: '2019/4/30', className: "mark"}],
-        currentDate: new Date().toLocaleDateString().replace(/\//ig, '-'),
+        selectArr: [{date: '2019/4/1 13:00', className: "mark"}, {
+          date: '2019/4/1 15:00',
+          className: "mark"
+        }, {date: '2019/4/30', className: "mark"}],
+        currentDate: new Date().toLocaleDateString(),
         courselist: ['1']
       }
     },
     methods: {
+      // 切换天
       clickDay(data) {
         console.log(data);
+        this.currentDate = data;
+      },
+      // 切换月份
+      changeMonth(data) {
+        console.log(data);
+        this.getTimeTable();
+      },
+
+      // 获取数据
+      getTimeTable() {
+        let date = new Date(this.currentDate);
+        let begin = date.getFullYear() + "-" + (date.getMonth() + 1) + '-01';
+        let end = date.getFullYear() + "-" + (date.getMonth() + 2) + '-01';
+        let obj = {
+          begin: begin,
+          end: end
+        }
+        listByTeacher(obj).then(res => {
+          let data = res.data.data;
+          let arr = [];
+          if (res.data.code == 200 && data.length > 0) {
+            data.forEach((item, index) => {
+              this.selectArr.push({date: item.beginTime, className: 'mark'});
+            });
+            console.log(this.selectArr)
+            this.changeMark();
+          }
+        })
+      },
+
+      // 更新视图上的红点
+      changeMark() {
+        setTimeout(() => {
+          let marks = document.querySelectorAll('.mark');
+          for (let i = 0; i < marks.length; i++) {
+            marks[i].innerHTML = marks[i].innerHTML + '<div class="markChild"></div>'
+          }
+        }, 1000);
       }
     },
     mounted() {
-      setTimeout(() => {
-        let marks = document.querySelectorAll('.mark');
-        for (let i = 0; i < marks.length; i++) {
-          marks[i].innerHTML = marks[i].innerHTML + '<div class="markChild"></div>'
-        }
-      }, 1000)
+      this.getTimeTable();
+
+
+    },
+    filters: {
+      date: (value) => {
+        console.log(value);
+        return value.replace(/\//ig, '-');
+      }
     }
   }
 </script>
@@ -146,13 +193,13 @@
             display: flex;
             justify-content: space-around;
             font-size: 12px;
-            .line-back{
+            .line-back {
               width: 120px;
               height: 17px;
               background: rgba(194, 138, 240, 0.15);
               position: relative;
               border-radius: 9px;
-              .line-color{
+              .line-color {
                 text-align: center;
                 color: #fff;
                 position: absolute;
@@ -166,7 +213,7 @@
             }
           }
         }
-        .timeTable-list-li-top-btn{
+        .timeTable-list-li-top-btn {
           width: 56px;
           height: 12px;
           display: flex;
@@ -174,30 +221,30 @@
           justify-content: center;
           height: 71px;
           margin-left: 15px;
-          div{
+          div {
             text-align: center;
             font-size: 12px;
             border-radius: 12px;
           }
-          .timeTable-list-li-top-btn-over{
+          .timeTable-list-li-top-btn-over {
             border: 1px solid #DCDCDC;
             color: #DCDCDC;
           }
-          .timeTable-list-li-top-btn-noover{
+          .timeTable-list-li-top-btn-noover {
             border: 1px solid #40D2B4;
             color: #40D2B4;
           }
         }
       }
-      .timeTable-list-li-bottom{
+      .timeTable-list-li-bottom {
         padding: 15px;
         display: flex;
-        .timeTable-list-li-bottom-title{
+        .timeTable-list-li-bottom-title {
           font-size: 14px;
           color: #464948;
           line-height: 20px;
         }
-        .timeTable-list-li-bottom-context{
+        .timeTable-list-li-bottom-context {
           font-size: 14px;
           color: #F5A623;
           margin-right: 10px;

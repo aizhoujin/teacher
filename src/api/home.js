@@ -29,4 +29,15 @@ export const detailMy = (token,id) => {
     }
   })
 }
+//
+// // 我的公告详情，标记已读
+// export const detailMy = (token,id) => {
+//   return request({
+//     url: `${baseUrl}/api/affiche/v1/detailMy`,
+//     method: 'post',
+//     params: {
+//       id: id
+//     }
+//   })
+// }
 

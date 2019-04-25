@@ -74,7 +74,11 @@
         let obj = {
           year: this.pickerVisible.getFullYear(),
           month: this.pickerVisible.getMonth() + 1
-        }
+        };
+        this.payollData = null,
+          this.sumMoney = "00.00",
+          this.payollDetaill = [],
+          this.isConfirm = 1
         this.$store.commit('loadChange', true);
         getPayroll(obj).then(res => {
           this.$store.commit('loadChange', false);

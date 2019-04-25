@@ -41,7 +41,7 @@ export const changePassword = (data) => {
 export const getPayroll = (data) => {
   return request({
     url: `${baseUrl}/api/wages/v1/detailMy`,
-    method: "post",
+    method: "get",
     params: data
   })
 }
@@ -51,7 +51,7 @@ export const getPayroll = (data) => {
 export const confirmPayroll = (data) => {
   return request({
     url: `${baseUrl}/api/wages/v1/confirm`,
-    method: "post",
+    method: "get",
     params: {
       recordId: data
     }

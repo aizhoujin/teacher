@@ -2,8 +2,18 @@
   <div style="background: #FFFFFF">
     <div class="home-head">
       <div class="home-head-switcher">
-        <span>切换</span>
-        <i class="el-icon-sort" style="transform: rotate(90deg)"></i>
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            切换<i class="el-icon-sort" style="transform: rotate(90deg)"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>黄金糕</el-dropdown-item>
+            <el-dropdown-item>狮子头</el-dropdown-item>
+            <el-dropdown-item>螺蛳粉</el-dropdown-item>
+            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
       <div class="home-head-search">
         <el-input :placeholder="userInfo ? userInfo.company.name : '邯郸计算机培训学院'" v-model="homeSchool"></el-input>
