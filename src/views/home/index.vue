@@ -1,22 +1,16 @@
 <template>
   <div style="background: #FFFFFF">
     <div class="home-head">
-      <div class="home-head-switcher">
-        <el-dropdown trigger="click">
-          <span class="el-dropdown-link">
-            切换<i class="el-icon-sort" style="transform: rotate(90deg)"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
+      <div class="home-head-switcher">校区</div>
       <div class="home-head-search">
-        <el-input :placeholder="userInfo ? userInfo.company.name : '邯郸计算机培训学院'" v-model="homeSchool"></el-input>
+        <el-select v-model="campus" placeholder="请选择校区" style="width: 100%" @change="changeCampus">
+          <el-option
+            v-for="item in options"
+            :key="item.orgId"
+            :label="item.name"
+            :value="item.orgId">
+          </el-option>
+        </el-select>
       </div>
     </div>
     <div class="home-swiper">
@@ -66,7 +60,7 @@
 </template>
 
 <script>
-  import {myGetBulletin, detailMy} from "../../api/home";
+  import {myGetBulletin, detailMy, changeCompany} from "../../api/home";
   import axios from 'axios'
   import {mapState} from 'vuex'
 
@@ -99,7 +93,9 @@
         homeSchool: '',
         unread: [],
         bulletin: [],
-        showIndex: 0
+        showIndex: 0,
+        campus: this.$store.state.user.userInfo ? this.$store.state.user.userInfo.belongCompanyList[0].orgId : '',
+        options: this.$store.state.user.userInfo ? this.$store.state.user.userInfo.belongCompanyList : [],
       }
     },
     computed: {
@@ -164,6 +160,13 @@
         this.$router.push({
           path: '/bulletin'
         })
+      },
+
+      // 切换校区
+      changeCampus() {
+        changeCompany(this.campus).then(res => {
+
+        })
       }
     },
     mounted() {
@@ -189,12 +192,13 @@
     padding-top: 5px;
     line-height: 42px;
     & .home-head-switcher {
-      width: 15%;
+      width: 10%;
       text-align: left;
       white-space: nowrap;
+      color: #868C8A;
     }
     & .home-head-search {
-      width: 75%;
+      width: 85%;
     }
   }
 

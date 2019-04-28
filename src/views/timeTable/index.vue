@@ -9,7 +9,7 @@
       <span> {{ courselist.length > 0 ? '(共' + courselist.length + '节课)' : ''}}</span>
     </div>
     <div class="timeTable-list">
-      <li>
+      <li v-for="(item,index) in cueentData">
         <div class="timeTable-list-li-top">
           <div class="timeTable-list-li-top-img">
             <img src="../../assets/2.jpg" alt="">
@@ -36,33 +36,7 @@
           <div class="timeTable-list-li-bottom-context">7#121</div>
         </div>
       </li>
-      <li>
-        <div class="timeTable-list-li-top">
-          <div class="timeTable-list-li-top-img">
-            <img src="../../assets/2.jpg" alt="">
-          </div>
-          <div class="timeTable-list-li-top-context">
-            <div class="timeTable-list-li-top-context-name">42班</div>
-            <div class="timeTable-list-li-top-context-text">
-              <div>学生</div>
-              <div class="line-back">
-                <div class="line-color">28人</div>
-              </div>
-              <div style="color: #B5B6B6; font-size: 11px">48人</div>
-            </div>
-          </div>
-          <div class="timeTable-list-li-top-btn">
-            <div v-if="false" class="timeTable-list-li-top-btn-over">已上课</div>
-            <div v-if="true" class="timeTable-list-li-top-btn-noover">未上课</div>
-          </div>
-        </div>
-        <div class="timeTable-list-li-bottom">
-          <div class="timeTable-list-li-bottom-title">上课时间：</div>
-          <div class="timeTable-list-li-bottom-context">09:00-18:55</div>
-          <div class="timeTable-list-li-bottom-title">教室：</div>
-          <div class="timeTable-list-li-bottom-context">7#121</div>
-        </div>
-      </li>
+      <div class="time-empty">今天没有课程哦!</div>
     </div>
   </div>
 </template>
@@ -78,10 +52,9 @@
     },
     data() {
       return {
-        selectArr: [{date: '2019/4/1 13:00', className: "mark"}, {
-          date: '2019/4/1 15:00',
-          className: "mark"
-        }, {date: '2019/4/30', className: "mark"}],
+        selectArr: [],
+        cueentData: [],
+        monthData: [],
         currentDate: new Date().toLocaleDateString(),
         courselist: ['1']
       }
@@ -89,12 +62,12 @@
     methods: {
       // 切换天
       clickDay(data) {
-        console.log(data);
         this.currentDate = data;
+        this.getCueentData();
+
       },
       // 切换月份
       changeMonth(data) {
-        console.log(data);
         this.getTimeTable();
       },
 
@@ -109,12 +82,14 @@
         }
         listByTeacher(obj).then(res => {
           let data = res.data.data;
+          this.monthData = res.data.data;
+          this.getCueentData();
           let arr = [];
           if (res.data.code == 200 && data.length > 0) {
             data.forEach((item, index) => {
               this.selectArr.push({date: item.beginTime, className: 'mark'});
             });
-            console.log(this.selectArr)
+            console.log(this.selectArr);
             this.changeMark();
           }
         })
@@ -128,16 +103,28 @@
             marks[i].innerHTML = marks[i].innerHTML + '<div class="markChild"></div>'
           }
         }, 1000);
+      },
+
+      // 获取当前选择日期的详细数据
+      getCueentData() {
+        this.cueentData = [];
+        let startData = new Date(this.currentDate).getTime();
+        let endData = new Date(this.currentDate).getTime() + 24 * 60 * 60 * 1000;
+        console.log(new Date(startData).toLocaleDateString(), new Date(endData).toLocaleDateString())
+        this.monthData.forEach((item, index) => {
+          let itemDate = new Date(item.beginTime).getTime();
+          if (startData < itemDate && itemDate < endData) {
+            this.cueentData.push(item);
+          }
+        })
+        console.log(this.cueentData);
       }
     },
     mounted() {
       this.getTimeTable();
-
-
     },
     filters: {
       date: (value) => {
-        console.log(value);
         return value.replace(/\//ig, '-');
       }
     }
@@ -252,5 +239,13 @@
         }
       }
     }
+  }
+
+  .time-empty {
+    width: 100%;
+    text-align: center;
+    margin: 30px auto;
+    font-size: 14px;
+    color: #717373;
   }
 </style>

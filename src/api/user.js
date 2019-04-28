@@ -47,7 +47,7 @@ export const getPayroll = (data) => {
 }
 
 
-// 获取工资
+// 确认工资
 export const confirmPayroll = (data) => {
   return request({
     url: `${baseUrl}/api/wages/v1/confirm`,
