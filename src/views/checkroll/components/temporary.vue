@@ -8,13 +8,13 @@
       v-model="searchPerson">
     </el-input>
     <el-row style="margin: 16px 0px;font-size: 16px">通知对象</el-row>
-    <el-collapse accordion v-model="activeNames">
+    <el-collapse accordion v-model="activeNames" @change="collapseChange">
       <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList" :name="item.classNo">
         <template slot="title">
           <div class="listTitle">
-            <div class="list-portrait">{{item.classNo}}</div>
+            <div class="list-portrait">{{item.name}}</div>
             <div class="list-detail">
-              <div>{{item.classNo}} 班</div>
+              <div>{{item.name}} 班</div>
               <div class="list-detail-text">全班共{{item.applyList.length}}名同学</div>
             </div>
           </div>
@@ -86,7 +86,6 @@
             item.check = false;
             if (item.applyList.length > 0) {
               for (let i = 0; i < item.applyList.length; i++) {
-                console.log(item.applyList[i]);
                 item.applyList[i].check = false;
                 item.applyList[i].id = item.applyList[i].id.toString();
               }
@@ -153,6 +152,11 @@
       // 搜索事件
       searchEvent() {
 
+      },
+
+      // 展开收起
+      collapseChange() {
+        console.log(this.activeNames)
       }
     },
     mounted() {

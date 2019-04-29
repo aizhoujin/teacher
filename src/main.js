@@ -13,6 +13,7 @@ import './style/index.scss'
 import * as urls from '../static/config';
 import {iconfontUrl, iconfontVersion} from "../static/config";
 import {loadStyle} from "./util/util";
+import moment from 'moment'
 
 Vue.config.productionTip = false;
 
@@ -23,6 +24,8 @@ Vue.use(VueAxios, axios);
 Object.keys(urls).forEach(key => {
   Vue.prototype[key] = urls[key];
 })
+
+Vue.prototype.$moment = moment;
 
 iconfontVersion.forEach(ele => {
   loadStyle(iconfontUrl.replace('$key', ele));
