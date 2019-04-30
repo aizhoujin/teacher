@@ -7,43 +7,25 @@
       @change="searchEvent"
       v-model="searchPerson">
     </el-input>
-    <el-row style="margin: 16px 0px;font-size: 16px">通知对象</el-row>
-    <el-collapse accordion v-model="activeNames" @change="collapseChange">
-      <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList" :name="item.classNo">
-        <template slot="title">
-          <div class="listTitle">
-            <div class="list-portrait">{{item.name}}</div>
-            <div class="list-detail">
-              <div>{{item.name}} 班</div>
-              <div class="list-detail-text">全班共{{item.applyList.length}}名同学</div>
-            </div>
+    <el-row style="margin: 16px 0px;font-size: 12px;color: #F75E70;">选择班级，进行快速排课</el-row>
+    <div class="class-list">
+      <li class="class-li" v-for="(item,index) in classPersonList" :key="index" @click="selectClass(item)">
+        <div class="class-li-left">
+          <div class="class-li-left-img">
+            <img src="../../../assets/2.jpg" alt="">
           </div>
-        </template>
-        <li class="class-detail">
+          <div class="class-li-left-conent">
+            <div class="class-name">{{item.name}}</div>
+            <div class="class-course">课程：{{item.courseEntity.name}}</div>
+          </div>
+        </div>
+        <div class="class-right">
           <div>
-            全选
+            {{item.applyList.length}}
           </div>
-          <div class="person-check">
-            <el-checkbox v-model="item.check" :checked="item.check" :key="item.id" class="person-check"
-                         @change="checkAll(item.id)"></el-checkbox>
-          </div>
-        </li>
-        <li v-if="item.applyList.length>0" v-for="(ite, ind) in item.applyList" :key="ind" class="class-detail">
-          <div class="perosn-data">
-            <div class="person-portrait"></div>
-            <div class="person-name">
-              {{ite.studentEntity ? ite.studentEntity.infoEntity.nickName: ''}}
-              <!--{{ite.studentEntity.infoEntity.nickName}}-->
-            </div>
-          </div>
-          <div class="person-check">
-            <el-checkbox size="medium" v-model="ite.check" :key="ite.id" :checked="ite.check"
-                         @change="checkAction(ite.id)"></el-checkbox>
-          </div>
-        </li>
-
-      </el-collapse-item>
-    </el-collapse>
+        </div>
+      </li>
+    </div>
     <div style="height: 64px;"></div>
     <div class="person-footer">
       <el-button @click="$router.go(-1)">取消</el-button>
@@ -157,6 +139,17 @@
       // 展开收起
       collapseChange() {
         console.log(this.activeNames)
+      },
+
+      // 选择班级
+      selectClass(data) {
+        let selectData = data;
+        selectData.assistantNames = data.classSubjectEntity.assistantNames;
+        selectData.teachName = data.classSubjectEntity.teachEntity.infoEntity.realName;
+        this.$router.push({
+          path: '/scheduling',
+          query: selectData
+        })
       }
     },
     mounted() {
@@ -239,6 +232,59 @@
       width: 161px;
       height: 44px;
       font-size: 16px;
+    }
+  }
+
+  .class-list {
+    width: 100%;
+    .class-li {
+      display: flex;
+      height: 74px;
+      justify-content: space-between;
+      border-bottom: 0.5px solid #F2F2F2;
+      .class-li-left {
+        display: flex;
+        .class-li-left-img {
+          width: 59px;
+          img {
+            width: 44px;
+            height: 44px;
+            margin: 15px;
+            margin-left: 0px;
+            border-radius: 50%;
+          }
+        }
+      }
+      .class-li-left-conent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .class-name {
+          color: #464948;
+          font-size: 16px;
+          line-height: 22px;
+          font-weight: bold;
+        }
+        .class-course {
+          font-size: 14px;
+          line-height: 20px;
+          color: #717373;
+        }
+      }
+      .class-right {
+        line-height: 74px;
+        div {
+          width: 36px;
+          height: 36px;
+          margin: 19px 0px 19px 19px;
+          text-align: center;
+          line-height: 36px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, rgba(116, 235, 219, 1) 0%, rgba(64, 210, 180, 1) 100%);
+          color: #fff;
+          font-size: 16px;
+        }
+      }
     }
   }
 </style>

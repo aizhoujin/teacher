@@ -10,3 +10,12 @@ export const listByTeacher = (data) => {
   })
 }
 
+// 获取班级科目列表
+export const subjectSelectorByClass = (data) => {
+  return request({
+    url: `${baseUrl}/api/class/v1/subjectSelectorByClass`,
+    method: 'get',
+    params: data
+  })
+}
+

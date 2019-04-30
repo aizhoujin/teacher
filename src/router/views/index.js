@@ -88,4 +88,8 @@ export default [{
   path: '/transcript',
   name: '录入成绩单',
   component: () => import('@/views/transcript/index.vue')
+}, {
+  path: '/scheduling',
+  name: '临时排课信息编辑',
+  component: () => import('@/views/checkroll/components/scheduling.vue')
 }]
