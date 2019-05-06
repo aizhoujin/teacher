@@ -11,8 +11,8 @@
         </div>
       </div>
       <div class="class-data-bottom">
-        <div>老师: {{classData.assistantNames}}</div>
-        <div>助教: {{classData.teachName}}</div>
+        <div>老师: {{classData.teacherName}}</div>
+        <div>助教: {{classData.assistantNames}}</div>
       </div>
     </div>
     <div class="scheduling-data">
@@ -30,7 +30,7 @@
         </el-form-item>
         <el-form-item label="开始时间" prop="date1">
           <!--<el-input type="text" v-model="ruleForm.begin" @focus="openPicker(1)"></el-input>-->
-          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.begin |
+          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.beginTime |
             formatDate}}
           </div>
           <mt-datetime-picker
@@ -40,8 +40,14 @@
             @confirm="handleConfirm('begin')">
           </mt-datetime-picker>
         </el-form-item>
+        <el-form-item label="课程时长">
+          <el-select v-model="ruleForm.duration" placeholder="请选择课程时长">
+            <el-option v-for="(item,index) in durationTimeList" :key="index" :label="item.label"
+                       :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="结束时间" prop="class" disabled>
-          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.begin |
+          <div style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.endTime |
             formatDate}}
           </div>
         </el-form-item>
@@ -65,14 +71,22 @@
         subjectList: [],
         ruleForm: {
           class: '',
-          begin: null
+          beginTime: null,
+          endTime: null,
+          duration: ''
         },
         rules: {
           class: [
             {required: true, message: '请选择科目', trigger: 'change'}
           ],
         },
-        picker1: null
+        picker1: null,
+
+        durationTimeList: [
+          {label: '45分钟', value: 45},
+          {label: '60分钟', value: 60},
+          {label: '75分钟', value: 75},
+        ]
       }
     },
     methods: {
@@ -92,13 +106,21 @@
       // 选择日期确定之后
       handleConfirm(type) {
         console.log(this.picker1)
-        this.ruleForm.begin = this.$moment(this.picker1).format('YYYY-MM-DD HH:mm');
+        this.ruleForm.beginTime = this.$moment(this.picker1).format('YYYY-MM-DD HH:mm');
+        console.log(this.ruleForm.duration)
+        if (this.ruleForm.duration) {
+          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(40, 'm')
+          console.log(this.ruleForm.endTime)
+        }
       },
 
       // 打开日期选择器
       openPicker(type) {
         if (type == 1) {
-          this.picker1 = this.$moment(new Date()).format('YYYY-MM-DD HH:mm');
+          if (this.ruleForm.beginTime == null) {
+            this.picker1 = this.$moment(new Date()).format('YYYY-MM-DD HH:mm');
+          }
+          // this.picker1 = this.$moment(new Date()).format('YYYY-MM-DD HH:mm');
           this.$refs.begin.open();
         }
       }
