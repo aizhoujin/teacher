@@ -30,7 +30,7 @@
         </el-form-item>
         <el-form-item label="开始时间" prop="date1">
           <!--<el-input type="text" v-model="ruleForm.begin" @focus="openPicker(1)"></el-input>-->
-          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.beginTime |
+          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;" placeholder="请选择开始时间">{{ |
             formatDate}}
           </div>
           <mt-datetime-picker
@@ -40,8 +40,8 @@
             @confirm="handleConfirm('begin')">
           </mt-datetime-picker>
         </el-form-item>
-        <el-form-item label="课程时长">
-          <el-select v-model="ruleForm.duration" placeholder="请选择课程时长">
+        <el-form-item label="课程时长" prop="duration">
+          <el-select v-model="ruleForm.duration" placeholder="请选择课程时长" @change="duraChange">
             <el-option v-for="(item,index) in durationTimeList" :key="index" :label="item.label"
                        :value="item.value"></el-option>
           </el-select>
@@ -51,11 +51,21 @@
             formatDate}}
           </div>
         </el-form-item>
-        <el-form-item label="上课教室" prop="class">
+        <el-form-item label="上课教室" prop="room">
+          <el-input v-model="ruleForm.classroomId"></el-input>
         </el-form-item>
-
+        <el-form-item label="检测上课冲突">
+          <el-radio-group v-model="ruleForm.clash">
+            <el-radio :label="1">检测</el-radio>
+            <el-radio :label="0">跳过</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
-
+    </div>
+    <div style="height: 64px;"></div>
+    <div class="person-footer">
+      <el-button type="primary" @click="submitForm('ruleForm')">检查冲突</el-button>
+      <el-button type="primary">去上课点名</el-button>
     </div>
   </div>
 </template>
@@ -73,12 +83,26 @@
           class: '',
           beginTime: null,
           endTime: null,
-          duration: ''
+          duration: '',
+          clash: 0,
+          classroomId: ''
         },
         rules: {
           class: [
             {required: true, message: '请选择科目', trigger: 'change'}
           ],
+          date1: [
+            {required: true, message: '请选择开始时间', trigger: 'change'}
+          ],
+          date2: [
+            {required: true, message: '请选结束时间', trigger: 'change'}
+          ],
+          duration: [{
+            required: true, message: '请选择课程时长', trigger: 'change'
+          }],
+          room: [{
+            required: true, message: '请选择教室', trigger: 'change'
+          }]
         },
         picker1: null,
 
@@ -105,12 +129,9 @@
 
       // 选择日期确定之后
       handleConfirm(type) {
-        console.log(this.picker1)
         this.ruleForm.beginTime = this.$moment(this.picker1).format('YYYY-MM-DD HH:mm');
-        console.log(this.ruleForm.duration)
         if (this.ruleForm.duration) {
-          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(40, 'm')
-          console.log(this.ruleForm.endTime)
+          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(this.ruleForm.duration, 'm')
         }
       },
 
@@ -123,7 +144,26 @@
           // this.picker1 = this.$moment(new Date()).format('YYYY-MM-DD HH:mm');
           this.$refs.begin.open();
         }
-      }
+      },
+
+      // 课程时长选择
+      duraChange() {
+        if (this.ruleForm.beginTime) {
+          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(this.ruleForm.duration, 'm')
+        }
+      },
+
+      // 检查冲突
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     },
     mounted() {
       console.log(this.classData);
@@ -214,6 +254,24 @@
       height: 44px;
       font-size: 16px;
       margin: 10px 16px;
+    }
+  }
+
+  .person-footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background: #ffffff;
+    line-height: 64px;
+    height: 64px;
+    z-index: 3000;
+    .el-button {
+      width: 161px;
+      height: 44px;
+      font-size: 16px;
     }
   }
 </style>
