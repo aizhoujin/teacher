@@ -145,7 +145,7 @@
       selectClass(data) {
         let selectData = data;
         selectData.assistantNames = data.classSubjectEntity.assistantNames;
-        selectData.teacherName = data.classSubjectEntity.teachEntity.infoEntity.realName;
+        selectData.teacherName = data.mainTeacherEntity.infoEntity.realName;
         this.$router.push({
           path: '/scheduling',
           query: selectData

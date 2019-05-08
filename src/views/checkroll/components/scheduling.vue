@@ -25,12 +25,12 @@
         <el-form-item label="科目" prop="class">
           <el-select v-model="ruleForm.class" placeholder="请选择期望年级">
             <el-option v-for="(item,index) in subjectList" :key="index" :label="item.courseEntity.name"
-                       :value="item.subjectId"></el-option>
+                       :value="item.courseId"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="开始时间" prop="date1">
-          <!--<el-input type="text" v-model="ruleForm.begin" @focus="openPicker(1)"></el-input>-->
-          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;" placeholder="请选择开始时间">{{ |
+        <el-form-item label="开始时间" prop="beginTime">
+          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;" placeholder="请选择开始时间">{{
+            ruleForm.beginTime |
             formatDate}}
           </div>
           <mt-datetime-picker
@@ -51,8 +51,11 @@
             formatDate}}
           </div>
         </el-form-item>
-        <el-form-item label="上课教室" prop="room">
-          <el-input v-model="ruleForm.classroomId"></el-input>
+        <el-form-item label="上课教室" prop="classroomId">
+          <el-select v-model="ruleForm.classroomId" placeholder="请选择教室">
+            <el-option v-for="(item,index) in classRoomlist" :key="index" :label="item.name"
+                       :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="检测上课冲突">
           <el-radio-group v-model="ruleForm.clash">
@@ -71,7 +74,7 @@
 </template>
 
 <script>
-  import {subjectSelectorByClass} from '../../../api/timeTable'
+  import {subjectSelectorByClass, getClassRoomList, createByPlan} from '../../../api/timeTable'
 
   export default {
     name: "scheduling",
@@ -79,19 +82,20 @@
       return {
         classData: this.$route.query,
         subjectList: [],
+        classRoomlist: [],
         ruleForm: {
           class: '',
           beginTime: null,
           endTime: null,
           duration: '',
-          clash: 0,
+          clash: 1,
           classroomId: ''
         },
         rules: {
           class: [
             {required: true, message: '请选择科目', trigger: 'change'}
           ],
-          date1: [
+          beginTime: [
             {required: true, message: '请选择开始时间', trigger: 'change'}
           ],
           date2: [
@@ -100,12 +104,11 @@
           duration: [{
             required: true, message: '请选择课程时长', trigger: 'change'
           }],
-          room: [{
+          classroomId: [{
             required: true, message: '请选择教室', trigger: 'change'
           }]
         },
         picker1: null,
-
         durationTimeList: [
           {label: '45分钟', value: 45},
           {label: '60分钟', value: 60},
@@ -127,11 +130,29 @@
         })
       },
 
+      // 获取教室列表
+      getClassRoom() {
+        this.classRoomlist = [];
+        let obj = {
+          "equals": {
+            "companyId": this.$store.state.user.userInfo.company.companyId
+          },
+          "like": {
+            "name": "教室"
+          }
+        }
+        getClassRoomList(obj).then(res => {
+          if (res.data.code == 200 && res.data.data.list) {
+            this.classRoomlist = res.data.data.list;
+          }
+        })
+      },
+
       // 选择日期确定之后
       handleConfirm(type) {
         this.ruleForm.beginTime = this.$moment(this.picker1).format('YYYY-MM-DD HH:mm');
         if (this.ruleForm.duration) {
-          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(this.ruleForm.duration, 'm')
+          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(this.ruleForm.duration, 'm').format('YYYY-MM-DD HH:mm')
         }
       },
 
@@ -141,7 +162,6 @@
           if (this.ruleForm.beginTime == null) {
             this.picker1 = this.$moment(new Date()).format('YYYY-MM-DD HH:mm');
           }
-          // this.picker1 = this.$moment(new Date()).format('YYYY-MM-DD HH:mm');
           this.$refs.begin.open();
         }
       },
@@ -149,7 +169,7 @@
       // 课程时长选择
       duraChange() {
         if (this.ruleForm.beginTime) {
-          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(this.ruleForm.duration, 'm')
+          this.ruleForm.endTime = this.$moment(this.ruleForm.beginTime).add(this.ruleForm.duration, 'm').format('YYYY-MM-DD HH:mm')
         }
       },
 
@@ -157,9 +177,27 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            console.log(this.ruleForm);
+            let obj = {
+              classId: this.classData.id,
+              planType: 0,
+              planBegin: this.$moment(this.ruleForm.beginTime).format('YYYY-MM-DD'),
+              planEnd: this.$moment(this.ruleForm.endTime).format('YYYY-MM-DD'),
+              planCount: 1,
+              teacherId: this.$store.state.user.userInfo.userId,
+              assistantIds: '',
+              classroomId: this.ruleForm.classroomId,
+              courseId: this.ruleForm.class,
+              beginTime: this.ruleForm.beginTime,
+              endTime: this.ruleForm.endTime,
+              duration: this.ruleForm.duration,
+              clash: this.ruleForm.clash
+            }
+            console.log(obj);
+            createByPlan(obj).then(res => {
+
+            })
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -168,6 +206,7 @@
     mounted() {
       console.log(this.classData);
       this.getClassSubject();
+      this.getClassRoom();
     },
     filters: {
       formatDate: (value) => {
