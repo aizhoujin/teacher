@@ -29,7 +29,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="开始时间" prop="beginTime">
-          <div @click="openPicker(1)" style="width: 100%;height: 100%;min-height: 32px;" placeholder="请选择开始时间">{{
+          <div @click="openPicker(1)" class="dateValue" style="width: 100%;height: 100%;min-height: 32px;"
+               placeholder="请选择开始时间">{{
             ruleForm.beginTime |
             formatDate}}
           </div>
@@ -47,7 +48,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="结束时间" prop="class" disabled>
-          <div style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.endTime |
+          <div class="dateValue" style="width: 100%;height: 100%;min-height: 32px;">{{ruleForm.endTime |
             formatDate}}
           </div>
         </el-form-item>
@@ -58,7 +59,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="检测上课冲突">
-          <el-radio-group v-model="ruleForm.clash">
+          <el-radio-group v-model="ruleForm.clash" style="padding-left: 15px;">
             <el-radio :label="1">检测</el-radio>
             <el-radio :label="0">跳过</el-radio>
           </el-radio-group>
@@ -74,6 +75,7 @@
 </template>
 
 <script>
+  import {MessageBox} from 'mint-ui';
   import {subjectSelectorByClass, getClassRoomList, createByPlan} from '../../../api/timeTable'
 
   export default {
@@ -195,7 +197,23 @@
             }
             console.log(obj);
             createByPlan(obj).then(res => {
-
+              if (res.data.code == 200) {
+                if (res.data.data.newClash && res.data.data.newClash.length > 0) {
+                  // MessageBox({
+                  //   title: '提示',
+                  //   message: '检测到存在冲突课程，是否解决冲突?',
+                  //   showCancelButton: true
+                  // });
+                  MessageBox.confirm('检测到存在冲突课程，是否解决冲突?').then(action => {
+                    let clash = {
+                      newClash: res.data.data.newClash,
+                      oldClash: res.data.data.oldClash
+                    }
+                    this.$store.commit('clashDateChange', clash);
+                    this.$router.push({path: '/clash'})
+                  });
+                }
+              }
             })
           } else {
             return false;
@@ -312,5 +330,10 @@
       height: 44px;
       font-size: 16px;
     }
+  }
+
+  .dateValue {
+    padding-left: 13px;
+    font-size: 13px;
   }
 </style>

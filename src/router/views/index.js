@@ -92,4 +92,8 @@ export default [{
   path: '/scheduling',
   name: '临时排课信息编辑',
   component: () => import('@/views/checkroll/components/scheduling.vue')
+}, {
+  path: '/clash',
+  name: '检查冲突',
+  component: () => import('@/views/checkroll/components/clash.vue')
 }]
