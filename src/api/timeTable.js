@@ -5,7 +5,7 @@ import {baseUrl} from "../../static/config";
 export const listByTeacher = (data) => {
   return request({
     url: `${baseUrl}/api/coursePlan/v1/listByTeacher`,
-    method: 'get',
+    method: 'post',
     params: data
   })
 }

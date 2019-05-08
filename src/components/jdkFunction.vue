@@ -1,7 +1,8 @@
 <template>
   <div style="width: 100%">
-    <!--<input ref="videoEvent" type="file" style="/* visibility: hidden */" capture="camera" accept="video/*" name=""-->
-    <!--value="" @change="aaaa" id="videoEvent">-->
+    <input hidden ref="videoEvent" type="file" style="/* visibility: hidden */" capture="camera" accept="video/*"
+           name="videoEvent"
+           value="" @change="videoChange($event)" id="videoEvent">
     <!--<div @click="chooseImage">点我选择图片</div>-->
     <!--<div @click="startRecord">点我开始录音</div>-->
     <!--<div @click="stopRecord">点我停止录音</div>-->
@@ -50,7 +51,9 @@
 </template>
 
 <script>
-  import {getJdk} from '../api/common'
+  import {getJdk, getSts} from '../api/common';
+  import axios from 'axios';
+  import {base_baseUrl, baseUrl} from "../../static/config";
 
   export default {
     name: "jdk-function",
@@ -74,14 +77,51 @@
         angle: 0,
         timeM: 0,
         serverId: null,
+        stsData: {}
       }
     },
-    watch: {
-      // videoValue(oldValue, value) {
-      //   alert(value)
-      // }
-    },
+    watch: {},
     methods: {
+      videoChange(e) {
+        console.log(e);
+        var file = e.target.files[0];
+        var formdata = new FormData();
+        formdata.append('fileStream', file);
+        console.log('正在上传视频');
+        this.doUpload(formdata);
+      },
+      doUpload(formdata) {
+        let _this = this;
+        // axios.get('/teacher/doUpload', formdata).then(res => {
+        //   if (res.data.success) {
+        //     console.log('上传成功');
+        //   } else {
+        //     console.log('上传失败');
+        //   }
+        // }).catch(err => {
+        //   console.log(err);
+        // })
+        const uploadFileClient = new OSS({
+          region: this.stsData.region,
+          accessKeyId: this.stsData.sts.accessKeyId,
+          accessKeySecret: this.stsData.sts.accessKeySecret,
+          stsToken: this.stsData.sts.securityToken,
+          bucket: this.stsData.bucket,
+        })
+        uploadFileClient.multipartUpload(storeAs, file).then(function (result) {
+          console.log(result);
+        }).catch(function (err) {
+          console.log(err);
+        });
+        // uploadFileClient
+        //   .put('eee', formdata)
+        //   .then((res) => {
+        //     console.log(res)
+        //   })
+        //   .catch((err) => {
+        //     console.log(err)
+        //   })
+      },
       recordOver(type) {
         if (this.localIdRecord == null) {
           return;
@@ -214,6 +254,7 @@
         });
       },
 
+      // 录音一套
       recordEvent() {
         let _this = this;
         if (this.recordState == 1) {
@@ -262,10 +303,22 @@
         } else if (type == 2) {
           this.chooseImage();
         } else if (type == 3) {
+          this.$refs.videoEvent.click();
         }
+      },
+
+      // getSts
+      getStsEvent() {
+        getSts().then(res => {
+          console.log(res);
+          if (res.code == 200) {
+            this.stsData = res.data.data;
+          }
+        })
       }
     },
     mounted() {
+      this.getStsEvent();
       this.videoValue = 0;
       setInterval(function () {
         this.videoValue++;
@@ -293,7 +346,7 @@
     height: 48px;
     justify-content: space-between;
     line-height: 48px;
-    .funicon-list{
+    .funicon-list {
       display: flex;
       .funicon-icon {
         width: 48px;

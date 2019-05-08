@@ -12,6 +12,8 @@ const env = process.env;
 // baseUrl = `http://tea.ngrok.eanfang.net:89/wechat`;
 baseUrl = `http://api.xiaoxunbang.com/wechat`;
 
+base_baseUrl = `http://api.xiaoxunbang.com`;
+
 
 export {
   baseUrl,

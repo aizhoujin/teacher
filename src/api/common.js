@@ -1,5 +1,5 @@
 import request from '@/router/axios'
-import {baseUrl,base_baseUrl} from "../../static/config";
+import {baseUrl, base_baseUrl} from "../../static/config";
 
 //  获取班级人员电话列表
 export const getClassPerson = (data) => {
@@ -13,9 +13,18 @@ export const getClassPerson = (data) => {
   })
 }
 
+// 获取微信jdk
 export const getJdk = () => {
   return request({
     url: `${baseUrl}/api/wx/authJs`,
+    method: 'get',
+  })
+}
+
+// getSts
+export const getSts = () => {
+  return request({
+    url: `${base_baseUrl}/sys/api/oss/sts`,
     method: 'get',
   })
 }
