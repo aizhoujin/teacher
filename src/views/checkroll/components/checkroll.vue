@@ -1,0 +1,132 @@
+<template>
+  <div>
+    <div class="call-data">
+      <div class="call-data-top">
+        <div class="call-data-img">
+          <img src="../../../assets/2.jpg" alt="">
+        </div>
+        <div class="call-data-conent">
+          <div class="call-name">{{}}</div>
+        </div>
+      </div>
+      <div class="call-data-bottom">
+        <div><i class="el-icon-time" style="margin-right: 10px"></i>老师: {{}}</div>
+        <div><i class="el-icon-location" style="margin-right: 10px"></i>助教: {{}}</div>
+      </div>
+    </div>
+    <div class="call-search">
+      <el-input type="text" suffix-icon="el-icon-search"></el-input>
+    </div>
+    <div class="call-title">
+      <div class="call-title-text">
+        <div>班级学员</div>
+      </div>
+    </div>
+    <div class="call-list">
+
+    </div>
+  </div>
+</template>
+
+<script>
+  import {mapState} from 'vuex'
+
+  export default {
+    name: "checkroll",
+    data() {
+      return {}
+    },
+    computed: {
+      ...mapState({
+        callData: state => state.checkroll.callData
+      })
+    },
+    methods: {},
+    mounted() {
+
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+  .call-data {
+    width: 100%;
+    height: 114px;
+    border-radius: 8px;
+    background: linear-gradient(315deg, rgba(255, 231, 141, 1) 0%, rgba(255, 138, 72, 1) 100%);
+    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.05);
+    .call-data-top {
+      width: 100%;
+      display: flex;
+      padding: 18px 0px 14px 0px;
+      .call-data-img {
+        img {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          margin: 0px 23px 0px 27px;
+        }
+      }
+      .call-data-conent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .call-name {
+          font-size: 20px;
+          font-weight: bold;
+          color: #FFFFFF;
+          line-height: 25px;
+        }
+        .call-time {
+          color: #FFFFFF;
+          line-height: 17px;
+          font-size: 12px;
+        }
+      }
+    }
+    .call-data-bottom {
+      display: flex;
+      color: #464948;
+      font-size: 14px;
+      div {
+        width: 45%;
+        text-indent: 20px;
+        color: #FFFFFF;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .call-search {
+    margin: 15px 16px;
+    height: 32px;
+  }
+
+  .call-title {
+    position: relative;
+    margin: 15px 24px;
+    height: 32px;
+    .call-title-text {
+      position: absolute;
+      transform: skewX(-30deg);
+      width: 105px;
+      height: 32px;
+      line-height: 32px;
+      background: linear-gradient(315deg, rgba(79, 136, 246, 1) 0%, rgba(29, 103, 212, 1) 100%);
+      border-radius: 4px;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
+      div {
+        position: absolute;
+        transform: skewX(30deg);
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+</style>

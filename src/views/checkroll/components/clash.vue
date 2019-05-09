@@ -59,8 +59,8 @@
 
     <div style="height: 64px;"></div>
     <div class="person-footer">
-      <el-button type="primary">取消排课</el-button>
-      <el-button type="primary">去上课点名</el-button>
+      <el-button type="primary" @click="$router.push({path: '/temporary'})">取消排课</el-button>
+      <el-button type="primary" @click="cover">去上课点名</el-button>
     </div>
   </div>
 </template>
@@ -68,6 +68,7 @@
 <script>
   import {Toast} from 'mint-ui';
   import {mapState} from 'vuex';
+  import {createByReplace} from '../../../api/timeTable';
 
   export default {
     name: "clash",
@@ -82,6 +83,35 @@
       ...mapState({
         clashData: state => state.checkroll.clashData,
       })
+    },
+    methods: {
+      // 去上课点名
+      cover() {
+        let data = this.newClash[0];
+        let obj = {
+          assistantIds: data.assistantIds,
+          topCompanyId: data.teacherEntity.companyId,
+          classroomId: data.classroomId,
+          duration: data.duration,
+          classId: data.classId,
+          companyId: data.companyId,
+          createStaffId: '',
+          teacherId: data.teacherId,
+          createTime: data.createTime,
+          clashType: data.clashType,
+          beginTime: data.beginTime,
+          endTime: data.endTime,
+          id: data.id,
+          status: data.status
+        }
+        createByReplace(obj).then(res => {
+          if (res.data.code == 200) {
+            Toast('排课成功');
+            this.$store.commit('callDataChange', obj);
+            this.$router.push({path: '/checkName'})
+          }
+        })
+      }
     },
     mounted() {
       console.log(this.clashData)
@@ -128,6 +158,7 @@
       }
     }
   }
+
   .person-footer {
     display: flex;
     width: 100%;

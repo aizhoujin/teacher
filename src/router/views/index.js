@@ -96,4 +96,8 @@ export default [{
   path: '/clash',
   name: '检查冲突',
   component: () => import('@/views/checkroll/components/clash.vue')
+}, {
+  path: '/checkName',
+  name: '上课点名',
+  component: () => import('@/views/checkroll/components/checkroll.vue')
 }]

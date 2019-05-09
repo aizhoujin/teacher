@@ -69,7 +69,7 @@
     <div style="height: 64px;"></div>
     <div class="person-footer">
       <el-button type="primary" @click="submitForm('ruleForm')">检查冲突</el-button>
-      <el-button type="primary">去上课点名</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')">去上课点名</el-button>
     </div>
   </div>
 </template>
@@ -212,6 +212,10 @@
                     this.$store.commit('clashDateChange', clash);
                     this.$router.push({path: '/clash'})
                   });
+                } else {
+                  console.log('排课成功');
+                  this.$store.commit('callDataChange', obj);
+                  this.$router.push({path: '/checkName'});
                 }
               }
             })
@@ -324,7 +328,7 @@
     background: #ffffff;
     line-height: 64px;
     height: 64px;
-    z-index: 3000;
+    z-index: 2000;
     .el-button {
       width: 161px;
       height: 44px;

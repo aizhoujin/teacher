@@ -36,3 +36,12 @@ export const createByPlan = (data) => {
     data: data
   })
 }
+
+// 冲突覆盖接口
+export const createByReplace = (data) => {
+  return request({
+    url: `${baseUrl}/api/coursePlan/v1/createByReplace`,
+    method: 'post',
+    data: data
+  })
+}
