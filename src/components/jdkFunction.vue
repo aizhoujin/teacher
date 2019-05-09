@@ -85,10 +85,79 @@
       videoChange(e) {
         console.log(e);
         var file = e.target.files[0];
-        var formdata = new FormData();
-        formdata.append('fileStream', file);
-        console.log('正在上传视频');
-        this.doUpload(formdata);
+        let storeAs = 'upload-file';
+        getSts().then(res => {
+          console.log(res.data.data);
+          if (res.data.code == 200) {
+            console.log(res.data.data);
+            this.stsData = res.data.data;
+            let result = res.data.data;
+            let client = new OSS.Wrapper({
+              accessKeyId: result.sts.accessKeyId,
+              accessKeySecret: result.sts.accessKeySecret,
+              stsToken: result.sts.securityToken,
+              region: result.region,
+              bucket: result.bucket
+            })
+            console.log(client)
+            //storeAs表示上传的object name , file表示上传的文件
+            let url = client.signatureUrl('upload-file');
+            console.log(url)
+            // client.list({
+            //   'max-keys': 10
+            // }).then(function (result) {
+            //   console.log(result);
+            // }).catch(function (err) {
+            //   console.log(err);
+            // });
+            // client.multipartUpload(storeAs, file).then(function (result) {
+            //   console.log(result);
+            //
+            //   let resdow = client.signatureUrl('test/download_file',{
+            //     expires: 3600,
+            //     response: {
+            //       'content-disposition': 'attachment; filename="' + 'download_file' + '"'
+            //     }
+            //   })
+            //
+            //   console.log(resdow);
+            //   window.location = resdow;
+            // }).catch(function (err) {
+            //   console.log(err);
+            // });
+
+          }
+        })
+
+        // OSS.urllib.request(base_baseUrl + '/sys/api/oss/sts', {method: 'GET'}, (err, response) => {
+        //   console.log(err, response);
+        //   if (err) {
+        //     return alert(err);
+        //   }
+        //   try {
+        //     // result = JSON.parse(response);
+        //   } catch (e) {
+        //     console.log(e)
+        //     return alert('parse sts response info error: ' + e.message);
+        //   }
+        //   console.log(result)
+        // })
+
+        // const uploadFileClient = new OSS({
+        //   region: this.stsData.region,
+        //   accessKeyId: this.stsData.sts.accessKeyId,
+        //   accessKeySecret: this.stsData.sts.accessKeySecret,
+        //   stsToken: this.stsData.sts.securityToken,
+        //   bucket: this.stsData.bucket,
+        // });
+        // console.log(uploadFileClient);
+        // uploadFileClient.multipartUpload('aaa.mp4', formdata).then(function (result) {
+        //   console.log(result);
+        // }).catch(function (err) {
+        //   console.log(err);
+        // });
+
+        // this.doUpload(formdata);
       },
       doUpload(formdata) {
         let _this = this;
@@ -101,18 +170,8 @@
         // }).catch(err => {
         //   console.log(err);
         // })
-        const uploadFileClient = new OSS({
-          region: this.stsData.region,
-          accessKeyId: this.stsData.sts.accessKeyId,
-          accessKeySecret: this.stsData.sts.accessKeySecret,
-          stsToken: this.stsData.sts.securityToken,
-          bucket: this.stsData.bucket,
-        })
-        uploadFileClient.multipartUpload(storeAs, file).then(function (result) {
-          console.log(result);
-        }).catch(function (err) {
-          console.log(err);
-        });
+        console.log(this.stsData)
+
         // uploadFileClient
         //   .put('eee', formdata)
         //   .then((res) => {
@@ -311,14 +370,15 @@
       getStsEvent() {
         getSts().then(res => {
           console.log(res);
-          if (res.code == 200) {
+          if (res.data.code == 200) {
+            console.log(res.data.data);
             this.stsData = res.data.data;
           }
         })
       }
     },
     mounted() {
-      this.getStsEvent();
+      // this.getStsEvent();
       this.videoValue = 0;
       setInterval(function () {
         this.videoValue++;

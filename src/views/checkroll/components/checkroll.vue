@@ -23,27 +23,69 @@
       </div>
     </div>
     <div class="call-list">
-
+      <el-table
+        :data="personList"
+        style="width: 100%">
+        <el-table-column
+          width="120"
+          label="班级学员">
+          <template slot-scope="scope">
+            <div class="person">
+              <div class="portrait">
+                <img src="../../../assets/2.jpg" alt="">
+              </div>
+              <div class="name">{{scope.row.studentEntity.infoEntity.realName}}</div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+        <el-table-column
+          label="缺勤原因">
+        </el-table-column>
+        <el-table-column
+          label="余课">
+        </el-table-column>
+        <el-table-column
+          label="缺勤">
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState} from 'vuex';
+  import {getcheckPersonList} from '../../../api/timeTable';
 
   export default {
     name: "checkroll",
     data() {
-      return {}
+      return {
+        personList: []
+      }
     },
     computed: {
       ...mapState({
         callData: state => state.checkroll.callData
       })
     },
-    methods: {},
+    methods: {
+      getPersonList() {
+        let obj = {
+          classId: "1125233822854545408"
+        };
+        getcheckPersonList(obj).then(res => {
+          if (res.data.code == 200 && res.data.data.list) {
+            this.personList = res.data.data.list;
+          }
+        })
+      }
+    },
     mounted() {
-
+      this.getPersonList();
     }
   }
 </script>
@@ -127,6 +169,29 @@
         width: 100%;
         text-align: center;
       }
+    }
+  }
+
+  .person {
+    display: flex;
+    .portrait {
+      width: 32px;
+      height: 32px;
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+    }
+    .name{
+      line-height: 32px;
+      margin-left: 5px;
+      color: #464948;
+      font-size: 14px;
+      width: 60px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 </style>
