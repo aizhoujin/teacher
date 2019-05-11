@@ -7,6 +7,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
 @import "./timeTable";
 
+.colorActive {
+  color: $--color-primary;
+}
+
 #linkmanList {
   & .el-collapse-item__header {
     height: 75px !important;

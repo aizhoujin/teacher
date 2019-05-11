@@ -23,7 +23,6 @@
         noGoHome: [
           '/login',
           '/index/home',
-          '/index/chat',
           '/index/user'
         ]
       }

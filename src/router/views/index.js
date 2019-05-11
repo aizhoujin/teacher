@@ -8,13 +8,31 @@ export default [{
     name: '主页',
     component: () => import('@/views/home/index.vue')
   }, {
-    path: "/index/chat",
-    name: '微聊',
-    component: () => import('@/views/chat/index.vue')
-  }, {
     path: "/index/user",
     name: '我的',
     component: () => import('@/views/user/index.vue')
+  }]
+}, {
+  path: "/index/chat",
+  name: '微聊',
+  component: () => import('@/views/chat/index.vue'),
+  redirect: '/index/chat/chatList',
+  children: [{
+    path: "/index/chat/chatList",
+    name: "会话列表",
+    component: () => import('@/views/chat/components/chatList')
+  }, {
+    path: "/index/chat/addressList",
+    name: "联系人",
+    component: () => import('@/views/chat/components/addressList')
+  }, {
+    path: "/index/chat/groupChat",
+    name: "群聊",
+    component: () => import('@/views/chat/components/groupChat')
+  }, {
+    path: "/index/chat/chatDetail",
+    name: "聊天",
+    component: () => import('@/views/chat/components/chatDetail')
   }]
 }, {
   path: '/bulletin',
