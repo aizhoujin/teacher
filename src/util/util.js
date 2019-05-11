@@ -81,7 +81,7 @@ export const encryption = (params) => {
  * 设置浏览器头部标题
  */
 export const setTitle = function(title) {
-  title = '摩羯';
+  title = '微信老师端';
   window.document.title = title;
 };
 /**

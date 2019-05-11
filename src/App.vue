@@ -88,7 +88,7 @@
     border-top-right-radius: 16px;
     position: fixed;
     left: 0px;
-    top: 60%;
+    top: 55%;
   }
 
   a {

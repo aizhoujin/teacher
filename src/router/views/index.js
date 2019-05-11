@@ -29,11 +29,11 @@ export default [{
     path: "/index/chat/groupChat",
     name: "群聊",
     component: () => import('@/views/chat/components/groupChat')
-  }, {
-    path: "/index/chat/chatDetail",
-    name: "聊天",
-    component: () => import('@/views/chat/components/chatDetail')
   }]
+}, {
+  path: "/index/chat/chatDetail",
+  name: "聊天",
+  component: () => import('@/views/chat/components/chatDetail')
 }, {
   path: '/bulletin',
   name: '公告列表',

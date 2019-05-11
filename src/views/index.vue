@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;overflow-y: auto;background: #fff;"
          :style="{'height': footHeight + 'px'}">
-      <router-view></router-view>
+      <router-view class="routerView"></router-view>
     </div>
     <div class="home-footer"
          :style="{'top': footHeight + 'px'}">
@@ -63,7 +63,7 @@
     mounted() {
       setTimeout(() => {
         this.footHeight = document.documentElement.clientHeight - 50;
-      },500)
+      }, 500)
     },
     created() {
       this.footHeight = document.documentElement.clientHeight - 50;
