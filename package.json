@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "echarts": "^4.2.1",
     "element-ui": "^2.5.4",
     "mint-ui": "^2.2.13",
     "moment": "^2.24.0",

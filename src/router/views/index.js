@@ -127,6 +127,18 @@ export default [{
   name: '录入成绩单',
   component: () => import('@/views/transcript/index.vue')
 }, {
+  path: '/selectClass',
+  name: '选择班级 ',
+  component: () => import('@/views/transcript/components/selectClass.vue')
+}, {
+  path: '/chart',
+  name: '波动 ',
+  component: () => import('@/views/transcript/components/chart.vue')
+}, {
+  path: '/report',
+  name: '成绩录入 ',
+  component: () => import('@/views/transcript/components/report.vue')
+}, {
   path: '/scheduling',
   name: '临时排课信息编辑',
   component: () => import('@/views/checkroll/components/scheduling.vue')
