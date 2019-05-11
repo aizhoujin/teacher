@@ -115,6 +115,14 @@ export default [{
   name: '上课点评',
   component: () => import('@/views/remark/index.vue')
 }, {
+  path: '/classRemark',
+  name: '班级点评',
+  component: () => import('@/views/remark/components/classRemark.vue')
+}, {
+  path: '/grade',
+  name: '上课点评',
+  component: () => import('@/views/remark/components/grade.vue')
+}, {
   path: '/transcript',
   name: '录入成绩单',
   component: () => import('@/views/transcript/index.vue')
