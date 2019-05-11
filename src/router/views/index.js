@@ -75,6 +75,18 @@ export default [{
   name: '新增意向学员',
   component: () => import('@/views/student/components/addStudent.vue')
 }, {
+  path: '/myStudent',
+  name: '我的学员',
+  component: () => import('@/views/student/components/myStudent.vue')
+}, {
+  path: '/visit',
+  name: '回访记录',
+  component: () => import('@/views/student/components/visit.vue')
+}, {
+  path: '/addVisit',
+  name: '新增回访记录',
+  component: () => import('@/views/student/components/addVisit.vue')
+}, {
   path: '/changePassword',
   name: '修改密码',
   component: () => import('@/views/user/components/changePassword.vue')

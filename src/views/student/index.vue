@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="student-list">
-      <div class="student-li student-li-todayAdd">
+      <div class="student-li student-li-todayAdd" @click="$router.push({path: '/myStudent'})">
         <div class="student-li-left">
           <img src="../../assets/发布通知模块/图片_未被选择.png" alt="">
           <div>今日新增</div>
@@ -29,7 +29,7 @@
           {{studentCount}}人 <i class="el-icon-arrow-right"></i>
         </div>
       </div>
-      <div class="student-li student-li-todayNot">
+      <div class="student-li student-li-todayNot" @click="$router.push({path: '/myStudent'})">
         <div class="student-li-left">
           <img src="../../assets/发布通知模块/图片_未被选择.png" alt="">
           <div>今日待沟通</div>
@@ -38,7 +38,7 @@
           {{studentCount}}人 <i class="el-icon-arrow-right"></i>
         </div>
       </div>
-      <div class="student-li student-li-todayOver">
+      <div class="student-li student-li-todayOver" @click="$router.push({path: '/myStudent'})">
         <div class="student-li-left">
           <img src="../../assets/发布通知模块/图片_未被选择.png" alt="">
           <div>今日已沟通</div>

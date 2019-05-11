@@ -1,6 +1,6 @@
 let baseUrl = '';
 let base_baseUrl = '';
-let iconfontVersion = ['567566_r22zi6t8noas8aor', '1186103_05hz7l8dnv8t'];
+let iconfontVersion = ['1186103_3ip8jjqzprs'];
 let iconfontUrl = `//at.alicdn.com/t/font_$key.css`;
 let codeUrl = `${baseUrl}/code`;
 const env = process.env;
