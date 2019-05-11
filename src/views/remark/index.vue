@@ -48,6 +48,79 @@
           <el-button size="mini" type="primary">去点评</el-button>
         </div>
       </li>
+      <li class="remark-li" @click="$router.push({path:'/classRemark'})">
+        <div class="remark-top">
+          <div class="remark-portrait">
+            <img src="../../assets/2.jpg" alt="">
+          </div>
+          <div class="remark-text">
+            <div class="remark-name">数学一班</div>
+            <div class="remark-student">学员已点评 <span>20</span>/30</div>
+          </div>
+        </div>
+        <div class="remark-bottom">
+          <div class="remark-bottom-date">
+            <i class="el-icon-time"></i>
+            2019-03-11 09:00 - 14:00
+          </div>
+          <el-button size="mini" type="primary">去点评</el-button>
+        </div>
+      </li>
+      <li class="remark-li" @click="$router.push({path:'/classRemark'})">
+        <div class="remark-top">
+          <div class="remark-portrait">
+            <img src="../../assets/2.jpg" alt="">
+          </div>
+          <div class="remark-text">
+            <div class="remark-name">数学一班</div>
+            <div class="remark-student">学员已点评 <span>20</span>/30</div>
+          </div>
+        </div>
+        <div class="remark-bottom">
+          <div class="remark-bottom-date">
+            <i class="el-icon-time"></i>
+            2019-03-11 09:00 - 14:00
+          </div>
+          <el-button size="mini" type="primary">去点评</el-button>
+        </div>
+      </li>
+      <li class="remark-li" @click="$router.push({path:'/classRemark'})">
+        <div class="remark-top">
+          <div class="remark-portrait">
+            <img src="../../assets/2.jpg" alt="">
+          </div>
+          <div class="remark-text">
+            <div class="remark-name">数学一班</div>
+            <div class="remark-student">学员已点评 <span>20</span>/30</div>
+          </div>
+        </div>
+        <div class="remark-bottom">
+          <div class="remark-bottom-date">
+            <i class="el-icon-time"></i>
+            2019-03-11 09:00 - 14:00
+          </div>
+          <el-button size="mini" type="primary">去点评</el-button>
+        </div>
+      </li>
+      <li class="remark-li" @click="$router.push({path:'/classRemark'})">
+        <div class="remark-top">
+          <div class="remark-portrait">
+            <img src="../../assets/2.jpg" alt="">
+          </div>
+          <div class="remark-text">
+            <div class="remark-name">数学一班</div>
+            <div class="remark-student">学员已点评 <span>20</span>/30</div>
+          </div>
+        </div>
+        <div class="remark-bottom">
+          <div class="remark-bottom-date">
+            <i class="el-icon-time"></i>
+            2019-03-11 09:00 - 14:00
+          </div>
+          <el-button size="mini" type="primary">去点评</el-button>
+        </div>
+      </li>
+
     </div>
   </div>
 </template>

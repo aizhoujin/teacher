@@ -13,6 +13,66 @@
         </div>
         <el-button type="primary" size="mini" @click="$router.push({path: '/report'})">去录入</el-button>
       </div>
+      <div class="class-li">
+        <div class="class-left">
+          <div class="class-portrait">
+            <img src="../../../assets/2.jpg" alt="">
+          </div>
+          <div class="class-content">
+            <div class="class-name">数学一班</div>
+            <div class="class-number">学员人数： <span>20</span></div>
+          </div>
+        </div>
+        <el-button type="primary" size="mini" @click="$router.push({path: '/report'})">去录入</el-button>
+      </div>
+      <div class="class-li">
+        <div class="class-left">
+          <div class="class-portrait">
+            <img src="../../../assets/2.jpg" alt="">
+          </div>
+          <div class="class-content">
+            <div class="class-name">数学一班</div>
+            <div class="class-number">学员人数： <span>20</span></div>
+          </div>
+        </div>
+        <el-button type="primary" size="mini" @click="$router.push({path: '/report'})">去录入</el-button>
+      </div>
+      <div class="class-li">
+        <div class="class-left">
+          <div class="class-portrait">
+            <img src="../../../assets/2.jpg" alt="">
+          </div>
+          <div class="class-content">
+            <div class="class-name">数学一班</div>
+            <div class="class-number">学员人数： <span>20</span></div>
+          </div>
+        </div>
+        <el-button type="primary" size="mini" @click="$router.push({path: '/report'})">去录入</el-button>
+      </div>
+      <div class="class-li">
+        <div class="class-left">
+          <div class="class-portrait">
+            <img src="../../../assets/2.jpg" alt="">
+          </div>
+          <div class="class-content">
+            <div class="class-name">数学一班</div>
+            <div class="class-number">学员人数： <span>20</span></div>
+          </div>
+        </div>
+        <el-button type="primary" size="mini" @click="$router.push({path: '/report'})">去录入</el-button>
+      </div>
+      <div class="class-li">
+        <div class="class-left">
+          <div class="class-portrait">
+            <img src="../../../assets/2.jpg" alt="">
+          </div>
+          <div class="class-content">
+            <div class="class-name">数学一班</div>
+            <div class="class-number">学员人数： <span>20</span></div>
+          </div>
+        </div>
+        <el-button type="primary" size="mini" @click="$router.push({path: '/report'})">去录入</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -58,18 +118,18 @@
               line-height: 25px;
               margin-top: 15px;
             }
-            .class-number{
+            .class-number {
               color: #717373;
-              height:17px;
-              font-size:12px;
-              span{
+              height: 17px;
+              font-size: 12px;
+              span {
                 color: #40D2B4;
                 font-size: 14px;
               }
             }
           }
         }
-        .el-button{
+        .el-button {
           margin: 20px 10px;
         }
       }

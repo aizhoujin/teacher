@@ -84,8 +84,7 @@
     </div>
     <div style="height: 64px;"></div>
     <div class="person-footer">
-      <el-button type="primary" @click="submitForm('ruleForm')">检查冲突</el-button>
-      <el-button type="primary" @click="submitForm('ruleForm')">去上课点名</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
     </div>
   </div>
 </template>
@@ -341,7 +340,8 @@
 
   .person-footer {
     display: flex;
-    width: 100%;
+    width: calc(100% - 32px);
+    margin: 0 16px;
     justify-content: space-around;
     position: fixed;
     bottom: 0px;
@@ -351,7 +351,7 @@
     height: 64px;
     z-index: 2000;
     .el-button {
-      width: 161px;
+      width: 100%;
       height: 44px;
       font-size: 16px;
     }

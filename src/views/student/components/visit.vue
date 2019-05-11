@@ -240,12 +240,13 @@
 
   .person-footer {
     display: flex;
-    width: 100%;
+    width: calc(100% - 32px);
     position: fixed;
     bottom: 0px;
     left: 0px;
     background: #ffffff;
     line-height: 64px;
+    margin: 0px 16px;
     height: 64px;
     z-index: 2000;
     .el-button {

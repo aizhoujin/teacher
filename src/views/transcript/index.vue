@@ -104,6 +104,9 @@
       }
     },
     methods: {
+      dateFit(){
+
+      },
       openPicker(type) {
         if (type == 1) {
           this.pickerValue1 = new Date();
