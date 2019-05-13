@@ -56,14 +56,12 @@
       // 获取班级列表数据
       getPersonData() {
         this.$store.commit('loadChange', true)
-        console.log(this.userInfo);
         let obj = {
           teacherId: this.userInfo.userId
         }
         getClassPerson(obj).then(res => {
           this.$store.commit('loadChange', false);
           let data = res.data.data;
-          console.log(data);
           data.forEach((item, index) => {
             item.check = false;
             if (item.applyList.length > 0) {
@@ -138,7 +136,6 @@
 
       // 展开收起
       collapseChange() {
-        console.log(this.activeNames)
       },
 
       // 选择班级

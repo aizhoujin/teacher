@@ -33,7 +33,6 @@ axios.interceptors.request.use(config => {
 })
 //HTTPresponse拦截
 axios.interceptors.response.use(data => {
-  console.log(data)
   return data
 }, error => {
   if (error.response.status == 500) {

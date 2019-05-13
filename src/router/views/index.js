@@ -120,7 +120,7 @@ export default [{
   component: () => import('@/views/remark/components/classRemark.vue')
 }, {
   path: '/grade',
-  name: '上课点评',
+  name: '上课点评列表',
   component: () => import('@/views/remark/components/grade.vue')
 }, {
   path: '/transcript',
@@ -147,7 +147,7 @@ export default [{
   name: '检查冲突',
   component: () => import('@/views/checkroll/components/clash.vue')
 }, {
-  path: '/checkName',
+  path: '/checkName列表',
   name: '上课点名',
   component: () => import('@/views/checkroll/components/checkroll.vue')
 }]

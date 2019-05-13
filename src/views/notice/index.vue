@@ -63,7 +63,6 @@
         getBulletin(token, this.obj).then(res => {
           this.$store.commit('loadChange', false);
           let data = res.data.data;
-          console.log(data.list);
           this.noticeList = this.noticeList.concat(data.list);
         }).catch(err => {
           this.$store.commit('loadChange', false);

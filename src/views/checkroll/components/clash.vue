@@ -114,7 +114,6 @@
       }
     },
     mounted() {
-      console.log(this.clashData)
       if (this.clashData.oldClash) {
         this.oldClash = this.clashData.oldClash;
         this.newClash = this.clashData.newClash;

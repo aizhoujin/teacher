@@ -59,7 +59,6 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   setTimeout(() => {
-    console.log(to.name)
     window.document.title = to.name
   }, 0)
 })

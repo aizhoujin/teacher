@@ -20,7 +20,6 @@
     methods: {
       getNoticeDetail() {
         let token = this.$store.state.user.userInfo.token;
-        console.log(this.$route.params.id)
         let id = this.$route.params.id;
         noticeDetail(token, id).then(res => {
           if (res.data.code == 200) {

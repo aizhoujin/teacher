@@ -107,7 +107,6 @@
     methods: {
       getBulletin() {
         let token = this.userInfo.token;
-        console.log(this.userInfo.token);
         let obj = {
           "between": {},
           "equals": {},
@@ -174,7 +173,6 @@
     },
     watch: {
       loginState(val, oldVal) {
-        console.log(val, oldVal);
         if (val) {
           this.getBulletin();
         }

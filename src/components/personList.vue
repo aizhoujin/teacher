@@ -9,10 +9,10 @@
     </el-input>
     <el-row style="margin: 16px 0px;font-size: 16px" v-if="!showPhone">通知对象</el-row>
     <el-collapse accordion v-model="activeNames">
-      <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList" :name="item.classNo">
+      <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList">
         <template slot="title">
           <div class="listTitle">
-            <div class="list-portrait">{{item.classNo}}</div>
+            <div class="list-portrait">{{item.classNo ? item.classNo + '班' : item.name}}</div>
             <div class="list-detail">
               <div>{{item.classNo ? item.classNo + '班' : item.name}}</div>
               <div class="list-detail-text">全班共{{item.applyList.length}}名同学</div>
@@ -20,7 +20,7 @@
           </div>
         </template>
         <li v-if="!showPhone" class="class-detail">
-          <div>
+          <div class="person-all">
             全选
           </div>
           <div class="person-check">
@@ -30,7 +30,9 @@
         </li>
         <li v-if="item.applyList.length>0" v-for="(ite, ind) in item.applyList" :key="ind" class="class-detail">
           <div class="perosn-data">
-            <div class="person-portrait"></div>
+            <div class="person-portrait">
+              <img src="../assets/2.jpg" alt="">
+            </div>
             <div class="person-name">
               {{ite.studentEntity ? ite.studentEntity.infoEntity.nickName: ''}}
               <!--{{ite.studentEntity.infoEntity.nickName}}-->
@@ -79,29 +81,30 @@
     methods: {
       // 获取班级列表数据
       getPersonData() {
-        this.$store.commit('loadChange', true)
-        console.log(this.userInfo);
         let obj = {
           teacherId: this.userInfo.userId
         }
-        getClassPerson(obj).then(res => {
-          this.$store.commit('loadChange', false);
-          let data = res.data.data;
-          console.log(data);
-          data.forEach((item, index) => {
-            item.check = false;
-            if (item.applyList.length > 0) {
-              for (let i = 0; i < item.applyList.length; i++) {
-                console.log(item.applyList[i]);
-                item.applyList[i].check = false;
-                item.applyList[i].id = item.applyList[i].id.toString();
+        if (this.$store.state.person.classPersonList.length > 0) {
+          this.classPersonList = this.$store.state.person.classPersonList;
+        } else {
+          this.$store.commit('loadChange', true);
+          getClassPerson(obj).then(res => {
+            this.$store.commit('loadChange', false);
+            let data = res.data.data;
+            data.forEach((item, index) => {
+              item.check = false;
+              if (item.applyList.length > 0) {
+                for (let i = 0; i < item.applyList.length; i++) {
+                  item.applyList[i].check = false;
+                  item.applyList[i].id = item.applyList[i].id.toString();
+                }
               }
-            }
+            })
+            this.classPersonList = data;
+          }).catch(err => {
           })
-          this.classPersonList = data;
-        }).catch(err => {
+        }
 
-        })
       },
 
       // 全选操作
@@ -134,16 +137,19 @@
       selectPerson() {
         let classIds = '';
         let personIds = '';
+        let noticeNames = [];
         this.classPersonList.forEach((item, index) => {
           if (item.check) {
             classIds += (item.id + ',');
+            noticeNames.push(item.name);
           } else {
             let classFlag = false;
             let listLi = item.applyList;
             for (let i = 0; i < listLi.length; i++) {
               if (listLi[i].check) {
                 classFlag = true;
-                personIds += (listLi[i].studentId + ',');
+                personIds += (listLi[i].studentEntity.infoEntity.id + ',');
+                noticeNames.push(listLi[i].studentEntity.infoEntity.realName);
               }
             }
             if (classFlag) {
@@ -151,8 +157,10 @@
             }
           }
         })
+        this.$store.commit('classPersonListChange', this.classPersonList);
         this.$store.commit('classIdsChange', classIds.substring(0, classIds.length - 1));
         this.$store.commit('personIdsChange', personIds.substring(0, personIds.length - 1));
+        this.$store.commit('noticeNamesChange', noticeNames);
         this.$router.go(-1);
       },
 
@@ -168,7 +176,6 @@
     },
     watch: {
       showPhone(value, oldVal) {
-        console.log(value)
       }
     }
   }
@@ -186,6 +193,7 @@
       background: #40D2B4;
       text-align: center;
       color: #fff;
+      overflow: hidden;
     }
     .list-detail {
       margin-left: 5px;
@@ -206,11 +214,16 @@
   }
 
   .class-detail {
+    margin-left: 20px;
     display: flex;
     justify-content: space-between;
     height: 50px;
     font-size: 14px;
     color: #717373FF;
+    border-top: 0.5px solid #F2F2F2;
+    .person-all {
+      line-height: 50px;
+    }
     .perosn-data {
       display: flex;
       line-height: 50px;
@@ -220,6 +233,11 @@
         border-radius: 50%;
         margin: 9px;
         background: #40D2B4;
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+        }
       }
     }
   }

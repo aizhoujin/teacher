@@ -142,7 +142,6 @@
           _float;
       },
       dateFil: (value) => {
-        console.log(value)
         return value.getFullYear() + '年' + (value.getMonth() + 1) + '月'
       }
     }

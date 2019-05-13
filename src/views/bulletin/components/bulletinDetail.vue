@@ -40,7 +40,6 @@
       let id = this.$route.params.id;
       detailMy(token, id).then(res => {
         if (res.data.code == 200) {
-          console.log(res.data.data)
           this.detail = res.data.data;
         }
       })

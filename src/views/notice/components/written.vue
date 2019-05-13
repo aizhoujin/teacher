@@ -2,16 +2,18 @@
   <div>
     <!-- 发布通知页面 -->
     <div class="written">
-      <input type="text" v-model="title" class="written-title" placeholder="标题">
+      <input type="text" v-model="noticeText.title" @change="changeNoticeText" class="written-title" placeholder="标题">
     </div>
     <div class="addNotice" @click="addPerson">
       <div class="icon el-icon-plus"></div>
-      <span v-if="classIds.length > 0">{{classIds}}</span>
-      <span v-else>添加通知对象</span>
+      <div v-if="classIds.length > 0" class="noticeList">
+        <div v-for="item in noticeNames" class="noticeName">{{item}}</div>
+      </div>
+      <div class="noticeList" v-else>添加通知对象</div>
     </div>
     <div class="recordList">
       <li v-for="item in localIdsRecord">
-        {{item}}1
+        {{item}}
       </li>
     </div>
     <div class="localIdsImgList">
@@ -26,12 +28,13 @@
         :rows="5"
         :autosize="{ minRows: 10}"
         placeholder="正文"
-        v-model="context">
+        @change="changeNoticeText"
+        v-model="noticeText.content">
       </el-input>
     </div>
 
     <div class="jdkFun">
-      <jdkFun></jdkFun>
+      <jdkFun :funType="'notice'"></jdkFun>
     </div>
   </div>
 </template>
@@ -39,7 +42,8 @@
 <script>
   import jdkFun from '../../../components/jdkFunction'
   import {mapState} from 'vuex'
-  import {getJdk} from '../../../api/common'
+  import {getJdk} from '../../../api/common';
+  import {MessageBox} from 'mint-ui'
 
   export default {
     name: "written",
@@ -48,27 +52,46 @@
     },
     data() {
       return {
-        title: '',
-        context: '',
+        noticeText: {
+          title: this.$store.state.person.noticeTiceText.title,
+          content: this.$store.state.person.noticeTiceText.content,
+        },
       }
     },
     computed: {
       ...mapState({
         classIds: state => state.person.classIds,
         personIds: state => state.person.personIds,
+        noticeNames: state => state.person.noticeNames,
         localIdsRecord: state => state.fun.localIdsRecord,
         localIdsImg: state => state.fun.localIdsImg
       })
     },
     methods: {
+      // 添加通知对象
       addPerson() {
         this.$router.push({
           path: '/linkman',
         })
+      },
+      changeNoticeText() {
+        this.$store.commit('noticeTiceTextChange', this.noticeText)
       }
     },
+    mounted() {
+    },
     created() {
-      console.log(this.$store.state.person.classIds);
+    },
+    // 导航离开该组件的对应路由时调用
+    beforeRouteLeave(to, from, next) {
+      if (to.path == '/linkman') {
+        next();
+      } else {
+        MessageBox.confirm('离开当前页面后，将丢失现在已经编辑好的所有通知内容，确定要返回主页吗?').then(action => {
+          this.$store.commit('clearState')
+          next();
+        });
+      }
     }
   }
 </script>
@@ -91,7 +114,7 @@
   .context {
     border: none;
     margin: 10px auto;
-    & input{
+    & input {
       border: none !important;
     }
   }
@@ -110,11 +133,30 @@
       line-height: 20px;
       font-size: 12px;
     }
-    & span {
+    .noticeList {
       color: #B5B6B6;
       font-size: 14px;
       line-height: 20px;
       text-indent: 5px;
+      width: calc(100% - 50px);
+      margin-left: 5px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      /*text-overflow: ellipsis;*/
+      white-space: nowrap;
+    }
+
+    .noticeName {
+      display: inline-block;
+      color: #40D2B4;
+      text-align: center;
+      padding: 1px;
+      border: 1px solid #40D2B4;
+      font-size: 12px;
+      border-radius: 2px;
+      margin: 0px 5px;
+      height: 17px;
+      line-height: 17px;
     }
   }
 
@@ -136,19 +178,19 @@
     left: 0px;
   }
 
-  .localIdsImgList{
+  .localIdsImgList {
     width: 92%;
     margin: 15px auto;
     display: flex;
     /*justify-content: space-around;*/
     flex-wrap: wrap;
-    li{
+    li {
       width: 33.3%;
       height: 100px;
       margin-bottom: 5px;
       overflow: hidden;
       text-align: center;
-      img{
+      img {
         width: 100px;
         /*max-height: 100px;*/
         overflow-y: auto;

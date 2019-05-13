@@ -179,7 +179,6 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.ruleForm);
             let obj = {
               classId: this.classData.id,
               planType: 0,
@@ -195,7 +194,6 @@
               duration: this.ruleForm.duration,
               clash: this.ruleForm.clash
             }
-            console.log(obj);
             createByPlan(obj).then(res => {
               if (res.data.code == 200) {
                 if (res.data.data.newClash && res.data.data.newClash.length > 0) {
@@ -213,7 +211,6 @@
                     this.$router.push({path: '/clash'})
                   });
                 } else {
-                  console.log('排课成功');
                   this.$store.commit('callDataChange', obj);
                   this.$router.push({path: '/checkName'});
                 }
@@ -226,7 +223,6 @@
       },
     },
     mounted() {
-      console.log(this.classData);
       this.getClassSubject();
       this.getClassRoom();
     },

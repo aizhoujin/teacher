@@ -26,8 +26,18 @@ export const noticeDetail = (token, data) => {
       "token": token,
       "Content-Type": "application/json;charset=UTF-8",
     },
-    params:{
+    params: {
       id: data
     }
+  })
+}
+
+
+// 老师端通知详情
+export const noticeAdd = (data) => {
+  return request({
+    url: `${baseUrl}/api/inform/v1/add`,
+    method: 'POST',
+    data: data
   })
 }

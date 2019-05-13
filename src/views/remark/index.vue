@@ -164,7 +164,6 @@
       handleConfirm(type) {
         if (type == 1) {
           this.pickerValue1 = new Date(this.pickerValue1).toLocaleDateString();
-          console.log(this.pickerValue1)
           this.dateFrom = this.pickerValue1;
         } else if (type == 2) {
           this.pickerValue2 = new Date(this.pickerValue2).toLocaleDateString();
@@ -193,10 +192,8 @@
             this.myGetBulletin();
           }
         }
-        console.log(this.pickerValue2 > this.pickerValue1)
       },
       bulletinDetail(id) {
-        console.log('id', id)
         this.$router.push({
           path: '/bulletinDetail/' + id,
         })

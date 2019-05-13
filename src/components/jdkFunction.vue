@@ -19,7 +19,7 @@
       </div>
 
       <div style="height: 24px;width: 80px;text-align: center">
-        <el-button size="mini" type="primary">发布</el-button>
+        <el-button size="mini" type="primary" @click="issueEvent">发布</el-button>
       </div>
     </div>
     <div class="record" v-if="selectFunIco.indexOf(1) != -1">
@@ -52,11 +52,15 @@
 
 <script>
   import {getJdk, getSts} from '../api/common';
+  import {noticeAdd} from '../api/notice';
   import axios from 'axios';
   import {base_baseUrl, baseUrl} from "../../static/config";
 
   export default {
     name: "jdk-function",
+    props: {
+      funType: String
+    },
     data() {
       return {
         localIdRecord: null,
@@ -82,14 +86,37 @@
     },
     watch: {},
     methods: {
+      // 发布事件
+      issueEvent() {
+        if (this.funType == 'notice') {
+          let data = this.$store.state.person;
+          let obj = {
+            title: data.noticeTiceText.title,
+            content: data.noticeTiceText.content,
+            imgs: '',
+            audios: '',
+            videos: '',
+            beginTime: '',
+            classIds: data.classIds,
+            userIds: '',
+          }
+          // return;
+          noticeAdd(obj).then(res => {
+            if (res.data.code == 200) {
+              this.$toast('发布成功');
+              this.$router.push({path: '/notice'})
+            }
+          }).catch(err => {
+
+          })
+        }
+      },
+
       videoChange(e) {
-        console.log(e);
         var file = e.target.files[0];
         let storeAs = 'upload-file';
         getSts().then(res => {
-          console.log(res.data.data);
           if (res.data.code == 200) {
-            console.log(res.data.data);
             this.stsData = res.data.data;
             let result = res.data.data;
             let client = new OSS.Wrapper({
@@ -99,10 +126,8 @@
               region: result.region,
               bucket: result.bucket
             })
-            console.log(client)
             //storeAs表示上传的object name , file表示上传的文件
             let url = client.signatureUrl('upload-file');
-            console.log(url)
             // client.list({
             //   'max-keys': 10
             // }).then(function (result) {
@@ -210,7 +235,6 @@
           serverId: _this.serverId, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
           isShowProgressTips: 1, // 默认为1，显示进度提示
           success: function (res) {
-            console.log(res);
             var localId = res.localId; // 返回音频的本地ID
           }
         });
@@ -278,7 +302,6 @@
           success: function (res) {
             var localId = res.localId;
             _this.localIdRecord = res.localId;
-            console.log(res);
           }
         });
       },
@@ -351,7 +374,6 @@
 
       // 功能按钮
       funIconEvent(type) {
-        console.log(this.selectFunIco.indexOf(type));
         if (type == 1) {
           // this.startRecord();
           if (this.selectFunIco.indexOf(1) == -1) {
@@ -369,9 +391,7 @@
       // getSts
       getStsEvent() {
         getSts().then(res => {
-          console.log(res);
           if (res.data.code == 200) {
-            console.log(res.data.data);
             this.stsData = res.data.data;
           }
         })
