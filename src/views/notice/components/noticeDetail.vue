@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="noticeDetail">
     <!-- 通知详情 -->
     <div class="detail-title">
       {{detail.title}}
+    </div>
+    <div class="detail-content">
+      {{detail.content}}
     </div>
   </div>
 </template>
@@ -35,8 +38,13 @@
 </script>
 
 <style scoped lang="scss">
+  .noticeDetail {
+    width: calc(100% - 32px);
+    margin: 0 auto;
+  }
+
   .detail-title {
-    margin: 15px 15px 10px 15px;
+    margin: 15px 0px 10px 0px;
     font-size: 16px;
     color: #1F2423;
     font-weight: bold;
@@ -48,5 +56,8 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     line-height: 24px;
+  }
+  .detail-content{
+
   }
 </style>
