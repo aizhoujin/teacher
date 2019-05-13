@@ -148,7 +148,7 @@
             for (let i = 0; i < listLi.length; i++) {
               if (listLi[i].check) {
                 classFlag = true;
-                personIds += (listLi[i].studentEntity.infoEntity.id + ',');
+                personIds += (listLi[i].studentEntity.id + ',');
                 noticeNames.push(listLi[i].studentEntity.infoEntity.realName);
               }
             }

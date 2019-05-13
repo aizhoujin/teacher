@@ -98,8 +98,9 @@
             videos: '',
             beginTime: '',
             classIds: data.classIds,
-            userIds: '',
+            userIds: data.personIds,
           }
+          console.log(data, obj)
           // return;
           noticeAdd(obj).then(res => {
             if (res.data.code == 200) {
@@ -112,6 +113,7 @@
         }
       },
 
+      // 视频上传
       videoChange(e) {
         var file = e.target.files[0];
         let storeAs = 'upload-file';
@@ -296,10 +298,13 @@
 
       // 结束录音
       stopRecord() {
+        alert(123)
+        console.log(2);
         var _this = this;
         clearInterval(_this.timeCircle);
         wx.stopRecord({
           success: function (res) {
+            console.log(1, res);
             var localId = res.localId;
             _this.localIdRecord = res.localId;
           }
@@ -339,12 +344,14 @@
       // 录音一套
       recordEvent() {
         let _this = this;
+        console.log(123123123)
         if (this.recordState == 1) {
           this.startRecord();
           this.recordImg = require('../assets/发布通知模块/语音录入/录音中.png');
           this.recordText = '点击暂停';
           this.recordState = 2;
         } else if (this.recordState == 2) {
+          console.log(123)
           this.stopRecord();
           this.recordImg = require('../assets/发布通知模块/语音录入/点击播放.png');
           this.recordText = '点击播放';
