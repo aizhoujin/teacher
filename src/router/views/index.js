@@ -148,6 +148,6 @@ export default [{
   component: () => import('@/views/checkroll/components/clash.vue')
 }, {
   path: '/checkName列表',
-  name: '上课点名',
+  name: '上课点名列表',
   component: () => import('@/views/checkroll/components/checkroll.vue')
 }]

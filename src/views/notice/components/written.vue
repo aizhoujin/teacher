@@ -34,7 +34,7 @@
     </div>
 
     <div class="jdkFun">
-      <jdkFun :funType="'notice'"></jdkFun>
+      <jdkFun :funType="quertType"></jdkFun>
     </div>
   </div>
 </template>
@@ -52,6 +52,7 @@
     },
     data() {
       return {
+        quertType: this.$route.query.type,
         noticeText: {
           title: this.$store.state.person.noticeTiceText.title,
           content: this.$store.state.person.noticeTiceText.content,

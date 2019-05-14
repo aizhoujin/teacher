@@ -34,7 +34,7 @@
               <img src="../assets/2.jpg" alt="">
             </div>
             <div class="person-name">
-              {{ite.studentEntity ? ite.studentEntity.infoEntity.nickName: ''}}
+              {{ite.studentEntity ? ite.studentEntity.infoEntity.realName: ''}}
               <!--{{ite.studentEntity.infoEntity.nickName}}-->
             </div>
           </div>

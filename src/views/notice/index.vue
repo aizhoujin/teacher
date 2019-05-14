@@ -15,7 +15,7 @@
             <div class="notice-list-person">
               <img src="" alt="">
             </div>
-            <div class="notice-list-text"  @click="goPath(item.id)">
+            <div class="notice-list-text" @click="goPath(item.id)">
               <span>查看阅读详情</span> <i class="el-icon-arrow-right"></i>
             </div>
           </div>
@@ -28,7 +28,7 @@
     <!--发布通知-->
     <div class="occupied"></div>
     <div class="newNotive" :style="{'top': clientHeight + 'px'}">
-      <router-link :to="{path: '/written'}">
+      <router-link :to="{path: '/written', query: {type: 'notice'}}">
         <el-button type="primary" size="small" class="newNotive-btn"
                    :style="{'width': clientWidth+ 'px'}">发布新通知
         </el-button>
@@ -45,11 +45,11 @@
     data() {
       return {
         obj: {
+          "page": null,
+          "size": null,
           "gtEquals": {}, //大于等于
           "ltEquals": {}, // 小于等于
-          "page": 1,
-          "size": 10,
-          "empty": true
+          // "empty": true
         },
         noticeList: [],
         clientHeight: 603,
@@ -68,7 +68,7 @@
           this.$store.commit('loadChange', false);
         })
       },
-      goPath(id){
+      goPath(id) {
         this.$router.push({
           path: '/noticeDetail/' + id
         })

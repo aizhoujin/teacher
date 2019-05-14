@@ -11,7 +11,7 @@ export const getBulletin = (token, data) => {
       "token": token,
       "Content-Type": "application/json;charset=UTF-8",
     },
-    data: {data}
+    data: data
   })
 }
 
