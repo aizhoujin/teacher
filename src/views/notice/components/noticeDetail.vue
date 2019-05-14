@@ -17,16 +17,36 @@
     name: "notice-detail",
     data() {
       return {
-        detail: {}
+        detail: {},
+        classList: []
       }
     },
     methods: {
       getNoticeDetail() {
         let token = this.$store.state.user.userInfo.token;
         let id = this.$route.params.id;
+        this.classList = [];
         noticeDetail(token, id).then(res => {
           if (res.data.code == 200) {
             this.detail = res.data.data;
+            let personList = res.data.data.inform2userList;
+            let empty = [];
+            if (personList.length > 0) {
+              personList.forEach((item, index) => {
+                if (empty.indexOf(item.classId) == -1) {
+                  let obj = {
+                    classId: item.classId,
+                    className: item.mainClassEntity.name,
+                    child: [],
+                  };
+                  obj.child.push(item);
+                  this.classList.push(obj);
+                } else {
+                  let ind = empty.indexOf(item.classId);
+                  this.classList[ind].child.push(item)
+                }
+              })
+            }
           }
         })
       }
@@ -57,7 +77,8 @@
     -webkit-box-orient: vertical;
     line-height: 24px;
   }
-  .detail-content{
+
+  .detail-content {
 
   }
 </style>

@@ -7,7 +7,8 @@ const person = {
     noticeTiceText: {
       title: '',
       content: '',
-    }
+    },
+    noticeState: 1,
   },
   mutations: {
     // 班级id
@@ -35,6 +36,11 @@ const person = {
       state.noticeTiceText = data;
     },
 
+    noticeStateChange(state,data){
+      state.noticeState = data;
+    },
+
+    // 清空state
     clearState(state) {
       state.noticeTiceText.title = '';
       state.noticeTiceText.content = '';

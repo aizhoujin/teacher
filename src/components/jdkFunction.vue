@@ -89,6 +89,9 @@
       // 发布事件
       issueEvent() {
         if (this.funType == 'notice') {
+          this.$store.commit('noticeStateChange', 2);
+          this.$router.push({path: '/notice'})
+          return;
           let data = this.$store.state.person;
           let obj = {
             title: data.noticeTiceText.title,
