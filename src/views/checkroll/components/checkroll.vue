@@ -42,10 +42,10 @@
         <el-table-column
           width="75">
           <template slot="header" slot-scope="scope">
-            <el-checkbox v-model="checkAll">全选</el-checkbox>
+            <el-checkbox v-model="checkAll" @change="changeAllEvent">全选</el-checkbox>
           </template>
           <template slot-scope="scope">
-            <el-checkbox v-model="scope.row.isCq">签到</el-checkbox>
+            <el-checkbox v-model="scope.row.isCq" :key="scope.row.id" @change="changeCheckEvent">签到</el-checkbox>
           </template>
         </el-table-column>
         <el-table-column
@@ -74,8 +74,16 @@
           align="center"
           min-width="40"
           label="缺勤">
+          <template slot-scope="scope">
+            {{scope.row.absenteeism_cause ? absenteeism_cause : 0}}
+          </template>
         </el-table-column>
       </el-table>
+    </div>
+    <div class="call-total">
+      <div><span class="call-total-col">合计：</span>{{personList.length}}</div>
+      <div><span class="call-total-col">出勤：</span>{{checkCount}}</div>
+      <div><span>缺勤：</span>{{personList.length - checkCount}}</div>
     </div>
     <div class="call-title">
       <div class="call-title-text">
@@ -105,9 +113,10 @@
       return {
         personList: [],
         absenteeismCause: [],
-        checkAll: true,
+        checkAll: false,
         content: '',
         tableHeight: 603,
+        checkCount: 0
       }
     },
     computed: {
@@ -116,6 +125,9 @@
       })
     },
     methods: {
+      aaa() {
+        console.log(1)
+      },
       // 获取学员列表
       getPersonList() {
         let obj = {
@@ -124,12 +136,39 @@
         getcheckPersonList(obj).then(res => {
           if (res.data.code == 200 && res.data.data.list) {
             this.personList = res.data.data.list;
-            this.personList.forEach((item => {
-              // item.isCq = true;
-              item.absenteeismCause = '';
-            }))
+            for (let i = 0; i < this.personList.length; i++) {
+              this.$set(this.personList[i], 'isCq', false);
+              this.$set(this.personList[i], 'absenteeismCause', '');
+            }
           }
         })
+      },
+
+      // 全选操作
+      changeAllEvent() {
+        this.checkAll ? (this.checkCount = this.personList.length) : this.checkCount = 0;
+        this.personList.forEach(item => {
+          item.isCq = this.checkAll;
+          if (this.checkAll) {
+            item.absenteeismCause = '';
+          }
+        })
+      },
+
+      // 单选操作
+      changeCheckEvent() {
+        this.checkCount = 0;
+        this.personList.forEach(item => {
+          if (item.isCq) {
+            this.checkCount++;
+            item.absenteeismCause = '';
+          }
+        });
+        if (this.personList.length == this.checkCount) {
+          this.checkAll = true;
+        } else {
+          this.checkAll = false;
+        }
       },
 
       // 开始上课
@@ -138,7 +177,7 @@
       }
     },
     mounted() {
-      this.tableHeight = document.documentElement.clientHeight - 400;
+      this.tableHeight = document.documentElement.clientHeight - 405;
       this.getPersonList();
       window.localStorage.getItem('classify') ? this.absenteeismCause = JSON.parse(window.localStorage.getItem('classify')).absenteeismCause : [];
     }
@@ -227,6 +266,18 @@
     }
   }
 
+  .call-total {
+    width: calc(100% - 32px);
+    margin: 5px auto;
+    display: flex;
+    justify-content: space-between;
+    div {
+      .call-total-col {
+        color: #40D2B4;
+      }
+    }
+  }
+
   .person {
     display: flex;
     .portrait {
@@ -255,4 +306,5 @@
       padding: 0px 10px !important;
     }
   }
+
 </style>
