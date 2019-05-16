@@ -81,7 +81,7 @@
 
     },
     mounted() {
-      this.$store.commit('noticeStateChange', 1);
+      // this.$store.commit('noticeStateChange', 1);
     },
     created() {
     },
@@ -89,7 +89,7 @@
     beforeRouteLeave(to, from, next) {
       if (to.path == '/linkman') {
         next();
-      } else if (this.$store.state.person.noticeState == 2) {
+      } else if (this.$store.state.person.noticeState == 1) {
         next();
       } else {
         MessageBox.confirm('离开当前页面后，将丢失现在已经编辑好的所有通知内容，确定要返回主页吗?').then(action => {
@@ -118,7 +118,7 @@
 
   .context {
     border: none;
-    margin: 10px auto;
+    margin: 10px 0px;
     & input {
       border: none !important;
     }
@@ -166,7 +166,7 @@
   }
 
   .context {
-    width: 92%;
+    width: 100%;
     margin: 15px auto;
     & #writtenContext {
       width: 100%;

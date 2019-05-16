@@ -8,7 +8,7 @@
       <userlogin></userlogin>
     </div>
     <div class="login-footer" :style="{'top': clientHeight + 'px'}">
-      <span>忘记密码</span>
+      <span @click="forget">忘记密码</span>
     </div>
   </div>
 </template>
@@ -32,9 +32,13 @@
         userInfo: state => state.user.userInfo
       }),
     },
-    methods: {},
-    created(){
-      this.clientHeight = document.documentElement.clientHeight -40
+    methods: {
+      forget() {
+        this.$toast('请联系老师，在电脑端重置密码!')
+      }
+    },
+    created() {
+      this.clientHeight = document.documentElement.clientHeight - 40
     }
   }
 </script>
@@ -71,7 +75,7 @@
     padding: 6px;
   }
 
-  .login-footer{
+  .login-footer {
     color: #40D2B4;
     position: absolute;
     left: 0px;

@@ -9,8 +9,8 @@
       </div>
       <div>{{detail.createTime}}</div>
     </div>
-    <div class="detail-text">
-      {{detail.content}}
+    <div class="detail-text" v-html="detail.content">
+
       <!--<img src="osspath" alt="">-->
       <!--<img :src="'http://biz.ngrok.eanfang.net:89/sys/api/oss/url?token=' + token + '&ossPath=test/456.png'" alt="">-->
 

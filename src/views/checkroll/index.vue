@@ -2,7 +2,7 @@
   <div>
     <div class="checkroll-title">
       <div class="checkroll-title-top">
-        今天您共有3节课
+        今天您共有{{currentData.length}}节课
       </div>
       <div class="checkroll-title-bottom">
         {{toDay}} (周{{toWeek}})
@@ -17,11 +17,11 @@
             </div>
             <div class="checkroll-class-li-top-context">
               <div class="checkroll-class-class">
-                <span class="checkroll-class-class-name">数学一班</span>
+                <span class="checkroll-class-class-name">{{item.classEntity.name}}</span>
                 <span class="checkroll-class-class-action">已上课</span>
               </div>
               <div class="checkroll-class-class-teacher">
-                李敏老师
+                {{item.teacherEntity.infoEntity.realName}}老师
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@
 
         </div>
         <div class="checkroll-class-li-bottom">
-          <div><i class="el-icon-time"></i>13:00-14:00</div>
+          <div><i class="el-icon-time"></i>{{item.beginTime | time}}</div>
           <div><i class="el-icon-location"></i>综合大楼一教室</div>
         </div>
       </li>
@@ -86,6 +86,18 @@
       this.clientHeight = document.documentElement.clientHeight - 64;
       this.clientWidth = document.documentElement.clientWidth - 32;
       this.getCurrent();
+    },
+    // 过滤器
+    filters: {
+      date: (value) => {
+        return value.replace(/\//ig, '-');
+      },
+      time: (value) => {
+        let data = new Date(value);
+        let hh = data.getHours() >= 10 ? data.getHours() : '0' + data.getHours();
+        let mm = data.getMinutes() >= 10 ? data.getMinutes() : '0' + data.getMinutes();
+        return hh + ":" + mm
+      }
     }
   }
 </script>

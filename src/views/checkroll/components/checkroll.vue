@@ -272,6 +272,7 @@
     display: flex;
     justify-content: space-between;
     div {
+      font-size: 14px;
       .call-total-col {
         color: #40D2B4;
       }

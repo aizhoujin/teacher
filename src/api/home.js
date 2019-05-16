@@ -6,7 +6,7 @@ export const getBulletin = (data, query1) => {
   return request({
     url: `${baseUrl}/api/inform/v1/list`,
     method: 'POST',
-    data:{query1}
+    data: {query1}
   })
 }
 
@@ -15,12 +15,12 @@ export const myGetBulletin = (data, obj) => {
   return request({
     url: `${baseUrl}/api/affiche/v1/listMy`,
     method: 'POST',
-    data:{obj}
+    data: obj
   })
 }
 
 // 我的公告详情，标记已读
-export const detailMy = (token,id) => {
+export const detailMy = (token, id) => {
   return request({
     url: `${baseUrl}/api/affiche/v1/detailMy`,
     method: 'post',

@@ -29,14 +29,17 @@ const person = {
     // 所有人员选中状态切换
     classPersonListChange(state, data) {
       state.classPersonList = data;
+      state.noticeState = 2;
     },
 
     // 发布通知 标题和正文 变化
     noticeTiceTextChange(state, data) {
       state.noticeTiceText = data;
+      state.noticeState = 2;
     },
 
-    noticeStateChange(state,data){
+    // 标题,
+    noticeStateChange(state, data) {
       state.noticeState = data;
     },
 

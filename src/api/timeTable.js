@@ -47,8 +47,6 @@ export const createByReplace = (data) => {
 }
 
 // 上课点名获取人员列表
-
-// 冲突覆盖接口
 export const getcheckPersonList = (data) => {
   return request({
     url: `${baseUrl}/api/class/v1/studentSelectorByClass`,

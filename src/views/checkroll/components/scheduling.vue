@@ -195,7 +195,7 @@
             }
             createByPlan(obj).then(res => {
               if (res.data.code == 200) {
-                if (res.data.data.newClash && res.data.data.newClash.length > 0) {
+                if (res.data.data.newClash && res.data.data.newClash.length > 0 && res.data.data.oldClash && res.data.data.oldClash.length > 0) {
                   // MessageBox({
                   //   title: '提示',
                   //   message: '检测到存在冲突课程，是否解决冲突?',

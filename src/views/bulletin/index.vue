@@ -29,13 +29,16 @@
         <img src="../../assets/icon_学校公告/筛选.png">
       </div>
     </div>
-    <div class="bulletinList">
+    <div class="bulletinList"
+         v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="10">
       <li v-for="(item,index) in bulletinList" :key="item.id" @click="bulletinDetail(item.id)">
         <div class="bulletinList-title">
           {{item.title}}
         </div>
-        <div class="bulletinList-context">
-          {{item.content}}
+        <div class="bulletinList-context" v-text="item.content">
+          <!--{{}}-->
         </div>
         <div class="bulletinList-basic">
           <div>
@@ -45,12 +48,14 @@
         </div>
         <div class="bulletinList-tag" v-show="item.status == 0"></div>
       </li>
+      <div class="footLoading" v-loading="loading">{{footerText}}</div>
     </div>
   </div>
 </template>
 
 <script>
   // import {DatetimePicker} from 'mint-ui'
+  import {InfiniteScroll} from 'mint-ui'
   import {Toast} from 'mint-ui';
   import {myGetBulletin} from "../../api/home";
   import {mapState} from "vuex";
@@ -72,10 +77,13 @@
           "empty": true
         },
         total: 0,
-        allLoaded: true
+        allLoaded: true,
+        loading: false,
+        footerText: '',
       }
     },
     methods: {
+      // 打开日期选择
       openPicker(type) {
         if (type == 1) {
           this.pickerValue1 = new Date();
@@ -86,6 +94,8 @@
         } else {
         }
       },
+
+      // 日期选择确定
       handleConfirm(type) {
         if (type == 1) {
           this.pickerValue1 = new Date(this.pickerValue1).toLocaleDateString();
@@ -95,33 +105,51 @@
           this.dateTo = this.pickerValue2;
         }
       },
+
+      // 获取公告
       myGetBulletin() {
         myGetBulletin(this.$store.state.user.userInfo.token, this.obj).then(res => {
-          let list = res.data.data.list;
-          this.total = res.data.data.total;
-          list.forEach(item => {
-            this.bulletinList.push(item);
-          })
+          this.loading = false;
+          if (res.data.code == 200) {
+            let list = res.data.data.list;
+            this.total = res.data.data.total;
+            list.sort((a, b) => {
+              return Date.parse(b.createTime) - Date.parse(a.createTime)
+            });
+            this.bulletinList = this.bulletinList.concat(list);
+          }
         })
       },
+
+      // 时间筛选
       dateFit() {
         if (this.pickerValue1 == '') {
           Toast('请选择开始时间')
         } else if (this.pickerValue2 == '') {
           Toast('请选择结束时间')
         } else {
-          if (this.pickerValue1 < this.pickerValue2) {
+          if (this.pickerValue1 <= this.pickerValue2) {
             this.obj.gtEquals.createTime = this.pickerValue1.replace('/', '-').replace('/', '-');
             this.obj.ltEquals.createTime = this.pickerValue2.replace('/', '-').replace('/', '-');
             this.bulletinList = [];
+            this.obj.page = 1;
             this.myGetBulletin();
           }
         }
       },
-      bulletinDetail(id){
+
+      // 去公告详情页
+      bulletinDetail(id) {
         this.$router.push({
           path: '/bulletinDetail/' + id,
         })
+      },
+
+      // 上拉加载
+      loadMore() {
+        // this.loading = true;
+        // this.obj.page++;
+        // this.myGetBulletin();
       }
     },
     computed: {
@@ -228,7 +256,7 @@
         font-size: 12px;
         line-height: 17px;
       }
-      & .bulletinList-tag{
+      & .bulletinList-tag {
         position: absolute;
         border-radius: 50%;
         width: 5px;
@@ -236,7 +264,7 @@
         background: #F52B2B;
         top: 5px;
         left: 5px;
-        box-shadow: 0px 1px 2px rgba(234,52,42,0.3);
+        box-shadow: 0px 1px 2px rgba(234, 52, 42, 0.3);
       }
     }
 

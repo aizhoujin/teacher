@@ -28,8 +28,8 @@
     </div>
     <!--<div style="height: 64px;"></div>-->
     <!--<div class="person-footer">-->
-      <!--<el-button @click="$router.go(-1)">取消</el-button>-->
-      <!--<el-button type="primary" @click="selectPerson">确定</el-button>-->
+    <!--<el-button @click="$router.go(-1)">取消</el-button>-->
+    <!--<el-button type="primary" @click="selectPerson">确定</el-button>-->
     <!--</div>-->
   </div>
 </template>
@@ -141,7 +141,7 @@
       // 选择班级
       selectClass(data) {
         let selectData = data;
-        selectData.assistantNames = data.classSubjectEntity.assistantNames;
+        selectData.assistantNames = (data.classSubjectEntity && data.classSubjectEntity.assistantNames) ? data.classSubjectEntity.assistantNames : '';
         selectData.teacherName = data.mainTeacherEntity.infoEntity.realName;
         this.$router.push({
           path: '/scheduling',

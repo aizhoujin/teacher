@@ -6,7 +6,7 @@
       v-on:choseDay="clickDay"></Calendar>
     <div class="timeTable-title">
       <span class="timeTable-title-date">{{currentDate | date}}</span>
-      <span> {{ courselist.length > 0 ? '(共' + courselist.length + '节课)' : ''}}</span>
+      <span> {{ cueentData.length > 0 ? '(共' + cueentData.length + '节课)' : ''}}</span>
     </div>
     <div class="timeTable-list">
       <li v-for="(item,index) in cueentData" v-if="cueentData.length > 0">

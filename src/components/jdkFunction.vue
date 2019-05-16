@@ -52,7 +52,7 @@
 
 <script>
   import {getJdk, getSts} from '../api/common';
-  import {noticeAdd} from '../api/notice';
+  import {noticeAdd, homeworkAdd} from '../api/notice';
   import axios from 'axios';
   import {base_baseUrl, baseUrl} from "../../static/config";
 
@@ -88,23 +88,31 @@
     methods: {
       // 发布事件
       issueEvent() {
-        if (this.funType == 'notice') {
-          this.$store.commit('noticeStateChange', 2);
-          this.$router.push({path: '/notice'})
+        this.$store.commit('noticeStateChange', 1);
+        let data = this.$store.state.person;
+        let obj = {
+          title: data.noticeTiceText.title,
+          content: data.noticeTiceText.content,
+          imgs: '',
+          audios: '',
+          videos: '',
+          beginTime: '',
+          classIds: data.classIds,
+          userIds: data.personIds,
+        };
+        if (obj.title == '') {
+          this.$toast('请输入标题');
           return;
-          let data = this.$store.state.person;
-          let obj = {
-            title: data.noticeTiceText.title,
-            content: data.noticeTiceText.content,
-            imgs: '',
-            audios: '',
-            videos: '',
-            beginTime: '',
-            classIds: data.classIds,
-            userIds: data.personIds,
-          }
-          console.log(data, obj)
-          // return;
+        } else if (obj.classIds == '') {
+          this.$toast('请选择班级');
+          return;
+        } else if (obj.content == '') {
+          this.$toast('请输入内容');
+          return;
+        }
+
+        console.log(obj);
+        if (this.funType == 'notice') {
           noticeAdd(obj).then(res => {
             if (res.data.code == 200) {
               this.$toast('发布成功');
@@ -112,6 +120,14 @@
             }
           }).catch(err => {
 
+          })
+        } else {
+          console.log(this.funType);
+          homeworkAdd(obj).then(res => {
+            if (res.data.code == 200) {
+              this.$toast('发布成功');
+              this.$router.push({path: '/seatwork'})
+            }
           })
         }
       },

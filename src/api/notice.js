@@ -33,7 +33,7 @@ export const noticeDetail = (token, data) => {
 }
 
 
-// 老师端通知详情
+// 老师端新增通知
 export const noticeAdd = (data) => {
   return request({
     url: `${baseUrl}/api/inform/v1/add`,
@@ -41,3 +41,14 @@ export const noticeAdd = (data) => {
     data: data
   })
 }
+
+
+// 老师端布置作业
+export const homeworkAdd = (data) => {
+  return request({
+    url: `${baseUrl}/api/homework/v1/add`,
+    method: 'POST',
+    data: data
+  })
+}
+
