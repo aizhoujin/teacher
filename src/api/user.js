@@ -16,6 +16,20 @@ export const userLogin = (data) => {
   })
 }
 
+// 获取基础数据
+export const getCfxData = (data) => {
+  return request({
+    url: `${baseUrl}/api/cfxData`,
+    method: 'post',
+    headers: {
+      "from": "TEAW"
+    },
+    params: {
+      md5: data
+    }
+  })
+}
+
 
 // app进入时使用token登录
 export const tokenLogin = (data) => {

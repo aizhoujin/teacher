@@ -68,7 +68,6 @@
     </div>
     <div style="height: 64px;"></div>
     <div class="person-footer">
-      <el-button type="primary" @click="submitForm('ruleForm')">检查冲突</el-button>
       <el-button type="primary" @click="submitForm('ruleForm')">去上课点名</el-button>
     </div>
   </div>
@@ -324,9 +323,11 @@
     background: #ffffff;
     line-height: 64px;
     height: 64px;
+    line-height: 64px;
     z-index: 2000;
     .el-button {
-      width: 161px;
+      margin-top: 10px;
+      width: calc(100% - 32px);
       height: 44px;
       font-size: 16px;
     }

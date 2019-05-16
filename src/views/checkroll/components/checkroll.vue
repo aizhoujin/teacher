@@ -25,9 +25,9 @@
     <div class="call-list">
       <el-table
         :data="personList"
+        :max-height="tableHeight"
         style="width: 100%">
         <el-table-column
-          width="120"
           label="班级学员">
           <template slot-scope="scope">
             <div class="person">
@@ -37,21 +37,60 @@
               <div class="name">{{scope.row.studentEntity.infoEntity.realName}}</div>
             </div>
           </template>
+
         </el-table-column>
         <el-table-column
-          type="selection"
-          width="55">
+          width="75">
+          <template slot="header" slot-scope="scope">
+            <el-checkbox v-model="checkAll">全选</el-checkbox>
+          </template>
+          <template slot-scope="scope">
+            <el-checkbox v-model="scope.row.isCq">签到</el-checkbox>
+          </template>
         </el-table-column>
         <el-table-column
+          width="100"
           label="缺勤原因">
+          <template slot-scope="scope">
+            <el-select :disabled="scope.row.isCq" size="mini" v-model="scope.row.absenteeismCause" placeholder="请选择">
+              <el-option
+                v-for="item in absenteeismCause"
+                :key="item.cValue"
+                :label="item.cKey"
+                :value="item.cValue">
+              </el-option>
+            </el-select>
+          </template>
         </el-table-column>
         <el-table-column
+          min-width="40"
+          align="center"
           label="余课">
+          <template slot-scope="scope">
+            {{scope.row.remainCount}}
+          </template>
         </el-table-column>
         <el-table-column
+          align="center"
+          min-width="40"
           label="缺勤">
         </el-table-column>
       </el-table>
+    </div>
+    <div class="call-title">
+      <div class="call-title-text">
+        <div>课堂备注</div>
+      </div>
+    </div>
+    <el-input
+      type="textarea"
+      :autosize="{ minRows: 2, maxRows: 10}"
+      placeholder="在这里输入回访内容"
+      v-model="content">
+    </el-input>
+    <div style="height: 64px;"></div>
+    <div class="app-footer">
+      <el-button type="primary" @click="beginAttend">开始上课</el-button>
     </div>
   </div>
 </template>
@@ -64,7 +103,11 @@
     name: "checkroll",
     data() {
       return {
-        personList: []
+        personList: [],
+        absenteeismCause: [],
+        checkAll: true,
+        content: '',
+        tableHeight: 603,
       }
     },
     computed: {
@@ -73,6 +116,7 @@
       })
     },
     methods: {
+      // 获取学员列表
       getPersonList() {
         let obj = {
           classId: "1125233822854545408"
@@ -80,12 +124,23 @@
         getcheckPersonList(obj).then(res => {
           if (res.data.code == 200 && res.data.data.list) {
             this.personList = res.data.data.list;
+            this.personList.forEach((item => {
+              // item.isCq = true;
+              item.absenteeismCause = '';
+            }))
           }
         })
+      },
+
+      // 开始上课
+      beginAttend() {
+
       }
     },
     mounted() {
+      this.tableHeight = document.documentElement.clientHeight - 400;
       this.getPersonList();
+      window.localStorage.getItem('classify') ? this.absenteeismCause = JSON.parse(window.localStorage.getItem('classify')).absenteeismCause : [];
     }
   }
 </script>
@@ -183,7 +238,7 @@
         border-radius: 50%;
       }
     }
-    .name{
+    .name {
       line-height: 32px;
       margin-left: 5px;
       color: #464948;
@@ -192,6 +247,12 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+  }
+
+  .call-list {
+    & .el-input__inner {
+      padding: 0px 10px !important;
     }
   }
 </style>

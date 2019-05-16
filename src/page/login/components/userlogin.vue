@@ -38,7 +38,7 @@
 
 <script>
   import {Toast} from 'mint-ui'
-  import {userLogin} from "../../../api/user";
+  import {userLogin, getCfxData} from "../../../api/user";
 
   export default {
     name: "userlogin",
@@ -107,6 +107,7 @@
           ? (this.passwordActive = 0)
           : (this.passwordActive = 1);
       },
+      // 登录
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
@@ -118,6 +119,7 @@
                 let userInfo = res.data.data;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 this.$store.commit('getUserInfo', userInfo);
+                this.getClassIfy();
                 this.$router.push({
                   path: '/index/home'
                 })
@@ -131,6 +133,18 @@
               })
           }
         });
+      },
+
+      //获取基础数据
+      getClassIfy() {
+        let md5 = window.localStorage.getItem('md5') ? window.localStorage.getItem('md5') : '0';
+        getCfxData(md5).then(res => {
+          if (res.data.code == 200) {
+            window.localStorage.setItem('classify', JSON.stringify(res.data.data.classify));
+            window.localStorage.setItem('md5', JSON.stringify(res.data.data.md5));
+            window.localStorage.setItem('const', JSON.stringify(res.data.data.const));
+          }
+        })
       }
     }
   };
