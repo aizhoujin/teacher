@@ -36,7 +36,10 @@
     </div>
 
     <!-- 作业列表 -->
-    <div class="bulletinList">
+    <div class="bulletinList"
+         v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="10">
       <li v-for="(item,index) in bulletinList" :key="item.id" @click="bulletinDetail(item.id)">
         <div class="bulletinList-title">
           {{item.title}}
@@ -52,6 +55,7 @@
         </div>
         <div class="bulletinList-tag" v-show="item.status == 0"></div>
       </li>
+      <div class="footLoading" v-loading="loading">{{footerText}}</div>
     </div>
 
     <!--布置作业-->
@@ -82,6 +86,8 @@
         pickerValue2: '',
         bulletinList: [],
         obj: {
+          "page": 1,
+          "size": 10,
           "gtEquals": {}, //大于等于
           "ltEquals": {}, // 小于等于
           "empty": true
@@ -89,10 +95,13 @@
         total: 0,
         allLoaded: true,
         clientHeight: 603,
-        clientWidth: 342
+        clientWidth: 342,
+        loading: false,
+        footerText: ''
       }
     },
     methods: {
+      // 打开日期选择器
       openPicker(type) {
         if (type == 1) {
           this.pickerValue1 = new Date();
@@ -103,6 +112,8 @@
         } else {
         }
       },
+
+      // 日期选择确定
       handleConfirm(type) {
         if (type == 1) {
           this.pickerValue1 = new Date(this.pickerValue1).toLocaleDateString();
@@ -112,8 +123,11 @@
           this.dateTo = this.pickerValue2;
         }
       },
+
+      // 获取作业列表
       myGetBulletin() {
         homework(this.$store.state.user.userInfo.token, this.obj).then(res => {
+          this.loading = false;
           let list = res.data.data.list;
           this.total = res.data.data.total;
           list.forEach(item => {
@@ -121,24 +135,40 @@
           })
         })
       },
+
+      // 筛选时间
       dateFit() {
+        console.log(1)
         if (this.pickerValue1 == '') {
           Toast('请选择开始时间')
         } else if (this.pickerValue2 == '') {
           Toast('请选择结束时间')
         } else {
-          if (this.pickerValue1 < this.pickerValue2) {
-            this.obj.gtEquals.createTime = this.pickerValue1.replace('/', '-').replace('/', '-');
-            this.obj.ltEquals.createTime = this.pickerValue2.replace('/', '-').replace('/', '-');
+          if (this.pickerValue1 <= this.pickerValue2) {
+            this.obj.gtEquals.createTime = this.pickerValue1.replace('/', '-').replace('/', '-') + " 00:00";
+            this.obj.ltEquals.createTime = this.pickerValue2.replace('/', '-').replace('/', '-') + "23:59";
             this.bulletinList = [];
             this.myGetBulletin();
+          } else {
+            this.$toast("结束时间不能小于开始时间");
           }
         }
       },
+
+      // 去详情页
       bulletinDetail(id) {
         this.$router.push({
           path: '/bulletinDetail/' + id,
         })
+      },
+
+      // 上拉加载
+      loadMore() {
+        if (this.bulletinList.length >= (this.obj.page * this.obj.size)) {
+          this.loading = true;
+          this.obj.page++;
+          this.myGetBulletin();
+        }
       }
     },
     computed: {

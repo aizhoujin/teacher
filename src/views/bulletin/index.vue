@@ -129,11 +129,13 @@
           Toast('请选择结束时间')
         } else {
           if (this.pickerValue1 <= this.pickerValue2) {
-            this.obj.gtEquals.createTime = this.pickerValue1.replace('/', '-').replace('/', '-');
-            this.obj.ltEquals.createTime = this.pickerValue2.replace('/', '-').replace('/', '-');
+            this.obj.gtEquals.createTime = this.pickerValue1.replace('/', '-').replace('/', '-') + " 00:00";
+            this.obj.ltEquals.createTime = this.pickerValue2.replace('/', '-').replace('/', '-') + " 23:59";
             this.bulletinList = [];
             this.obj.page = 1;
             this.myGetBulletin();
+          } else {
+            this.$toast("结束时间不能小于开始时间");
           }
         }
       },
@@ -147,9 +149,11 @@
 
       // 上拉加载
       loadMore() {
-        // this.loading = true;
-        // this.obj.page++;
-        // this.myGetBulletin();
+        if (this.bulletinList.length >= (this.obj.page * this.obj.size)) {
+          this.loading = true;
+          this.obj.page++;
+          this.myGetBulletin();
+        }
       }
     },
     computed: {

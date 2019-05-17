@@ -4,12 +4,11 @@
       placeholder="请输入内容"
       prefix-icon="el-icon-search"
       style="background: #F7F8F8FF"
-      @change="searchEvent"
       v-model="searchPerson">
     </el-input>
     <el-row style="margin: 16px 0px;font-size: 16px" v-if="!showPhone">通知对象</el-row>
     <el-collapse accordion v-model="activeNames">
-      <el-collapse-item v-for="(item,index) in classPersonList" :key="index" id="linkmanList">
+      <el-collapse-item v-for="(item,index) in aaaa" :key="index" id="linkmanList">
         <template slot="title">
           <div class="listTitle">
             <div class="list-portrait">{{item.classNo ? item.classNo + '班' : item.name}}</div>
@@ -35,7 +34,6 @@
             </div>
             <div class="person-name">
               {{ite.studentEntity ? ite.studentEntity.infoEntity.realName: ''}}
-              <!--{{ite.studentEntity.infoEntity.nickName}}-->
             </div>
           </div>
           <div class="person-check" v-if="!showPhone">
@@ -43,7 +41,8 @@
                          @change="checkAction(ite.id)"></el-checkbox>
           </div>
           <div class="person-check" v-if="showPhone">
-            <i class="el-icon-phone"></i>
+            <a class="phone" :href="'tel:' + ite.studentEntity.infoEntity.mobile"><i
+              class="iconfont icon-dianhua"></i></a>
           </div>
         </li>
 
@@ -65,7 +64,7 @@
     name: "person-list",
     data() {
       return {
-        searchPerson: '',
+        searchPerson: 1,
         classPersonList: [],
         activeNames: []
       }
@@ -77,6 +76,14 @@
       ...mapState({
         userInfo: state => state.user.userInfo
       }),
+      aaaa() {
+        let arr = [];
+        this.classPersonList.forEach((item, index) => {
+          
+        })
+
+        return arr;
+      }
     },
     methods: {
       // 获取班级列表数据
@@ -167,12 +174,20 @@
       // 搜索事件
       searchEvent() {
 
-      }
+      },
+
     },
     mounted() {
       this.getPersonData();
     },
     created() {
+    },
+
+    filters: {
+      searchfilter: function (data) {
+        console.log(data);
+        return data;
+      }
     },
     watch: {
       showPhone(value, oldVal) {
@@ -246,6 +261,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    .phone {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #40D2B4;
+      color: white;
+      text-align: center;
+      line-height: 24px;
+      margin-right: 10px;
+    }
   }
 
   .person-footer {

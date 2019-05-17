@@ -6,7 +6,7 @@ export const homework = (data, obj) => {
   return request({
     url: `${baseUrl}/api/homework/v1/list`,
     method: 'POST',
-    data:{obj}
+    data: obj
   })
 }
 

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="notice" :style="{'max-height': clientHeight + 'px'}">
+    <div class="notice"
+         v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="80">
       <!-- 通知列表 -->
       <li class="notice-list" v-for="(item,index) in noticeList" :key="item.id">
         <div class="notice-list-time">{{item.beginTime}}</div>
@@ -21,6 +24,7 @@
           </div>
         </div>
       </li>
+      <div class="footLoading" v-loading="loading">{{footerText}}</div>
     </div>
     <div v-if="noticeList.length == 0" style="width: 100%;text-align: center; margin: 20px auto;">暂无通知!</div>
 
@@ -45,15 +49,17 @@
     data() {
       return {
         obj: {
-          "page": null,
-          "size": null,
+          "page": 1,
+          "size": 10,
           "gtEquals": {}, //大于等于
           "ltEquals": {}, // 小于等于
           // "empty": true
         },
         noticeList: [],
         clientHeight: 603,
-        clientWidth: 342
+        clientWidth: 342,
+        loading: false,
+        footerText: '',
       }
     },
     methods: {
@@ -61,6 +67,7 @@
         this.$store.commit('loadChange', true);
         let token = this.$store.state.user.userInfo.token;
         getBulletin(token, this.obj).then(res => {
+          this.loading = false;
           this.$store.commit('loadChange', false);
           let data = res.data.data;
           this.noticeList = this.noticeList.concat(data.list);
@@ -72,6 +79,16 @@
         this.$router.push({
           path: '/noticeDetail/' + id
         })
+      },
+
+      // 上拉加载
+      loadMore() {
+        console.log(1);
+        if (this.noticeList.length >= (this.obj.page * this.obj.size)) {
+          this.loading = true;
+          this.obj.page++;
+          this.getNotice();
+        }
       }
     },
     created() {
@@ -85,7 +102,7 @@
 <style scoped lang="scss">
   .notice {
     width: 100%;
-    overflow-y: auto;
+    margin: 5px auto;
     & .notice-list {
       width: 100%;
       & .notice-list-time {
