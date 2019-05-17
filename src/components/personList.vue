@@ -79,7 +79,7 @@
       aaaa() {
         let arr = [];
         this.classPersonList.forEach((item, index) => {
-          
+
         })
 
         return arr;
