@@ -83,7 +83,6 @@
 
       // 上拉加载
       loadMore() {
-        console.log(1);
         if (this.noticeList.length >= (this.obj.page * this.obj.size)) {
           this.loading = true;
           this.obj.page++;

@@ -102,7 +102,6 @@
               }
             })
           } else {
-            console.log('error submit!!');
             return false;
           }
         });

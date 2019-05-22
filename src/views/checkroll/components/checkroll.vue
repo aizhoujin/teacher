@@ -126,7 +126,6 @@
     },
     methods: {
       aaa() {
-        console.log(1)
       },
       // 获取学员列表
       getPersonList() {

@@ -138,7 +138,6 @@
 
       // 筛选时间
       dateFit() {
-        console.log(1)
         if (this.pickerValue1 == '') {
           Toast('请选择开始时间')
         } else if (this.pickerValue2 == '') {

@@ -111,7 +111,6 @@
           return;
         }
 
-        console.log(obj);
         if (this.funType == 'notice') {
           noticeAdd(obj).then(res => {
             if (res.data.code == 200) {
@@ -216,7 +215,6 @@
         // }).catch(err => {
         //   console.log(err);
         // })
-        console.log(this.stsData)
 
         // uploadFileClient
         //   .put('eee', formdata)
@@ -317,8 +315,6 @@
 
       // 结束录音
       stopRecord() {
-        alert(123)
-        console.log(2);
         var _this = this;
         clearInterval(_this.timeCircle);
         wx.stopRecord({
@@ -363,7 +359,6 @@
       // 录音一套
       recordEvent() {
         let _this = this;
-        console.log(123123123)
         if (this.recordState == 1) {
           this.startRecord();
           this.recordImg = require('../assets/发布通知模块/语音录入/录音中.png');

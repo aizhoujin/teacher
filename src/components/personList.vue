@@ -185,7 +185,6 @@
 
     filters: {
       searchfilter: function (data) {
-        console.log(data);
         return data;
       }
     },

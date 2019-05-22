@@ -364,7 +364,6 @@
       getStsEvent() {
         getSts().then(res => {
           if (res.data.code == 200) {
-            console.log(res.data.data);
             this.stsData = res.data.data;
           }
         })
