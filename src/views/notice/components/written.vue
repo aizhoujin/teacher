@@ -12,7 +12,7 @@
       <div class="noticeList" v-else>添加通知对象</div>
     </div>
     <div class="recordList">
-      <li v-for="item in localIdsRecord">
+      <li class="record-li" v-for="item in localIdsRecord">
         {{item}}
       </li>
     </div>
@@ -201,5 +201,9 @@
         overflow-y: auto;
       }
     }
+  }
+  .recordList{
+    width: 100%;
+
   }
 </style>
