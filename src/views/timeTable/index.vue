@@ -68,12 +68,16 @@
       },
       // 切换月份
       changeMonth(data) {
-        this.getTimeTable();
+        this.getTimeTable(data);
       },
 
       // 获取数据
-      getTimeTable() {
-        let date = new Date(this.currentDate);
+      getTimeTable(data) {
+        let markChilds = document.querySelectorAll('.markChild');
+        for (let i = 0; i < markChilds.length; i++) {
+          markChilds[i].innerHTML = '';
+        }
+        let date = data ? new Date(data) : new Date(this.currentDate);
         let begin = date.getFullYear() + "-" + (date.getMonth() + 1) + '-01';
         let end = date.getFullYear() + "-" + (date.getMonth() + 2) + '-01';
         let obj = {
@@ -100,7 +104,9 @@
         setTimeout(() => {
           let marks = document.querySelectorAll('.mark');
           for (let i = 0; i < marks.length; i++) {
-            marks[i].innerHTML = marks[i].innerHTML + '<div class="markChild"></div>'
+            let odiv = document.createElement('div');
+            odiv.className = 'markChild';
+            marks[i].appendChild(odiv);
           }
         }, 1000);
       },
